@@ -1,15 +1,13 @@
 const TeamUpdate = module.require('./TeamUpdate');
 
 class TeamMemberUpdate extends TeamUpdate {
-    constructor(timeStamp,teamToBeUpdated,newMembers,quittedMembers) {
-        super(timeStamp,teamToBeUpdated);
-        this.newMembers = newMembers;
-        this.quittedMembers = quittedMembers;
-    }
-
-    sendSingle(user) {
-        //Override
-        //Database Operations
+    constructor(teamToBeUpdated,newMembers,quittedMembers) {
+        super(teamToBeUpdated);
+        // this.newMembers = newMembers;
+        // this.quittedMembers = quittedMembers;
+        this.content['newMembers'] = newMembers;
+        this.content['quittedMembers'] = quittedMembers;
+        this.messageType = 'TeamMemberUpdate';
     }
 }
 

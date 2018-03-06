@@ -21,6 +21,7 @@ exports.getDBTime = function getDBTime() {
 }
 
 exports.establishPool = function establishPool() {
+    if(pool !== undefined) return;
     try{
         pool = mysql.createPool({
             connectionLimit : 100,
@@ -43,112 +44,175 @@ exports.establishPool = function establishPool() {
 }
 
 function sqlQuery(sql) {
-    var res = {};
-    pool.query(sql, (err,results, fields)=>{
-        if(err) {
-            throw new Error("[DB Error] - "+err);
+    return new Promise((resolve,reject)=>{
+        try{
+            var id;
+            pool.query(sql, (err,results,fields)=>{
+                if(err) {
+                    throw new Error("[DB Error] - "+err);
+                }
+                id = results.insertId;
+                resolve(id);
+            });
         }
-        res = results;
+        catch(err) {
+            reject(err);
+        }
     });
-    return res;
 }
 
 
-exports.insertUserNotification = function insertUserNotification(user,isRead,message) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    var sql = 'INSERT INTO UserNotification (user, isRead, message) VALUES (?, ?, ?);';
-    var argList = [user, isRead, message];
-    sql = mysql.format(sql,argList);
-    //console.log(sql);
-    var insertId = sqlQuery(sql).insertId; //may throw error
-    return insertId;
+exports.insertUserNotification = async function insertUserNotification(timeStamp, user,isRead,message) {
+    return new Promise(async (resolve,reject)=> {
+        try{
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            //check if timeStamp is valid
+            if(!(Date.parse(timeStamp) > 0)) {
+                //invalid timeStamp
+                throw new Error('[DB Error] - Invalid timeStamp');
+            }
+            var sql = 'INSERT INTO UserNotification (timeStamp, user, isRead, message) VALUES (?, ?, ?, ?);';
+            var argList = [timeStamp, user, isRead, message];
+            sql = mysql.format(sql,argList);
+            var id = await sqlQuery(sql); //may throw error
+            resolve(id);
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.readUserNotification = function readUserNotification(messageID) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    var sql = "UPDATE UserNotification SET isRead = 1 WHERE notification_ID = ?;";
-    var argList = [messageID];
-    sql = mysql.format(sql, argList);
-    //console.log(sql);
-    sqlQuery(sql);
+exports.readUserNotification = async function readUserNotification(messageID) {
+    return new Promise(async (resolve,reject)=> {
+        try{
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            var sql = "UPDATE UserNotification SET isRead = 1 WHERE notification_ID = ?;";
+            var argList = [messageID];
+            sql = mysql.format(sql, argList);
+            //console.log(sql);
+            await sqlQuery(sql);
+            resolve();
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.deleteUserNotification = function deleteUserNotification(messageID) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    var sql = "DELETE FROM UserNotification WHERE notification_ID = ?;";
-    var argList = [messageID];
-    sql = mysql.format(sql, argList);
-    //console.log(sql);
-    sqlQuery(sql);
+exports.deleteUserNotification = async function deleteUserNotification(messageID) {
+    return new Promise(async (resolve, reject)=> {
+        try{
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            var sql = "DELETE FROM UserNotification WHERE notification_ID = ?;";
+            var argList = [messageID];
+            sql = mysql.format(sql, argList);
+            //console.log(sql);
+            await sqlQuery(sql);
+            resolve();
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.insertMessageBody = function insertMessageBody(timeStamp, messageType, content) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    //check if timeStamp is valid
-    if(!(Date.parse(timeStamp) > 0)) {
-        //invalid timeStamp
-        throw new Error('[DB Error] - Invalid timeStamp');
-    }
-    //check if messageType is valid
-    const messageTypes = {
-        "JoinRequest": true,
-        "TeamMemberUpdate": true,
-        "TeamActivityUpdate": true,
-        "TeamPublicMessage": true,
-        "newApplicationResult": true
-    }
-    if(messageTypes[messageType] === undefined) {
-        //invalid messageType
-        throw new Error("[DB Error] - Invalid messageType");
-    }
-    var sql = "INSERT INTO MessageBody (timeStamp, messageType, content) VALUES (?, ?, ?);";
-    var argList = [timeStamp,messageType,content];
-    sql = mysql.format(sql,argList);
-    var insertId = sqlQuery(sql).insertId;
-    return insertId;
+exports.insertMessageBody = async function insertMessageBody(timeStamp, messageType, content) {
+    return new Promise(async (resolve,reject) => {
+        try{
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            //check if timeStamp is valid
+            if(!(Date.parse(timeStamp) > 0)) {
+                //invalid timeStamp
+                throw new Error('[DB Error] - Invalid timeStamp');
+            }
+            //check if messageType is valid
+            const messageTypes = {
+                "JoinRequest": true,
+                "TeamMemberUpdate": true,
+                "TeamActivityUpdate": true,
+                "TeamPublicMessage": true,
+                "NewApplicationResult": true
+            }
+            if(messageTypes[messageType] === undefined) {
+                //invalid messageType
+                throw new Error("[DB Error] - Invalid messageType");
+            }
+            var sql = "INSERT INTO MessageBody (timeStamp, messageType, content) VALUES (?, ?, ?);";
+            var argList = [timeStamp,messageType,content];
+            sql = mysql.format(sql,argList);
+            var id = await sqlQuery(sql);
+            resolve(id);
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.deleteMessageBody = function deleteMessageBody(messageID) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    var sql = "DELETE FROM MessageBody WHERE message_ID = ?;";
-    var argList = [messageID];
-    sql = mysql.format(sql, argList);
-    sqlQuery(sql);
+exports.deleteMessageBody = async function deleteMessageBody(messageID) {
+    return new Promise(async (resolve,reject)=>{
+        try {
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            var sql = "DELETE FROM MessageBody WHERE message_ID = ?;";
+            var argList = [messageID];
+            sql = mysql.format(sql, argList);
+            await sqlQuery(sql);
+            resolve();
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.insertSystemNotification = function insertSystemNotification(timeStamp, content) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    //check if timeStamp is valid
-    if(!(Date.parse(timeStamp) > 0)) {
-        //invalid timeStamp
-        throw new Error('[DB Error] - Invalid timeStamp');
-    }
-    var sql = "INSERT INTO SystemNotification (timeStamp, content) VALUES (?, ?);";
-    var argList = [timeStamp,content];
-    sql = mysql.format(sql,argList);
-    var insertId = sqlQuery(sql).insertId;
-    return insertId;
+exports.insertSystemNotification = async function insertSystemNotification(timeStamp, content) {
+    return new Promise(async (resolve,reject)=> {
+        try {
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            //check if timeStamp is valid
+            if(!(Date.parse(timeStamp) > 0)) {
+                //invalid timeStamp
+                throw new Error('[DB Error] - Invalid timeStamp');
+            }
+            var sql = "INSERT INTO SystemNotification (timeStamp, content) VALUES (?, ?);";
+            var argList = [timeStamp,content];
+            sql = mysql.format(sql,argList);
+            var id = await sqlQuery(sql).insertId;
+            resolve(id);
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }
 
-exports.deleteSystemNotification = function deleteSystemNotification(SystemNotificationID) {
-    if(pool === undefined) {
-        throw new Error("[DB Error] - Connection not established");
-    }
-    var sql = "DELETE FROM SystemNotification WHERE systemNotification_ID = ?;";
-    var argList = [SystemNotificationID];
-    sql = mysql.format(sql, argList);
-    //console.log(sql);
-    sqlQuery(sql);
+exports.deleteSystemNotification = async function deleteSystemNotification(SystemNotificationID) {
+    return new Promise(async (resolve,reject)=> {
+        try {
+            if(pool === undefined) {
+                throw new Error("[DB Error] - Connection not established");
+            }
+            var sql = "DELETE FROM SystemNotification WHERE systemNotification_ID = ?;";
+            var argList = [SystemNotificationID];
+            sql = mysql.format(sql, argList);
+            await sqlQuery(sql);
+            resolve();
+        }
+        catch(err) {
+            reject(err);
+        }
+    });
 }

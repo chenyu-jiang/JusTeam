@@ -1,15 +1,11 @@
 const TeamUpdate = module.require('./TeamUpdate');
 
 class TeamPublicMessage extends TeamUpdate {
-    constructor(timeStamp,teamToBeUpdated,sender,message) {
-        super(timeStamp,teamToBeUpdated);
-        this.sender = sender;
-        this.message = message;
-    }
-
-    sendSingle(user) {
-        //Override
-        //Database Operations
+    constructor(teamToBeUpdated,sender,message) {
+        super(teamToBeUpdated);
+        this.content['sender'] = sender;
+        this.content['message'] = message;
+        this.messageType = 'TeamPublicMessage';
     }
 }
 

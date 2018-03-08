@@ -1,4 +1,4 @@
-import { Form, Icon, Input, Button, Checkbox ,message} from 'antd';
+import { Form, Icon, Input, Button, Checkbox ,message,notification} from 'antd';
 import React,{Component} from 'react'
 import {Link} from'react-router-dom';
 import 'antd/dist/antd.css'
@@ -15,6 +15,12 @@ class LoginFormTemp extends Component {
                     }
                     return v;
                 }));
+                const args = {
+                    message: 'Data Received',
+                    description: JSON.stringify(values),
+                    duration: 5,
+                };
+                notification.open(args);
                 console.log('Received values of form: ', values);
             }
         });
@@ -24,7 +30,7 @@ class LoginFormTemp extends Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('userName', {
+                    {getFieldDecorator('userID', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
@@ -55,11 +61,14 @@ class LoginFormTemp extends Component {
                 </Link>
                 </FormItem>
             </Form>
+
+
         );
     }
 }
 
 
 const LoginForm=Form.create()(LoginFormTemp);
+
 
 export default LoginForm;

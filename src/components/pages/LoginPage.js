@@ -6,6 +6,7 @@ const LoginPage=()=>(
         Login page with a
         <LoginForm/>
     </div>
+
 );
 
 export  default  LoginPage;

@@ -12,10 +12,10 @@ class Message {
           var messageID = await dbConnection.insertMessageBody(dbConnection.getDBTime(),this.messageType,JSON.stringify(this.content));
           if(users instanceof Array) {
               for(var i=0;i<users.length;i++) {
-                  dbConnection.insertUserNotification(dbConnection.getDBTime(),users[i],0,messageID);
+                  dbConnection.insertUserNotification(dbConnection.getDBTime(),users[i],messageID);
               }
           }
-          else dbConnection.insertUserNotification(dbConnection.getDBTime(),users,0,messageID);
+          else dbConnection.insertUserNotification(dbConnection.getDBTime(),users,messageID);
       } catch (err) {
           if(callback !== undefined) {
               callback(err);

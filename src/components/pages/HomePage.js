@@ -10,40 +10,32 @@ import Dashboard from './Dashboard'
 const menu = (
     <Menu>
         <Menu.Item>
-            <Link to='/accountInfo'>Account Information</Link>
+            <Link to='/home/accountInfo'>Account Information</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/notification'>Notifications</Link>
+            <Link to='/home/notification'>Notifications</Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/dash/myTeams'>
+            <Link to='/home/dash/myTeams'>
                 My Teams
             </Link>
         </Menu.Item>
         <Menu.Item>
-            <Link to='/'>
+            <Link to='/home'>
                 Logout
             </Link>
         </Menu.Item>
     </Menu>
 );
 
-class Dashredirect extends Component{
-    render() {
-        return(
-        <div className="Dashboarddiv">
-            <Route path='/' exact component={Dashboard}/>
-            <Route path='/dash' component={Dashboard}/>
-        </div>);
-    }
-}
+
 class HomePage extends Component{
     render(){
-        if(this.props.location.pathname==='/') return<Redirect to='/dash'/>;
+        if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
     <div className="HomePage">
     <div style={{background:'#5DADE2',padding:'10px 10px 10px'}}>
-        <Link to='/dash'>
+        <Link to='/home/dash'>
             <Button size="large" shape="circle" >
             Logo
         </Button>
@@ -59,7 +51,7 @@ class HomePage extends Component{
            </Link>
         , after login:
         <Dropdown overlay={menu}>
-            <Link to='/accountInfo' >
+            <Link to='/home/accountInfo' >
             <Button shape="circle" gost>
 
              <img src={logo} alt='UserLogo' height="30" width="30"/>
@@ -72,9 +64,9 @@ class HomePage extends Component{
 
 
         <div style={{ background: 'rgb(190, 200, 200)', padding: '26px 16px 16px' }}>
-            <Route path='/accountInfo' exact component={AccountInfoPage} />
-            <Route path='/'  component={Dashredirect} />
-            <Route path='/notification' exact component={NotiPage} />
+            <Route path='/home/accountInfo' exact component={AccountInfoPage} />
+            <Route path='/home/dash'  component={Dashboard} />
+            <Route path='/home/notification' exact component={NotiPage} />
         </div>
 
     </div>

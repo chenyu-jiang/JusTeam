@@ -10,26 +10,26 @@ import Teaming from '../sections/Teaming'
 
 class Dashboard extends Component {
     render() {
-        if(this.props.location.pathname==='/dash') return<Redirect to='/dash/teaming'/>;
+        if(this.props.location.pathname==='/home/dash') return<Redirect to='/home/dash/teaming'/>;
         return (
             <div>
                 <div>
             <span>
-                <Link to='/dash/myTeams'>
+                <Link to='/home/dash/myTeams'>
             <Button size="large">
             myTeams
         </Button>
                 </Link>
             </span>
                     <span>
-                <Link to='/dash/teaming'>
+                <Link to='/home/dash/teaming'>
             <Button size="large">
             Teaming
         </Button>
                 </Link>
             </span>
                     <span>
-                <Link to='/dash/discover'>
+                <Link to='/home/dash/discover'>
             <Button size="large">
             Discover
         </Button>
@@ -37,9 +37,9 @@ class Dashboard extends Component {
             </span>
                 </div>
                 <div>
-                    <Route path='/dash/myTeams' component={MyTeamsPage}/>
-                    <Route path='/dash/teaming' component={Teaming}/>
-                    <Route path='/dash/discover' component={Discover}/>
+                    <Route path='/home/dash/myTeams' component={MyTeamsPage}/>
+                    <Route path='/home/dash/teaming' component={Teaming}/>
+                    <Route path='/home/dash/discover' component={Discover}/>
                 </div>
             </div>
         );

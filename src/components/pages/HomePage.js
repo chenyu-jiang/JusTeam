@@ -64,9 +64,9 @@ class HomePage extends Component{
 
 
         <div style={{ background: 'rgb(190, 200, 200)', padding: '26px 16px 16px' }}>
-            <Route path='/home/accountInfo' exact component={AccountInfoPage} />
+            <Route path='/home/accountInfo'  component={AccountInfoPage} />
             <Route path='/home/dash'  component={Dashboard} />
-            <Route path='/home/notification' exact component={NotiPage} />
+            <Route path='/home/notification'  component={NotiPage} />
         </div>
 
     </div>

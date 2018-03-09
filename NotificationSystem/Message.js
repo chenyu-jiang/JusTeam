@@ -1,16 +1,27 @@
+const dbConnection = require("./dbConnection");
+
 class Message {
-  constructor (timeStamp) {
+  constructor () {
       if(new.target === Message) throw new TypeError("Abstract Class 'Message' cannot be instantiated.");
-      this.timeStamp = timeStamp;
+      this.messageType = "";
   }
 
-  send(destinations, sendOperation) {
-      for(var i = 0; i< destinations.length; i++) {
-          sendSingle(destinations[i]);
+   async send(users,callback) {
+      await dbConnection.establishPool();
+      try {
+          var messageID = await dbConnection.insertMessageBody(dbConnection.getDBTime(),this.messageType,JSON.stringify(this.content));
+          if(users instanceof Array) {
+              for(var i=0;i<users.length;i++) {
+                  dbConnection.insertUserNotification(dbConnection.getDBTime(),users[i],messageID);
+              }
+          }
+          else dbConnection.insertUserNotification(dbConnection.getDBTime(),users,messageID);
+      } catch (err) {
+          if(callback !== undefined) {
+              callback(err);
+          }
       }
   }
-
-  sendSingle() {};
 }
 
 module.exports = Message;

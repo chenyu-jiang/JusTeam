@@ -1,16 +1,15 @@
-const Message = module.require('./Message');
+const Message = require('./Message');
+const dbConnection = require('./dbConnection');
 
 class JoinRequest extends Message {
-    constructor(timeStamp,teamToBeJoined,applicant,joinInfo) {
-        super(timeStamp);
-        this.teamToBeJoined = teamToBeJoined;
-        this.applicant = applicant;
-        this.joinInfo = joinInfo;
-    }
-
-    sendSingle(user) {
-        //Override
-        //Database operations
+    constructor(teamToBeJoined,applicant,joinInfo) {
+        super();
+        this.content = {
+            'teamToBeJoined': teamToBeJoined,
+            'applicant': applicant,
+            'joinInfo': joinInfo
+        };
+        this.messageType = "JoinRequest";
     }
 }
 

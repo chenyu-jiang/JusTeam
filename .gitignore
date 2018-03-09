@@ -8,3 +8,6 @@ Desktop.ini
 
 #debug
 main.js
+
+#node modules
+node_modules/

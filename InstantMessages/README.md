@@ -1,6 +1,8 @@
-# SocketModule Usage
+# Chat Module Usage
 
 ## For Frontend
+
+## Socket.io
 
 ###Events from client:
 
@@ -9,9 +11,7 @@
 ```json
 //data:
 {
-    userID: 
-    //userName:
-    teamID:
+    teamID: //user will join the chatroom of this team
 }
 ```
 
@@ -24,20 +24,20 @@
 ```
 ###Events from server:
 
-* **userJoinedRoom:** 
+* **userJoinedRoom:**
 ```json
 //data:
 {
-    userName:
+    user: {userName, userID}
     numberOfUsers:
-    usersList: [userName]
+    usersList: [{userName, userID}]
 }
 ```
 * **newMessage:**
 ```json
 //data:
 {
-    userName:
+    user: {userName, userID} //sender
     message: //data package
 }
 ```
@@ -45,8 +45,16 @@
 ```json
 //data:
 {
-    userName:
+    user: {userName, userID}
     numberOfUsers:
     usersList: [userName]
 }
+```
+
+## Others 
+
+* getChatHistory(teamID)
+```json
+//Returns the chat history
+//to be defined
 ```

@@ -1,9 +1,13 @@
-const JoinRequest = module.require("./NotificationSystem/JoinRequest");
-const TeamMemberUpdate = module.require("./NotificationSystem/TeamMemberUpdate");
-const TeamActivityUpdate = module.require("./NotificationSystem/TeamActivityUpdate");
-const NewApplicationResult = module.require("./NotificationSystem/NewApplicationResult");
-const TeamPublicMessage = module.require("./NotificationSystem/TeamPublicMessage");
-const NewSystemMessage = module.require("./NotificationSystem/NewSystemMessage");
+//exposed to router
+
+//exposed to other internal modules
+const JoinRequest = require("./NotificationSystem/JoinRequest");
+const TeamMemberUpdate = require("./NotificationSystem/TeamMemberUpdate");
+const TeamActivityUpdate = require("./NotificationSystem/TeamActivityUpdate");
+const NewApplicationResult = require("./NotificationSystem/NewApplicationResult");
+const TeamPublicMessage = require("./NotificationSystem/TeamPublicMessage");
+//const NewSystemMessage = require("./NotificationSystem/NewSystemMessage");
+//const dbConnection = require("./NotificationSystem/dbConnection");
 
 module.exports = {
     'JoinRequest' : JoinRequest,
@@ -11,5 +15,5 @@ module.exports = {
     'TeamActivityUpdate' : TeamActivityUpdate,
     'NewApplicationResult' : NewApplicationResult,
     'TeamPublicMessage' : TeamPublicMessage,
-    'NewSystemMessage' : NewSystemMessage,
+    //'NewSystemMessage' : NewSystemMessage,
 }

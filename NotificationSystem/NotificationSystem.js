@@ -1,11 +1,11 @@
 //exposed to router
 
 //exposed to other internal modules
-const JoinRequest = require("./NotificationSystem/JoinRequest");
-const TeamMemberUpdate = require("./NotificationSystem/TeamMemberUpdate");
-const TeamActivityUpdate = require("./NotificationSystem/TeamActivityUpdate");
-const NewApplicationResult = require("./NotificationSystem/NewApplicationResult");
-const TeamPublicMessage = require("./NotificationSystem/TeamPublicMessage");
+const JoinRequest = require("./JoinRequest");
+const TeamMemberUpdate = require("./TeamMemberUpdate");
+const TeamActivityUpdate = require("./TeamActivityUpdate");
+const NewApplicationResult = require("./NewApplicationResult");
+const TeamPublicMessage = require("./TeamPublicMessage");
 //const NewSystemMessage = require("./NotificationSystem/NewSystemMessage");
 //const dbConnection = require("./NotificationSystem/dbConnection");
 

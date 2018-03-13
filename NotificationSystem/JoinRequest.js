@@ -2,7 +2,7 @@ const Message = require('./Message');
 const dbConnection = require('./dbConnection');
 
 class JoinRequest extends Message {
-    constructor(teamToBeJoined,applicant,joinInfo) {
+    constructor(teamToBeJoined, applicant, joinInfo) {
         super();
         this.content = {
             'teamToBeJoined': teamToBeJoined,

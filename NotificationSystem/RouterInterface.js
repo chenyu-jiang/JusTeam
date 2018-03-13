@@ -1,5 +1,5 @@
 const NotificationSystem = require("./NotificationSystem");
-const db = require("./NotificationSystem/dbConnection");
+const db = require("./dbConnection");
 
 //all errors must be handled at this level.
 async function processNotification(notifObject,msgArray) {

@@ -1,6 +1,6 @@
-#Notification system
+# Notification system
 
-##Notification Types:
+## Notification Types:
 ```js
     // (TeamID, UserID, String)
     function JoinRequest(teamToBeJoined, applicant, joinInfo) {};
@@ -16,7 +16,7 @@
     //function NewSystemMessage(message); (Not Supported in early stage)
 ```
 
-###Example code:
+### Example code:
 
 ```javascript
 const NotificationSystem = require("./NotificationSystem");
@@ -29,7 +29,7 @@ notification.send(users,(err)=>{
 
 _**Note:** for NewSystemMessage, its send() do not accept any user parameters (only a callback)._
 
-##Router Interfaces
+## Router Interfaces
 
 - getNumberOfNewNotifications(user);
 ```json

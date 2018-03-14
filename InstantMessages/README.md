@@ -4,7 +4,7 @@
 
 ## Socket.io
 
-###Events from client:
+### Events from client:
 
 * **userJoined:**
 
@@ -22,7 +22,7 @@
     // whatever in this will be broadcast to other users
 }
 ```
-###Events from server:
+### Events from server:
 
 * **userJoinedRoom:**
 ```json

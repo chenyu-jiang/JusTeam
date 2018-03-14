@@ -124,7 +124,7 @@ router.post("/articles", uploadText.single('article'), async (req, res, next)=>{
         //add the record to account
 
         //TODO: incorporate with account system
-        await accountSystem.addPost(user, postID);
+        if(req.body.isNew) await accountSystem.addPost(user, postID);
     }
     catch(err) {
         resContent.status = false;

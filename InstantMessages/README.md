@@ -9,18 +9,14 @@
 * **userJoined:**
 
 ```json
-//data:
-{
-    teamID: //user will join the chatroom of this team
-}
+//data: user will join this team's chatroom
+{ "teamID": 12345 }
 ```
 
 * **newMessage:**
 ```json
-//data:
-{
-    // whatever in this will be broadcast to other users
-}
+//data: whatever in this will be broadcast to other users
+{ "anything": "anything" }
 ```
 ### Events from server:
 
@@ -28,26 +24,26 @@
 ```json
 //data:
 {
-    user: {userName, userID}
-    numberOfUsers:
-    usersList: [{userName, userID}]
+    "user": {"userName": "JusTeam", "userID": 123},
+    "numberOfUsers": 2,
+    "usersList": [{"userName": "JusTeam", "userID": 456}]
 }
 ```
 * **newMessage:**
 ```json
-//data:
+//data: user is the message sender
 {
-    user: {userName, userID} //sender
-    message: //data package
+    "user": {"userName": "JusTeam", "userID": 123},
+    "message": {"data package": "data package"}
 }
 ```
 * **userLeftRoom:**
 ```json
 //data:
 {
-    user: {userName, userID}
-    numberOfUsers:
-    usersList: [userName]
+    user: {"userName": "JusTeam", "userID": 123},
+    numberOfUsers: 2,
+    usersList: [{"userName": "JusTeam", "userID": 456}]
 }
 ```
 

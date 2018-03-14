@@ -36,8 +36,8 @@ class HomePage extends Component{
     render(){
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
-    <div className="HomePage">
-    <div style={{background:'#5DADE2'}}>
+    <div className="HomePage" >
+    <Affix><div style={{background:'#5DADE2'}}>
         <Link to='/home/dash'>
             <Button size="large" shape="circle" >
             Logo
@@ -63,7 +63,7 @@ class HomePage extends Component{
 
         </Dropdown>
 
-    </div>
+    </div></Affix>
 
 
         <div style={{ background: '#fff', padding: '26px 0px 0px' }}>
@@ -75,8 +75,26 @@ class HomePage extends Component{
 
     <div>
     <Layout>
-            <Footer style={{ background:'#5DADE2', color:'#fff',textAlign: 'center' ,  width:'100%'}}>
-              <br/>CSCI3100 Group23 Justeam <p/>
+            <Footer style={{ background:'#222', color:'#fff',textAlign: 'center' ,  width:'100%'}}>
+            <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+            <div class="GroupMember" style={{textAlign:"center", padding:"5%", size:"20px", color:"#DDD"}}>
+                <div>JIANG Chenyu</div>
+                <div>DENG Shiyuan</div>
+                <div>WANG Yuxuan</div>
+                <div>XU Lu</div>
+                <div>ZHANG Yuechen</div>
+                </div>
+            </Col>
+              <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+
+              </Col>
+                <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+
+                </Col>
+              <Row>
+                <div><br/>CSCI3100 Group23 Justeam <p/>
+                </div>
+              </Row>
           </Footer>
         </Layout>
     </div>

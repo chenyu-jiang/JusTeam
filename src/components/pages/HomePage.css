@@ -25,6 +25,10 @@
 .Layout{
   font-size: 30px;
 }
+.FooterCol1 h3{
+  color:#ffda7e;
+  font-size: 30px;
+}
 .ant-carousel .slick-slide h3 {
   color: #fff;
 }

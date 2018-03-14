@@ -41,12 +41,12 @@ Development of future software engineers.
             **Response**:
             ```json
             {
-                "status": true
+                "status": true,
                 "postID": 12345
             }
             ```
 
-        * api/posts/setStat
+        * api/posts/set-stat
 
           Set the status of the post (Draft/Final).
 
@@ -63,7 +63,7 @@ Development of future software engineers.
           {"status": true}
           ```
 
-        * api/posts/attachActivity
+        * api/posts/attach_activity
 
           Attach a post to an activity.
 
@@ -81,6 +81,63 @@ Development of future software engineers.
           {"status": true}
           ```
 
-    * /teams
+    * api/teams
 
-    * /accounts
+    * api/accounts
+
+    * api/notifications
+
+        * api/notifications/new/content
+
+          Get new notifications of a user.
+
+          **Requirements**: None.
+
+          **Method** : GET
+
+          **Parameters**: None
+
+          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+        * api/notifications/new/number
+
+          Get number of new notifications of a user.
+
+          **Requirements**: None.
+
+          **Method** : GET
+
+          **Parameters**: None
+
+          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+        * api/notifications/history
+
+          Get notification history of a user.
+
+          **Requirements**: None.
+
+          **Method** : GET
+
+          **Parameters**: 
+
+          1. start: starting from
+          3. end: end with
+
+          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+        * api/notifications/delete
+
+          Delete a notification history of a user.
+
+          **Requirements**: None.
+
+          **Method** : DELETE
+
+          **Parameters**: 
+
+          1. messageID
+          2. messageType
+
+          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+

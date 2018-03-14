@@ -40,7 +40,7 @@ _**Note:** for NewSystemMessage, its send() do not accept any user parameters (o
         "numOfMessages": 5
     }
 ```
-Note: This will not set the notifications' status as "viewed". (They will be included in the next call of this function).
+*__Note__: This will **NOT** set the notifications' status as "viewed". (They will be included in the next call of this function).*
 
 - getNewNotification(user);
 ```json
@@ -65,7 +65,7 @@ Note: This will not set the notifications' status as "viewed". (They will be inc
         ]
     }
 ```
-_**Note**: This will set these notofications' status as "viewed". (They will not be included in the next call of this function)._
+_**Note**: This __will__ set these notofications' status as "viewed". (They will not be included in the next call of this function)._
 
 - getNotificationHistory(user, start, end);
 ```json

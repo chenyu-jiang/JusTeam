@@ -41,13 +41,13 @@
 ```json
 //data:
 {
-    user: {"userName": "JusTeam", "userID": 123},
-    numberOfUsers: 2,
-    usersList: [{"userName": "JusTeam", "userID": 456}]
+    "user": {"userName": "JusTeam", "userID": 123},
+    "numberOfUsers": 2,
+    "usersList": [{"userName": "JusTeam", "userID": 456}]
 }
 ```
 
-## Others 
+## Others
 
 * getChatHistory(teamID)
 ```json

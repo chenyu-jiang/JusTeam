@@ -1,7 +1,7 @@
 const Message = module.require('./Message');
 
 class NewApplicationResult extends Message {
-    constructor(result,teamApplied) {
+    constructor(result, teamApplied) {
         super();
         this.content = {
             'result': result,

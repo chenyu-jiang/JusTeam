@@ -1,94 +1,40 @@
 # JusTeam
 Development of future software engineers.
 
-## Internal Usage
+## Interface URL Format
+###POSTs:
 
-### Notification system
+* /api
+    * /posts
+        * /upload
+          * /pictures
+              Post pictures to this url.
+              Requirements: One file at a time.
 
-Notification Types:
+              Fields: 1. image : image file
 
-```javascript
-// (TeamID, UserID, String)
-function JoinRequest(teamToBeJoined, applicant, joinInfo);
-// (boolean, TeamID)
-function NewAppcationResult(result, teamApplied);
-// (TeamID, ActivityID, ActivityID, ActivityID)
-function TeamActivityUpdate(teamToBeUpdated, newActivity, deletedActivity, editedActivity);
-// (TeamID, Array of UserID, Array of UserID)
-function TeamMemberUpdate(teamToBeUpdated,newMembers,quittedMembers);
-// (TeamID, UserID, String)
-function TeamPublicMessage(teamToBeUpdated,sender,message);
-// (String)
-//function NewSystemMessage(message); (Not Supported in early stage)
-```
+              Response:
 
-Example code:
+              ```json
+              {
+                  "path" :"RELATIVE_PATH/TO/FILE.png",
+              }
+              ```
 
-```javascript
-const NotificationSystem = require("./NotificationSystem");
-var notification = new NotificationSystem.JoinRequest(teamToBeJoined, applicant,joinInfo);
-var users = [uid1, uid2, uid3];
-notification.send(users,(err)=>{
-    console.log(err);
-});
-```
+          * /articles
+            Post text content to this url.
 
-*__Note__: for NewSystemMessage, its send() do not accept any user parameters (only a callback).*
+            Requirements: One file at a time.
 
-#### Router Interfaces
+            Fields: 1. article: article content 2. isNew: new post or draft 3. postID
 
-* getNumberOfNewNotifications(user);
-```json
-//Response Format: JSON
-{
-    "status": (boolean),
-    "error": (string),
-    "numOfMessages": (int)
-}
-```
-*__Note:__ This will not set the notifications' status as "viewed". (They will be included in the next call of this function).*
+            Response:
+            ```json
+            {
+                "status": true
+            }
+            ```
 
-* getNewNotification(user);
+    * /teams
 
-```json
-//Response Format: JSON
-{
-    "status": (boolean),
-    "error": (string),
-    "numOfMessages": (int),
-    "messages": [
-        {
-            "messageID" : (int),
-            "messageType": (String),
-            "timeStamp" : (ISO date format String),
-            "content": (JSON),
-        },
-        {
-            //...
-        },
-        //...
-    ]
-}
-```
-
-*__Note__: This will set these notofications' status as "viewed". (They will not be included in the next call of this function).*
-
-* getNotificationHistory(user, start, end);
-```json
-//Response Format: JSON
-//Returns the notification history by time order (newest first) from "start" (included) to "end" (included)
-//Records starts from 0
-//Same as getNewNotification();
-```
-
-* deleteNotification(messageID, messageType, userID);
-
-```json
-//Response Format: JSON
-{
-    "status": (boolean),
-    "error": (String)
-}
-```
-
-*__Note__: SystemMessages must not be deleted by a normal user.*
+    * /accounts

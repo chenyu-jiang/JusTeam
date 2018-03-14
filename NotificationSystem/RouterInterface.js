@@ -1,5 +1,5 @@
 const NotificationSystem = require("./NotificationSystem");
-const db = require("./NotificationSystem/dbConnection");
+const db = require("./dbConnection");
 
 //all errors must be handled at this level.
 async function processNotification(notifObject,msgArray) {
@@ -48,16 +48,6 @@ exports.getNewNotification = async function getNewNotification(user) {
         "numOfMessages": 0,
         "messages": []
     };
-    //connect to database if not
-    try{
-        db.establishPool();
-    }
-    catch(err) {
-        console.log("[DB Error] - failed to establish connection pool");
-        response.status = false;
-        response.error = err;
-        return response;
-    }
     var notis;
     //get UserNotifications
     try{
@@ -85,16 +75,6 @@ exports.getNumberOfNewNotification = async function getNumberOfNewNotification(u
         "error": "",
         "numOfMessages": 0,
     };
-    //connect to server if not
-    try{
-        db.establishPool();
-    }
-    catch(err) {
-        console.log("[DB Error] - failed to establish connection pool");
-        response.status = false;
-        response.error = err;
-        return response;
-    }
     //get numberOfNewNotifications
     try {
         var number = undefined;
@@ -121,16 +101,6 @@ exports.getNotificationHistory = async function getNotificationHistory(user, sta
         "numOfMessages": 0,
         "messages": []
     };
-    //connect to database if not
-    try{
-        db.establishPool();
-    }
-    catch(err) {
-        console.log("[DB Error] - failed to establish connection pool");
-        response.status = false;
-        response.error = err;
-        return response;
-    }
     var notis;
     //get UserNotifications
     try{
@@ -157,16 +127,6 @@ exports.deleteNotification = async function deleteNotification(messageID) {
         "status": true,
         "error": "",
     };
-    //connect to database if not
-    try{
-        db.establishPool();
-    }
-    catch(err) {
-        console.log("[DB Error] - failed to establish connection pool");
-        response.status = false;
-        response.error = err;
-        return response;
-    }
     try {
         await db.deleteUserNotification(messageID);
         return response;

@@ -11,9 +11,9 @@ class NewSystemMessage extends Message {
     send(callback) {
         dbConnection.establishPool();
         try {
-            var messageID = dbConnection.insertSystemNotification(dbConnection.getDBTime(),this.message);
+            var messageID = dbConnection.insertSystemNotification(dbConnection.getDBTime(), this.message);
         } catch (err) {
-            if(callback !== undefined) {
+            if (callback !== undefined) {
                 callback(err);
             }
         }

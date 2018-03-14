@@ -1,3 +1,0 @@
-function storePostMedia(user, file) {
-    
-}

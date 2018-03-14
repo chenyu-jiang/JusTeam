@@ -7,14 +7,13 @@ class Message {
     }
 
     async send(users, callback) {
-        await dbConnection.establishPool();
         try {
-            var messageID = await dbConnection.insertMessageBody(dbConnection.getDBTime(), this.messageType, JSON.stringify(this.content));
+            var messageID = await dbConnection.insertMessageBody(this.messageType, JSON.stringify(this.content));
             if (users instanceof Array) {
                 for (var i = 0; i < users.length; i++) {
-                    dbConnection.insertUserNotification(dbConnection.getDBTime(), users[i], messageID);
+                    dbConnection.insertUserNotification(users[i], messageID);
                 }
-            } else dbConnection.insertUserNotification(dbConnection.getDBTime(), users, messageID);
+            } else dbConnection.insertUserNotification(users, messageID);
         } catch (err) {
             if (callback !== undefined) {
                 callback(err);

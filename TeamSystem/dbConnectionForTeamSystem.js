@@ -4,7 +4,7 @@ const dbUser = 'root';                      // root for dev
 const dbPassword = '123456';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
 const dbName = 'teamsystem';
-const teamInsertSQL = 'INSERT INTO test_team (`teamID`, `introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+const teamInsertSQL = 'INSERT INTO test_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
 const teamUpdateSQL = 'UPDATE test_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ? `status` = ? WHERE `teamID` = ?';
 const teamQuerySQL = 'SELECT * FROM test_team';
 const teamQueryByID = 'SELECT * FROM test_team WHERE teamID = ?';
@@ -83,7 +83,7 @@ askTeamInfo : function sqlQuery(teamID,callback){
 insertNewTeam : function insertNewTeam(newTeam,callback){
   newTeam.launchTime = this.getDBTime();
   newTeam.recentEditTime = newTeam.launchTime;
-  var teamInsertSQL_Params = [newTeam.teamID, newTeam.introduction, newTeam.teamTitle, newTeam.maxMember, newTeam.launchTime, JSON.stringify(newTeam.memberList), JSON.stringify(newTeam.eventList), newTeam.recentEditTime,newTeam.category,newTeam.reminder,newTeam.status];
+  var teamInsertSQL_Params = [newTeam.introduction, newTeam.teamTitle, newTeam.maxMember, newTeam.launchTime, JSON.stringify(newTeam.memberList), JSON.stringify(newTeam.eventList), newTeam.recentEditTime,newTeam.category,newTeam.reminder,newTeam.status];
   teamSystemPool.query(teamInsertSQL,teamInsertSQL_Params,(err,result) =>{
     if(err){
       var newErr = new Error("[DB Insert Error] -" + err);
@@ -109,8 +109,8 @@ updateTeamInfo: function updateTeamInfo(teamToBeUpdated, callback){
   });
 },         //成品
 
-deleteTeam: function deleteTeam(teamToBeDelete,callback){
-  var deleteTeam_Params = [teamToBeDelete.teamID];
+deleteTeam: function deleteTeam(teamID,callback){
+  var deleteTeam_Params = [teamID];
   teamSystemPool.query(teamDeleteSQL,deleteTeam_Params,(err,result) =>{
     if(err){
       var newErr = new Error("[DB Update Error] -" + err);

@@ -15,12 +15,12 @@ module.exports = {
     var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder);
     async function insertNow(){
       await dbTeam.establishPool();
-      dbTeam.insertNewteam(newTeam,(err,result)=>{
+      dbTeam.insertNewTeam(newTeam,(err,result)=>{
         if(err){
           callback(err,null);
         }
         else{
-          callback(null,result.insertID);
+          callback(null,result.insertId);
         }
       });
     };
@@ -30,7 +30,7 @@ module.exports = {
   deleteTeam : function deleteTeam(teamID,callback){
     async function deleteNow(){
       await dbTeam.establishPool();
-      dbteam.deleteTeam(teamID,(err,result)=>{
+      dbTeam.deleteTeam(teamID,(err,result)=>{
         if(err){
           callback(err,null);
         }
@@ -49,11 +49,11 @@ module.exports = {
         callback(err,null);
       }
       else{
-        var teamUpdating = new team(jsonIn.teamID,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember, jsonIn.category, jsonIn.status, jsonIn.reminder);
+        var teamUpdating = new Team(jsonIn.teamID,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember, jsonIn.category, jsonIn.status, jsonIn.reminder);
         teamUpdating.launchTime = rows[0].launchTime;
         teamUpdating.eventList = rows[0].eventList;
         teamUpdating.memberList = rows[0].memberList;
-        dbteam.updateTeamInfo(teamToBeUpdated,(err,result)=>{
+        dbTeam.updateTeamInfo(jsonIn,(err,result)=>{
           if(err){
             callback(err,null);
           }

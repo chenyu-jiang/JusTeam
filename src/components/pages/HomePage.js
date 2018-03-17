@@ -37,7 +37,7 @@ class HomePage extends Component{
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
     <div className="HomePage" >
-    <Affix><div style={{background:'#5DADE2'}}>
+    <Affix><div style={{background:'#f50'}}>
         <Link to='/home/dash'>
             <Button size="large" shape="circle" >
             Logo

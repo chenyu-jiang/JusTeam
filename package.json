@@ -25,6 +25,6 @@
     "eject": "react-scripts eject"
   },
   "theme": {
-    "primary-color": "#000000"
-  }
+  "primary-color": "#f50"
+}
 }

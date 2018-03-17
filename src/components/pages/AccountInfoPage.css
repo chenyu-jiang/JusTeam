@@ -31,19 +31,19 @@ text-align: center;
 }
 .conversation-container > .header {
 
-  background-color:#5DADE2;
+  background-color:#f50;
 
 }
 .conversation-container > .header>.title {
 
-  color: #333;
+  color: #fff;
 
 }
 .close-button{
   background-color:#333;
 }
 .message>.client{
-  background-color: #5DADE2;
+  background-color: #f50;
   color: white;
 }
 .message > .response {
@@ -54,6 +54,11 @@ text-align: center;
 
 }
 .widget-container>.launcher{
-  background-color: #5DADE2;
+  background-color: #f50;
 }
 /*for TimeLineCard*/
+.StepLine{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}

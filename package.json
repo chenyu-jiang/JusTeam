@@ -5,13 +5,18 @@
   "dependencies": {
     "ajv": "^6.2.1",
     "antd": "^3.2.3",
+    "lodash": "^4.17.5",
     "prop-type": "0.0.1",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
+    "react-chat-widget": "^2.1.2",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
+    "socket.io": "^2.0.4",
     "validator": "^9.4.1"
   },
   "scripts": {
@@ -19,5 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "theme": {
+    "primary-color": "#e57a00"
   }
 }

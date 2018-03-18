@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
 import  {Link,Route,Redirect} from 'react-router-dom'
 import{Button} from 'antd'
-
+import './HomePage.css'
 import MyTeamsPage from "../sections/MyTeamsPage";
 import Discover from '../sections/Discover'
 import Teaming from '../sections/Teaming'
-
+import LogDepButton from '../modules/LogDepButton'
 
 
 class Dashboard extends Component {
@@ -16,9 +16,7 @@ class Dashboard extends Component {
                 <div>
             <span>
                 <Link to='/home/dash/myTeams'>
-            <Button size="large">
-            myTeams
-        </Button>
+            <LogDepButton text="My Teams" />
                 </Link>
             </span>
                     <span>

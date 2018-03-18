@@ -1,32 +1,15 @@
 import  React,{Component} from 'react'
 import  {Link,Route,Redirect} from 'react-router-dom'
-import {Button,Dropdown,Menu,Icon} from 'antd'
-import logo from '../../logo.svg'
+import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix} from 'antd'
+import './HomePage.css'
 import 'antd/dist/antd.css'
 import NotiPage from "./NotiPage";
 import AccountInfoPage from "./AccountInfoPage";
+import TopBarIcon from '../modules/topBarIcon'
 import Dashboard from './Dashboard'
 
-const menu = (
-    <Menu>
-        <Menu.Item>
-            <Link to='/home/accountInfo'>Account Information</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/home/notification'>Notifications</Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/home/dash/myTeams'>
-                My Teams
-            </Link>
-        </Menu.Item>
-        <Menu.Item>
-            <Link to='/home'>
-                Logout
-            </Link>
-        </Menu.Item>
-    </Menu>
-);
+const {Footer}= Layout;
+
 
 
 class HomePage extends Component{
@@ -34,40 +17,56 @@ class HomePage extends Component{
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
     <div className="HomePage">
-    <div style={{background:'#5DADE2',padding:'10px 10px 10px'}}>
+    <Affix><div style={{background:'#f50'}}>
+        <Col span={20}>
         <Link to='/home/dash'>
-            <Button size="large" shape="circle" >
+            <Button size={30} shape="circle" >
             Logo
         </Button>
         </Link>
-
-        top bar with
-        loginButton
-
-           <Link to='/login' >
-               <Button type="primary" className="LoginButton">
-                   Login
-               </Button>
-           </Link>
-        , after login:
-        <Dropdown overlay={menu}>
-            <Link to='/home/accountInfo' >
-            <Button shape="circle" gost>
-
-             <img src={logo} alt='UserLogo' height="30" width="30"/>
-            </Button>
-            </Link>
-
-        </Dropdown>
-
-    </div>
+        </Col>
 
 
-        <div style={{ background: 'rgb(190, 200, 200)', padding: '26px 16px 16px' }}>
+
+    <span>
+
+        <TopBarIcon/>
+    </span>
+    </div></Affix>
+
+
+        <div style={{ background: '#fff', padding: '26px 0px 0px' }}>
             <Route path='/home/accountInfo'  component={AccountInfoPage} />
             <Route path='/home/dash'  component={Dashboard} />
             <Route path='/home/notification'  component={NotiPage} />
         </div>
+
+        <div>
+            <Layout>
+                <Footer style={{ background:'#222', color:'#fff',textAlign: 'center' ,  width:'100%'}}>
+                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+                        <div class="GroupMember" style={{textAlign:"center", padding:"5%", size:"20px", color:"#DDD"}}>
+                            <div>JIANG Chenyu</div>
+                            <div>DENG Shiyuan</div>
+                            <div>WANG Yuxuan</div>
+                            <div>XU Lu</div>
+                            <div>ZHANG Yuechen</div>
+                        </div>
+                    </Col>
+                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+
+                    </Col>
+                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+
+                    </Col>
+                    <Row>
+                        <div><br/>CSCI3100 Group23 Justeam <p/>
+                        </div>
+                    </Row>
+                </Footer>
+            </Layout>
+        </div>
+
 
     </div>
 );

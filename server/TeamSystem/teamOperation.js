@@ -53,7 +53,7 @@ module.exports = {
         teamUpdating.launchTime = rows[0].launchTime;
         teamUpdating.eventList = rows[0].eventList;
         teamUpdating.memberList = rows[0].memberList;
-        dbTeam.updateTeamInfo(jsonIn,(err,result)=>{
+        dbTeam.updateTeamInfo(teamUpdating,(err,result)=>{
           if(err){
             callback(err,null);
           }
@@ -83,7 +83,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(error) {
+          if(err) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -94,7 +94,6 @@ module.exports = {
           }
         });
       });
-
       switchTeam.memberList.num = switchTeam.memberList.IDList.push(jsonIn.userID);
       switchTeam.memberList.right.push(1);
 
@@ -115,7 +114,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(error) {
+          if(err) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -166,7 +165,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(error) {
+          if(err) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -207,7 +206,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(error) {
+          if(err) {
             var newErr = new Error('[addEvent0 err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -238,7 +237,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(error) {
+          if(err) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -256,7 +255,7 @@ module.exports = {
       }
       else{
         for(var i = 0; i < switchTeam.eventList.num; i++){
-          if(switchTeam.eventList.IDList[i] == jsonIn.userID){
+          if(switchTeam.eventList.IDList[i] == jsonIn.eventID){
             switchTeam.eventList.IDList.splice(i,1);
             switchTeam.eventList.num = switchTeam.eventList.IDList.length;
             break;

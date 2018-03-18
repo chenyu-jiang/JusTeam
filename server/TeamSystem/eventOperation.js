@@ -90,6 +90,7 @@ module.exports = {
           }
         });
       });
+      console.log(eventAttaching);
       //eventAttaching.postList = JSON.parse(eventAttaching.postList);
       eventAttaching.postList.num = eventAttaching.postList.IDList.push(jsonIn.postID);
       dbEvent.updateEventInfo(eventAttaching,(err,result)=>{

@@ -1,6 +1,4 @@
 # JusTeam
-Development of future software engineers.
-
 ## Client-Server Interfaces
 
 * /api

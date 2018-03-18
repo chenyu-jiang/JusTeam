@@ -1,0 +1,64 @@
+.infospan {
+  padding: 5px 30%;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+}
+.secondspan {
+  padding: 5px 30% ;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+}
+.infoList {
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top:  30px;
+  color: #fff;
+
+  font-size: 30px;
+}
+.centerbutton {
+text-align: center;
+  font-size: 18px;
+}
+.spacebetween{
+  font-size: 72px;
+}
+/*for CommunicationPage*/
+.editInfo{
+  text-align:right;
+}
+.conversation-container > .header {
+
+  background-color:#f50;
+
+}
+.conversation-container > .header>.title {
+
+  color: #fff;
+
+}
+.close-button{
+  background-color:#333;
+}
+.message>.client{
+  background-color: #f50;
+  color: white;
+}
+.message > .response {
+
+  background-color: black;
+
+  color: white;
+
+}
+.widget-container>.launcher{
+  background-color: #f50;
+}
+/*for TimeLineCard*/
+.StepLine{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}

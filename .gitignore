@@ -5,3 +5,10 @@
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+#node modules
+node_modules/
+
+#customer files and debug
+upload/
+main.js

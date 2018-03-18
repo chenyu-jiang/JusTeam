@@ -1,0 +1,34 @@
+.aspan .ant-row > div {
+  background: transparent;
+  border: 0;
+}
+.aspan {
+  background: #333;
+  height: 350px;
+  padding: 5px 0;
+  color: #fff;
+  text-align: center;
+  font-style: italic;
+  font-size: 24px;
+}
+{
+  color: #fff;
+}
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 600px;
+  line-height: 600px;
+  background: #ffda7e;
+  overflow: hidden;
+  font-size: 100px;
+}
+.Layout{
+  font-size: 30px;
+}
+.FooterCol1 h3{
+  color:#ffda7e;
+  font-size: 30px;
+}
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}

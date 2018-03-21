@@ -44,8 +44,8 @@ class HomePage extends Component{
         <div>
             <Layout>
                 <Footer style={{ background:'#222', color:'#fff',textAlign: 'center' ,  width:'100%'}}>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
-                        <div class="GroupMember" style={{textAlign:"center", padding:"5%", size:"20px", color:"#DDD"}}>
+                    <Col className="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+                        <div className="GroupMember" style={{textAlign:"center", padding:"5%", size:"20px", color:"#DDD"}}>
                             <div>JIANG Chenyu</div>
                             <div>DENG Shiyuan</div>
                             <div>WANG Yuxuan</div>
@@ -53,10 +53,10 @@ class HomePage extends Component{
                             <div>ZHANG Yuechen</div>
                         </div>
                     </Col>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+                    <Col className="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
 
                     </Col>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+                    <Col className="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
 
                     </Col>
                     <Row>

@@ -44,7 +44,7 @@ class RegistrationForm extends Component {
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 3 },
             },
             wrapperCol: {
                 xs: { span: 24 },
@@ -55,7 +55,7 @@ class RegistrationForm extends Component {
             wrapperCol: {
                 xs: {
                     span: 24,
-                    offset: 0,
+                    offset: 5,
                 },
                 sm: {
                     span: 16,

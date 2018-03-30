@@ -197,42 +197,60 @@
 
 * api/search
 
-  This is the entry for search function.
+  * api/search/team
 
-  **Requirements:**None.
+    This is the entry for team search function.
 
-  **Method:** GET
+    **Requirements:**None.
 
-  **Parameters:**
+    **Method:** GET
 
-  1. query : a string of keywords.
-  2. offset: the offset number of results, default is 0.
-  3. limit: the maximum number of items returned, default is 20.
+    **Parameters:**
 
-  **Response:**
+    1. query : a string of keywords.
+    2. offset: the offset number of results, default is 0.
+    3. limit: the maximum number of items returned, default is 20.
 
-  ```json
-  {
-      result: [
-          {
-              type: "team",
-              content: {
+    **Response:**
+
+      ```json
+      {
+          results: 
+          [
+              id: 1234,
+              content: {"A team Object": "Please see team documentation"}
+          ]
+      }
+      ```
+
+  * api/search/post
+
+    This is the entry for post search function.
+
+    **Requirements:**None.
+
+    **Method:** GET
+
+    **Parameters:**
+
+    1. query : a string of keywords.
+    2. offset: the offset number of results, default is 0.
+    3. limit: the maximum number of items returned, default is 20.
+
+    **Response:**
+
+      ```json
+      {
+          results: 
+          [
+              {
                   id: 1234,
-  				title: "Team Title",
-                  description: "Team description"
+                  content: {
+                    postTitle: "Team Title",
+                    tags: ["tag1","tag2"],
+                  	content: "postContent"                 
+                  }
               }
-          },
-          {
-              type: "post",
-              content: {
-                  id: 12345,
-                  title: "Post title",
-                  tags: ["tag1","tag2"],
-                  content: "Post content"
-              }
-          }
-      ]
-  }
-  ```
-
-  ​
+          ]
+      }
+      ```

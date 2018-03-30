@@ -3,39 +3,42 @@ var client = new elasticsearch.Client({
     host: 'localhost:9200'
 });
 
-var indexName = "justeam";
+var teamIndexName = "team";
 var teamTypeName = "team";
 var teamQueryFields = [];
+var postIndexName = "post";
 var postTypeName = "post";
 var postQueryFields = ["postTitle^3","content","tags^2"];
+var teamQueryFields = ["teamTitle^3", "introduction", "category^2"];
 
-function search(searchString, offset, limit) {
+function search(searchString, offset, limit, indexName, typeName, queryFields) {
     return new Promise(async (resolve, reject)=>{
-        var searchResult = [];
-        client.msearch({
-            body:[
-                {index:indexName, type:postTypeName},
-                {
-                    from: offset,
-                    size: limit,
-                    query: {
-                        multi_match: {
-                            query : searchString,
-                            fields : postQueryFields
-                        }
+        var searchResult = {
+            results: []
+        };
+        client.search({
+            index:indexName,
+            type:typeName,
+            from: offset,
+            size: limit,
+            body:{
+                query: {
+                    multi_match: {
+                        query : searchString,
+                        fields : queryFields
                     }
                 }
-            ]
+            }
         }, (err, response)=> {
             if(err) reject(err);
             else {
-                hitList = response["responses"][0]["hits"]["hits"];
+                hitList = response["hits"]["hits"];
                 for(var i=0;i<hitList.length;i++) {
                     var item = {
                         id : hitList[i]['_id'],
                         content : hitList[i]["_source"]
                     }
-                    searchResult.push(item);
+                    searchResult.results.push(item);
                 }
                 resolve(searchResult);
             }
@@ -43,6 +46,15 @@ function search(searchString, offset, limit) {
     });
 }
 
+function searchPost(searchString, offset, limit) {
+    return search(searchString,offset,limit,postIndexName,postTypeName,postQueryFields);
+}
+
+function searchTeam(searchString, offset, limit) {
+    return search(searchString,offset,limit,teamIndexName,teamTypeName,teamQueryFields);
+}
+
 module.exports = {
-    search: search
+    searchPost: searchPost,
+    searchTeam: searchTeam
 }

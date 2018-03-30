@@ -3,7 +3,7 @@ var notiInterface = require("../../NotificationSystem/RouterInterface")
 
 router.get("/content", async (req, res, next) => {
     //TODO: implement getUserID;
-    var userID = getUserID();
+    //var userID = req.user;
     var response = await notiInterface.getNewNotification(userID);
     res.send(response);
 });

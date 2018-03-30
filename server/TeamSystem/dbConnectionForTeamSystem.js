@@ -1,14 +1,14 @@
 const mysql = module.require("mysql");
 const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
-const dbPassword = '123456';                // plain text password? Really?
+const dbPassword = 'JusTeam3100Project!';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
 const dbName = 'teamsystem';
-const teamInsertSQL = 'INSERT INTO test_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
-const teamUpdateSQL = 'UPDATE test_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ?, `status` = ? WHERE `teamID` = ?';
-const teamQuerySQL = 'SELECT * FROM test_team';
-const teamQueryByID = 'SELECT * FROM test_team WHERE teamID = ?';
-const teamDeleteSQL = 'DELETE FROM test_team WHERE teamID = ?';
+const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
+const teamUpdateSQL = 'UPDATE formal_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ?, `status` = ? WHERE `teamID` = ?';
+const teamQuerySQL = 'SELECT * FROM formal_team';
+const teamQueryByID = 'SELECT * FROM formal_team WHERE teamID = ?';
+const teamDeleteSQL = 'DELETE FROM formal_team WHERE teamID = ?';
 
 var teamSystemPool = undefined;
 

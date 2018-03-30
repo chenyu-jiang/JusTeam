@@ -3,13 +3,14 @@ var client = new elasticsearch.Client({
     host: 'localhost:9200',
 });
 
-var indexName = "justeam";
+var teamIndexName = "team";
+var postIndexName = "post";
 var teamTypeName = "team";
 var postTypeName = "post";
 
 async function createPostItem(postId, postTitle, tags, content) {
     client.create({
-        index: indexName,
+        index: postIndexName,
         type: postTypeName,
         id: postId,
         body: {
@@ -22,7 +23,7 @@ async function createPostItem(postId, postTitle, tags, content) {
 
 async function updatePostItem(postId, postTitle, tags, content) {
     await client.delete({
-        index: indexName,
+        index: postIndexName,
         type: postTypeName,
         id: postId,
     });

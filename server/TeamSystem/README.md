@@ -8,106 +8,106 @@ TeamSystem
 
 # modules:
 
-  *teamOperation*
+*teamOperation*
 
-    * introduction : this part do the related work to team
+* introduction : this part do the related work to team
 
-    * definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
-                        for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
+* definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
+                    for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
 
-    * functions:
+* functions:
 
-      **createTeam**
+  **createTeam**
 
-        1. Parameters: Jason : {'introduction' : string, 'teamTitle' : string, 'maxMember' : integer , 'category' : string, 'status' : string , 'reminder' : string}
+      1. Parameters: Jason : {'introduction' : string, 'teamTitle' : string, 'maxMember' : integer , 'category' : string, 'status' : string , 'reminder' : string}
 
-        2. Output: (err, result) result be the insertID of the new Team.
+    2. Output: (err, result) result be the insertID of the new Team.
 
-      **deleteTeam**
+  **deleteTeam**
 
-        1. Parameters: teamID : integer
+    1. Parameters: teamID : integer
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **editTeam**
+  **editTeam**
 
-        1. Parameters: {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : string, 'reminder' : string}
+    1. Parameters: {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : string, 'reminder' : string}
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **askTeam**
+  **askTeam**
 
-        1. Parameters: teamID : integer
+    1. Parameters: teamID : integer
 
-        2. Output: (err, teamObject, fields)
+    2. Output: (err, teamObject, fields)
 
-      **addMember**
+  **addMember**
 
-        1. Parameters: Jason : {teamID: integer, userID: integer}
+    1. Parameters: Jason : {teamID: integer, userID: integer}
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **deleteMember**
+  **deleteMember**
 
-        1. Parameters: Jason : {teamID: integer, userID: integer}
+    1. Parameters: Jason : {teamID: integer, userID: integer}
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **editAuthority**
+  **editAuthority**
 
-        1. Parameters: Jason : {teamID: integer, userID: integer, newRight : integer}
+    1. Parameters: Jason : {teamID: integer, userID: integer, newRight : integer}
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **teamAttachEvent**
+  **teamAttachEvent**
 
-        1. Parameters : Jason : {teamID : integer, eventID: integer}
+    1. Parameters : Jason : {teamID : integer, eventID: integer}
 
-        2. Output: (err, result)
+    2. Output: (err, result)
 
-      **teamDeleteEvent**
+  **teamDeleteEvent**
 
-        1. Parameters : Jason : {teamID : integer, eventID: integer}
+    1. Parameters : Jason : {teamID : integer, eventID: integer}
 
-        2. Output : (err, result)
+    2. Output : (err, result)
 
-    *eventOperation*
+*eventOperation*
 
-    * introduction : this part do the related work to event
+* introduction : this part do the related work to event
 
 
-      **createEvent**
+  **createEvent**
 
-        1. Parameters : Jason : {'startTime' = string (data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
+    1. Parameters : Jason : {'startTime' = string (data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
+    
+    2. Output : insertID : integer
 
-        2. Output : insertID : integer
+  **deleteEvent**
 
-      **deleteEvent**
+    1. Parameters : eventID : integer
+    
+    2. Output : insertID : integer
 
-        1. Parameters : eventID : integer
+  **editEvent**
 
-        2. Output : insertID : integer
+    1. Parameters : Jason : {'eventID' = integer,'startTime' = string(data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
+    
+    2. Output : (err, result)
 
-      **editEvent**
+  **askEvent**
 
-        1. Parameters : Jason : {'eventID' = integer,'startTime' = string(data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
+    1. Parameters : eventID : integer
+    
+    2. Output : (err, eventObject, fields)
 
-        2. Output : (err, result)
+  **postAttachEvent**
 
-      **askEvent**
+    1. Parameters : {'eventID': integer, 'postID': integer}
+    
+    2. Output : (err, result)
 
-        1. Parameters : eventID : integer
+  **postDeleteEvent**
 
-        2. Output : (err, eventObject, fields)
-
-      **postAttachEvent**
-
-        1. Parameters : {'eventID': integer, 'postID': integer}
-
-        2. Output : (err, result)
-
-      **postDeleteEvent**
-
-        1. Parameters : {'eventID': integer, 'postID': integer}
-
-        2. Output : (err, result)
+    1. Parameters : {'eventID': integer, 'postID': integer}
+    
+    2. Output : (err, result)

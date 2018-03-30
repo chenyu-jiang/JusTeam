@@ -4,7 +4,7 @@ var client = new elasticsearch.Client({
     log:'trace'
 });
 
-var indexName = "justeam";
+var indexName = "team";
 var teamTypeName = "team";
 var postTypeName = "post";
 

@@ -1,11 +1,27 @@
 import React,{Component} from'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message} from 'antd';
+import {logIn, signUpSubmit} from '../../services/accountService'
+import {connect} from 'react-redux'
+import {Redirect}  from'react-router-dom'
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+const mapStateToProps=state=>{
+    return{
+        userID: state.userID,
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+        logInDispatch: userID=>{
+            dispatch(logIn(userID));
+        },
 
+    }
+}
 class RegistrationForm extends Component {
     state = {
+
         confirmDirty: false,
         autoCompleteResult: [],
     };
@@ -13,7 +29,24 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+               const formval={
+                   userID:values.userID,
+                   password:values.password,
+                   nickname:values.nickname,
+                   phone:values.phone ?(values.prefix+values.phone):undefined,
+                   institution:values.institution,
+                   major:values.major,
+               }
+                const hide=message.loading('Processing...',0);
+                signUpSubmit(formval)
+                    .then(response=>{
+                        console.log('response received: '+JSON.stringify(response));
+                        this.props.logInDispatch(values.userID);
+                        hide();
+
+                    });
+                console.log('Received values of form: ', JSON.stringify(formval));
+
             }
         });
     }
@@ -73,7 +106,7 @@ class RegistrationForm extends Component {
         );
 
 
-
+        if(this.props.userID) return(<Redirect to='/' />)
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
@@ -173,5 +206,5 @@ class RegistrationForm extends Component {
     }
 }
 
-const SignUpForm = Form.create()(RegistrationForm);
+const SignUpForm =connect(mapStateToProps,mapDispatchToProps)( Form.create()(RegistrationForm));
 export default  SignUpForm;

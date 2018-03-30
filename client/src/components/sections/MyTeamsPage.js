@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'
 import '../pages/HomePage.css'
 import CommunicationPage from '../forms/CommunicationPage'
 import OneTeamPage from '../forms/OneTeamPage'
+import JoinRequest from '../forms/JoinForm'
 const TabPane = Tabs.TabPane;
 
 
@@ -78,6 +79,7 @@ const MyTeamsPage=()=>
             <CommunicationPage/>
             <br/>
             <OneTeamPage/>
+            <JoinRequest/>
         </div>
 
     );

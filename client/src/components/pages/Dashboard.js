@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import  {Link,Route,Redirect} from 'react-router-dom'
-import{Button} from 'antd'
+import{Button,Col,Row,Divider} from 'antd'
 import './HomePage.css'
 import MyTeamsPage from "../sections/MyTeamsPage";
 import Discover from '../sections/Discover'
@@ -13,27 +13,31 @@ class Dashboard extends Component {
         if(this.props.location.pathname==='/home/dash') return<Redirect to='/home/dash/teaming'/>;
         return (
             <div>
-                <div>
-            <span>
+                <div style={{marginBottom:'20px'}}>
+                <Row type="flex" justify="space-around" >
+              <Col>
                 <Link to='/home/dash/myTeams'>
-            <LogDepButton text="My Teams" />
+            <LogDepButton text="My Teams" className="hoverbot"/>
                 </Link>
-            </span>
-                    <span>
+            </Col>
+            <Col >
                 <Link to='/home/dash/teaming'>
-            <Button size="large">
+            <Button type="ghost" className="hoverbot">
             Teaming
         </Button>
                 </Link>
-            </span>
-                    <span>
+            </Col>
+            <Col>
                 <Link to='/home/dash/discover'>
-            <Button size="large">
+            <Button type="ghost" className="hoverbot">
             Discover
         </Button>
-                </Link>
-            </span>
+          </Link>
+            </Col>
+            </Row>
+
                 </div>
+                  <hr className= "line" />
                 <div>
                     <Route path='/home/dash/myTeams' component={MyTeamsPage}/>
                     <Route path='/home/dash/teaming' component={Teaming}/>

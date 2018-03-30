@@ -110,8 +110,7 @@ router.post("/pictures", uploadPic.single('image'), (req, res, next)=>{
     var resContent = {
         path: req.file.path
     };
-    res.write(JSON.stringify(resContent));
-    res.end();
+    res.send(resContent);
 });
 
 router.post("/articles", uploadText.single('article'), async (req, res, next)=>{
@@ -137,8 +136,7 @@ router.post("/articles", uploadText.single('article'), async (req, res, next)=>{
         console.log(err);
         resContent.status = false;
     }
-    res.write(JSON.stringify(resContent));
-    res.end();
+    res.send(resContent);
 });
 
 //NOTE: Not supported in early stage

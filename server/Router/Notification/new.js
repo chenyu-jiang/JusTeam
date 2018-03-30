@@ -5,16 +5,14 @@ router.get("/content", async (req, res, next) => {
     //TODO: implement getUserID;
     var userID = getUserID();
     var response = await notiInterface.getNewNotification(userID);
-    res.write(JSON.stringify(response));
-    res.end();
+    res.send(response);
 });
 
 router.get("/number", async(req,res,next)=> {
     //TODO: implement getUserID;
     var userID = getUserID();
     var response = await notiInterface.getNumberOfNewNotification(userID);
-    res.write(JSON.stringify(response));
-    res.end();
+    res.send(response);
 });
 
 module.exports = router;

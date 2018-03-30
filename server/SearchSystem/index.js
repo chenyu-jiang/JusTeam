@@ -43,9 +43,6 @@ function search(searchString, offset, limit) {
     });
 }
 
-async function test() {
-    var items = await search("Travel plan");
-    console.log(items);
+module.exports = {
+    search: search
 }
-
-test();

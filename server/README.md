@@ -1,188 +1,238 @@
 # JusTeam
 ## Client-Server Interfaces
 
-* /api
-    * /api/posts
-        * api/posts/upload
-          * api/posts/upload/pictures
+## /api
 
-              Post pictures to this url.
+### /api/posts
 
-              **Requirements**: One file at a time.
+* api/posts/upload
+  * api/posts/upload/pictures
 
-              **Method**: POST
+      Post pictures to this url.
 
-              **Fields**:
+      **Requirements**: One file at a time.
 
-              1. *image* : image file
+      **Method**: POST
 
-              **Response**:
+      **Fields**:
 
-              ```json
-              {"path" :"RELATIVE_PATH/TO/FILE.png"}
-              ```
+      1. *image* : image file
 
-          * api/posts/upload/articles
+      **Response**:
 
-            Post text content to this url.
+      ```json
+      {"path" :"RELATIVE_PATH/TO/FILE.png"}
+      ```
 
-            **Requirements**: One file at a time.
+  * api/posts/upload/articles
 
-            **Method**: POST
+    Post text content to this url.
 
-            **Fields**:
+    **Requirements**: One file at a time.
 
-            1. *article*: article content
-            2. *isNew*: new post or draft
-            3. *postID*: if not new post, the old postID must be submitted
+    **Method**: POST
 
-            **Response**:
-            ```json
-            {
-                "status": true,
-                "postID": 12345
-            }
-            ```
+    **Fields**:
 
-        * api/posts/set-stat
+    1. *article*: article content
+    2. *isNew*: new post or draft
+    3. *postID*: if not new post, the old postID must be submitted
 
-          Set the status of the post (Draft/Final).
+    **Response**:
+    ```json
+    {
+        "status": true,
+        "postID": 12345
+    }
+    ```
 
-          **Requirements**: None.
+* api/posts/set-stat
 
-          **Method**: GET
+  Set the status of the post (Draft/Final).
 
-          **Parameters**:
+  **Requirements**: None.
 
-          1. postID: id of the post that needs changing status
+  **Method**: GET
 
-          **Response**:
-          ```json
-          {"status": true}
-          ```
+  **Parameters**:
 
-        * api/posts/attach_activity
+  1. postID: id of the post that needs changing status
 
-          Attach a post to an activity.
+  **Response**:
+  ```json
+  {"status": true}
+  ```
 
-          **Requirements**: TBA.
+* api/posts/attach_activity
 
-          **Method**: GET
+  Attach a post to an activity.
 
-          **Parameters**:
+  **Requirements**: TBA.
 
-          1. postID: id of the post
-          2. activityID: id of the activity
+  **Method**: GET
 
-          **Response**:
-          ```json
-          {"status": true}
-          ```
+  **Parameters**:
 
-    * api/team
+  1. postID: id of the post
+  2. activityID: id of the activity
 
-        * api/team/createTeam  
+  **Response**:
+  ```json
+  {"status": true}
+  ```
 
-          **Requirements**: None.
+###api/team
 
-          **Method** : POST
+* api/team/createTeam  
 
-          **Parameters**:
-            1. userID : integer
-            2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
+  **Requirements**: None.
 
-          **Response**: {state: 'success'/'fail', insertID: integer}
+  **Method** : POST
 
-        * api/team/teamInfo
+  **Parameters**:
+    1. userID : integer
+    2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
 
-            * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
+  **Response**: {state: 'success'/'fail', insertID: integer}
 
-              get team information for recommend usage
+* api/team/teamInfo
 
-              **Requirements**: None.
+    * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
 
-              **Method** : GET
+      get team information for recommend usage
 
-              **Parameters**: None
+      **Requirements**: None.
 
-              **Response**:
+      **Method** : GET
 
-            * api/team/teamInfo/getUserTeams
+      **Parameters**: None
 
-              **Requirements**: None.
+      **Response**:
 
-              **Method** : GET
+    * api/team/teamInfo/getUserTeams
 
-              **Parameters**:
-                1. userID : integer
+      **Requirements**: None.
 
-              **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
+      **Method** : GET
 
-            * api/team/teamInfo/viewOneTeam
+      **Parameters**:
+        1. userID : integer
 
-              **Requirements**: None.
+      **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
 
-              **Method** : GET
+    * api/team/teamInfo/viewOneTeam
 
-              **Parameters**:
-                  1. teamID : integer;
+      **Requirements**: None.
 
-              **Response**: {state : 'success'/'fail', team : teamObject}
+      **Method** : GET
 
-    * api/accounts
+      **Parameters**:
+          1. teamID : integer;
 
-    * api/notifications
+      **Response**: {state : 'success'/'fail', team : teamObject}
 
-        * api/notifications/new/content
+### api/accounts
 
-          Get new notifications of a user.
 
-          **Requirements**: None.
 
-          **Method** : GET
+### api/notifications
 
-          **Parameters**: None
+* api/notifications/new/content
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+  Get new notifications of a user.
 
-        * api/notifications/new/number
+  **Requirements**: None.
 
-          Get number of new notifications of a user.
+  **Method** : GET
 
-          **Requirements**: None.
+  **Parameters**: None
 
-          **Method** : GET
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
 
-          **Parameters**: None
+* api/notifications/new/number
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+  Get number of new notifications of a user.
 
-        * api/notifications/history
+  **Requirements**: None.
 
-          Get notification history of a user.
+  **Method** : GET
 
-          **Requirements**: None.
+  **Parameters**: None
 
-          **Method** : GET
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
 
-          **Parameters**:
+* api/notifications/history
 
-          1. start: starting from
-          3. end: end with
+  Get notification history of a user.
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+  **Requirements**: None.
 
-        * api/notifications/delete
+  **Method** : GET
 
-          Delete a notification history of a user.
+  **Parameters**:
 
-          **Requirements**: None.
+  1. start: starting from
+  3. end: end with
 
-          **Method** : DELETE
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
 
-          **Parameters**:
+* api/notifications/delete
 
-          1. messageID
-          2. messageType
+  Delete a notification history of a user.
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+  **Requirements**: None.
+
+  **Method** : DELETE
+
+  **Parameters**:
+
+  1. messageID
+  2. messageType
+
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+
+
+### api/search
+
+* api/search
+
+  This is the entry for search function.
+
+  **Requirements:**None.
+
+  **Method:** GET
+
+  **Parameters:**
+
+  1. query : a string of keywords.
+  2. offset: the offset number of results, default is 0.
+  3. limit: the maximum number of items returned, default is 20.
+
+  **Response:**
+
+  ```json
+  {
+      result: [
+          {
+              type: "team",
+              content: {
+                  id: 1234,
+  				title: "Team Title",
+                  description: "Team description"
+              }
+          },
+          {
+              type: "post",
+              content: {
+                  id: 12345,
+                  title: "Post title",
+                  tags: ["tag1","tag2"],
+                  content: "Post content"
+              }
+          }
+      ]
+  }
+  ```
+
+  ​

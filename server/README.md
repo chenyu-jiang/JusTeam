@@ -12,7 +12,7 @@
 
               **Method**: POST
 
-              **Fields**: 
+              **Fields**:
 
               1. *image* : image file
 
@@ -30,10 +30,10 @@
 
             **Method**: POST
 
-            **Fields**: 
+            **Fields**:
 
-            1. *article*: article content 
-            2. *isNew*: new post or draft 
+            1. *article*: article content
+            2. *isNew*: new post or draft
             3. *postID*: if not new post, the old postID must be submitted
 
             **Response**:
@@ -79,7 +79,55 @@
           {"status": true}
           ```
 
-    * api/teams
+    * api/team
+
+        * api/team/createTeam  
+
+          **Requirements**: None.
+
+          **Method** : POST
+
+          **Parameters**:
+            1. userID : integer
+            2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
+
+          **Response**: {state: 'success'/'fail', insertID: integer}
+
+        * api/team/teamInfo
+
+            * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
+
+              get team information for recommend usage
+
+              **Requirements**: None.
+
+              **Method** : GET
+
+              **Parameters**: None
+
+              **Response**:
+
+            * api/team/teamInfo/getUserTeams
+
+              **Requirements**: None.
+
+              **Method** : GET
+
+              **Parameters**:
+                1. userID : integer
+
+              **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
+
+            * api/team/teamInfo/viewOneTeam
+
+              **Requirements**: None.
+
+              **Method** : GET
+
+              **Parameters**:
+                  1. teamID : integer;
+
+              **Response**: {state : 'success'/'fail', team : teamObject}
 
     * api/accounts
 
@@ -117,7 +165,7 @@
 
           **Method** : GET
 
-          **Parameters**: 
+          **Parameters**:
 
           1. start: starting from
           3. end: end with
@@ -132,10 +180,9 @@
 
           **Method** : DELETE
 
-          **Parameters**: 
+          **Parameters**:
 
           1. messageID
           2. messageType
 
           **Response**: See [NotificationSystem](./NotificationSystem/README.md)
-

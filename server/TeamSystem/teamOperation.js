@@ -1,6 +1,7 @@
 const dbTeam = require('./dbConnectionForTeamSystem');
 const Team = require('./Team');
 
+//status: recruiting, fighting, finished
 //create input interface: {'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
 //edit input interface: {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
 //add member input interface : {teamID: integer, userID: integer}
@@ -10,7 +11,7 @@ const Team = require('./Team');
 
 
 module.exports = {
-  creatTeam : function createTeam(jsonIn,callback){
+  createTeam : function createTeam(jsonIn,callback){
     var newTeamID = undefined;
     var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder);
     async function insertNow(){

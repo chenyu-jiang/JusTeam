@@ -1,6 +1,6 @@
 var router = require("express").Router();
 var newNotis = require("./new");
-var notiInterface = require("../../NotificationSystem/")
+var notiInterface = require("../../NotificationSystem/RouterInterface")
 
 router.use("/new", newNotis);
 

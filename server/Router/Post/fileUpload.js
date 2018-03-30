@@ -1,3 +1,6 @@
+var fs = require("fs");
+var path = require("path");
+
 //fileUpload middleware
 const picMimetypes = {
     "image/bmp": true,
@@ -17,7 +20,7 @@ var uuidv4 = require("uuid/v4");
 var router = require("express").Router();
 var multer = require("multer");
 var postRecord = require("../../ExperienceSystem/postRecord");
-var accountSystem = require("");
+// var accountSystem = require("");
 
 //Upload Specifications
 var textStorage = multer.diskStorage({
@@ -113,20 +116,25 @@ router.post("/pictures", uploadPic.single('image'), (req, res, next)=>{
 
 router.post("/articles", uploadText.single('article'), async (req, res, next)=>{
     //TODO: implement getUser
-    var user = getUser();
+    //var user = getUser();
+    //dev:
+    user = 12345;
     var resContent = {
         status: true
     };
     //save record in database
     try{
         var postID = undefined;
-        postID = await postRecord.saveRecord(user, req.file.path, req.body.isNew, req.body.postID);
-        //add the record to account
-
-        //TODO: incorporate with account system
-        if(req.body.isNew) await accountSystem.addPost(user, postID);
+        var content = {
+            "user" : user,
+            "path" : path.resolve("./")+'/'+req.file.path,
+            "postTitle" : req.body.postTitle,
+            "tags" : req.body.tags,
+        }
+        postID = await postRecord.saveRecord(content, req.body.isNew, req.body.postID);
     }
     catch(err) {
+        console.log(err);
         resContent.status = false;
     }
     res.write(JSON.stringify(resContent));

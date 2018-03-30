@@ -11,7 +11,7 @@ app.get("/pic", function(req,res) {
 });
 
 app.get("/art", function(req,res) {
-    res.write('<html><body><form action="api/posts/upload/articles" method="post"enctype="multipart/form-data"><label for="file">Filename:</label><input type="file" name="article"><br><input type="submit" name="submit" value="Submit"></form></body></html>');
+    res.write('<html><body><form action="api/posts/upload/articles" method="post"enctype="multipart/form-data"><label for="file">Filename:</label><input type="file" name="article"><br>  tags: <input type="text" name="tags"><br> PostTitle: <input type="text" name="postTitle"><br><input type="text" name = "isNew"><br><input type="submit" name="submit" value="Submit"></form></body></html>');
     res.end();
 });
 

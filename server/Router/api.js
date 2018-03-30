@@ -4,6 +4,6 @@ var notification = require("./Notification/notification");
 
 //all routers under /api will be processed here
 router.use("/posts/upload",postFileUpload);
-router.user("/notifications/", notification);
+router.use("/notifications/", notification);
 
 module.exports = router;

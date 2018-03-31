@@ -1,5 +1,5 @@
 
-var {_domain,_log_in,_sign_up}=require( './Urlparams');
+var {_domain,_log_in,_sign_up,_upload_image}=require( './Urlparams');
 
 const logIn=(userID)=>{
     console.log('calling action creator:',userID);
@@ -89,6 +89,29 @@ const receiveTeam=(teamID,json)=>{
         receivedAt: Date.now()
     });}
 
+
+ const uploadImage=(file)=>{
+    const data=new FormData();
+    console.log("loading image! ");
+     return (
+         fetch(_domain+_upload_image,
+             {
+                 method:'POST',
+                 headers:{
+                     Accept:'application/json',
+                     'Content-Type':'multipart/form-data'
+                 },
+                 body: data.append('image',file),
+             }
+         )
+             .then((response)=>response.json())
+             .catch((error)=>{
+                 console.log('Error occurred'+JSON.stringify(error));
+                 return({error: error});
+             })
+     );
+ }
+
 module.exports={
     logIn:logIn,
     logOut:logOut,
@@ -97,6 +120,7 @@ module.exports={
     logInAuth:logInAuth,
     fetchActInfo:fetchActInfo,
     signUpSubmit:signUpSubmit,
+    uploadImage:uploadImage,
 };
 
 

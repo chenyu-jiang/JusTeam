@@ -3,7 +3,9 @@ import  {Link,Route,Redirect} from 'react-router-dom'
 import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix,Timeline,Steps,Tag,Divider} from 'antd'
 import 'antd/dist/antd.css'
 import '../pages/AccountInfoPage.css'
-
+import PostEditor from '../sections/PostEditor'
+import PostContentViewer from '../modules/PostContentViewer'
+const { Header, Content, Sider } = Layout;
 
 const TimeLine=[{Time:'2018.2.19', DoItem:'Do something1', Description:'I am so bad guy', Status:'finish',},
     {Time:'2018.2.19', DoItem:'Do something2', Description:'I am so bad guy', Status:'process',},
@@ -61,6 +63,14 @@ class OneTeamPage extends Component{
                         </Col>
                     </Card>
                 </div>
+                <Layout style={{ padding: '24px 24px 24px' }}>
+                  <Content style={{ background: '#fff', padding: 24, margin: 0, height: 400, width:"80%" }}>
+                    <PostEditor/>
+                  </Content>
+                </Layout>
+               <div>
+                   <PostContentViewer/>
+               </div>
             </div>
         );
     }

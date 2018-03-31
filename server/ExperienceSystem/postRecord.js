@@ -11,8 +11,6 @@ async function saveRecord(content, isNew, oldPostID) {
             if(err) console.log(err);
             else {
                 postArticle = data;
-                console.log(content);
-                console.log(postArticle);
                 if(content.postTitle && content.tags && postArticle) {
                     esConnection.createPostItem(newPostID, content.postTitle, content.tags,postArticle);
                 }

@@ -4,7 +4,9 @@ var client = new elasticsearch.Client({
     log:'trace'
 });
 
-var indexName = "team";
+var postRecord = require("./postRecord");
+
+var indexName = "post";
 var teamTypeName = "team";
 var postTypeName = "post";
 
@@ -16,3 +18,5 @@ body: {
         }
     }
 });
+
+//postRecord.deleteRecord({deleteByTeam:123});

@@ -35,8 +35,28 @@
     **Fields**:
 
     1. *article*: article content
-    2. *isNew*: new post or draft
-    3. *postID*: if not new post, the old postID must be submitted
+
+    2. postTitle: title of the post
+
+    3. *teamID*: the team this post will be attached to
+
+    4. *eventID*: the event this post will be attached to
+
+    5. *tags*: an json array object containing tags
+
+       *example:*
+
+       ```json
+       {tags:["tag1","tag2"]}
+       ```
+
+    6. *isNew*: If isNew is true, it will generate a new item and a new postID. If it's false, it will update the old post item.
+
+    7. *postID*: If not new post, the old postID must be submitted
+
+    8. isFinal: If isFinal is true, it will be set to Final and can be searched through SearchSystem, and be visible from team and event system. 
+
+       **NOTE:**once a post is set as Final, it cannot be set back to draft.
 
     **Response**:
     ```json
@@ -46,9 +66,9 @@
     }
     ```
 
-* api/posts/set-stat
+* api/posts/setFinal
 
-  Set the status of the post (Draft/Final).
+  Set the status of the post to Final if it is a draft.
 
   **Requirements**: None.
 
@@ -56,27 +76,57 @@
 
   **Parameters**:
 
-  1. postID: id of the post that needs changing status
+  1. *postID*: id of the post that needs setting status
 
   **Response**:
   ```json
   {"status": true}
   ```
 
-* api/posts/attach_activity
+* api/posts/articles
 
-  Attach a post to an activity.
+  Get the content of the post.
 
-  **Requirements**: TBA.
+  **Requirements**: None.
 
   **Method**: GET
 
   **Parameters**:
 
   1. postID: id of the post
-  2. activityID: id of the activity
 
   **Response**:
+    ```json
+  {
+      "status":true,
+      "content":{
+          "post_ID": 1,
+          "path": "path/on/server",
+          "timeStamp": "LastEditTime",
+          "team_ID": 123,
+          "event_ID": 234,
+          "isFinal": 1,
+          "postTitle": "Title",
+          "tags": "[\"test1\",\"test2\"]",
+          "content": "Article Content."
+      }
+  }
+    ```
+
+* api/posts/delete
+
+  Delete a post.
+
+  **Requirements:** None.
+
+  **Method:** DELETE
+
+  **Parameters:**
+
+  1. postID: id of the post
+
+  **Response:**
+
   ```json
   {"status": true}
   ```

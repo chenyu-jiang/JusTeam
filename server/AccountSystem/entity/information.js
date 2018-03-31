@@ -1,4 +1,4 @@
-var dbConnection = require('dbConnection.js');
+var dbCommon = require('../../dbCommon');
 
 function generalInfo(location, age, career, mobile) {
     this.location = location;
@@ -19,15 +19,15 @@ class requestInfo{
     }
 
     getSearchQuery(tableName, callBack){
-        if(tableName instanceof String) callBack(Error("Invalid table name!"));
+        if(tableName instanceof String) throw new Error("Invalid table name!");
         else{
             var query = 'SELECT ';
-            for(var i = 0; i < item.length; i++) {
-                query += item[i];
-                if(i != item.length - 1) query += ', ';
+            for(var i = 0; i < this.item.length; i++) {
+                query += this.item[i];
+                if(i != this.item.length - 1) query += ', ';
             }
-            query += 'FROM ' + tableName;
-            return query;
+            query += ' FROM ' + tableName + ' WHERE id = ' + this.id;
+            callBack (query);
         }
     }
 }
@@ -48,14 +48,14 @@ class editItem{
     }
 
     getEditQuery(tableName, callBack){
-        if(!tableName instanceof String) callBack(new Error("Invalid input"));
-        var query = 'UPDATE' + tablename + 'SET ';
+        if(!tableName instanceof String) throw new Error("Invalid input");
+        var query = 'UPDATE ' + tableName + ' SET ';
         for(var i = 0; i < this.item.length; i++){
-            query += editItem.item[i] + ' = ' + '\'' + editItem.value[i] + '\'';
+            query += this.item[i] + ' = ' + '\'' + this.value[i] + '\'';
             if(i != this.item.length - 1) query += ', ';
         }
-        query += 'WHERE id = ' + this.id;
-        return query;
+        query += ' WHERE id = ' + this.id;
+        callBack(query);
     }
 }
 

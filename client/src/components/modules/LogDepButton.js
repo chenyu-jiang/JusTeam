@@ -15,12 +15,12 @@ const mapDispatchToProps= ()=>{
 const logDepButton=function({userID=undefined,text=''}) {
     if(userID)
         return (
-            <Button size="large" >
+            <Button type="ghost">
                 {text}
             </Button>
         );
     return(
-        <Button size="large" disabled>
+        <Button disabled type="ghost">
             {text}
         </Button>
     );

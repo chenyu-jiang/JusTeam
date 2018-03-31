@@ -1,3 +1,6 @@
+var fs = require("fs");
+var path = require("path");
+
 //fileUpload middleware
 const picMimetypes = {
     "image/bmp": true,
@@ -17,7 +20,7 @@ var uuidv4 = require("uuid/v4");
 var router = require("express").Router();
 var multer = require("multer");
 var postRecord = require("../../ExperienceSystem/postRecord");
-var accountSystem = require("");
+// var accountSystem = require("");
 
 //Upload Specifications
 var textStorage = multer.diskStorage({
@@ -102,35 +105,96 @@ var uploadText = multer({storage: textStorage});
 //NOTE: Not supported in early stage
 // var uploadVid = multer({storage: vidStorage,fileFilter: vidFileFilter});
 
-router.post("/pictures", uploadPic.single('image'), (req, res, next)=>{
+router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
     //return the path
     var resContent = {
         path: req.file.path
     };
-    res.write(JSON.stringify(resContent));
-    res.end();
+    res.send(resContent);
 });
 
-router.post("/articles", uploadText.single('article'), async (req, res, next)=>{
+router.post("/upload/articles", uploadText.single('article'), async (req, res, next)=>{
     //TODO: implement getUser
-    var user = getUser();
+    //var user = getUser();
+    //dev:
+    user = 12345;
     var resContent = {
         status: true
     };
     //save record in database
     try{
         var postID = undefined;
-        postID = await postRecord.saveRecord(user, req.file.path, req.body.isNew, req.body.postID);
-        //add the record to account
-
-        //TODO: incorporate with account system
-        if(req.body.isNew) await accountSystem.addPost(user, postID);
-    }
-    catch(err) {
+        req.body.postID = parseInt(req.body.postID);
+        req.body.isNew = req.body.isNew === "true" ? true : false;
+        var content = {
+            "user" : user,
+            "path" : path.resolve("./")+'/'+req.file.path,
+            "postTitle" : req.body.postTitle,
+            "tags" : JSON.parse(req.body.tags).tags,
+            "isFinal": req.body.isFinal === "true" ? 1 : 0,
+            "teamID": req.body.teamID,
+            "eventID": req.body.eventID
+        }
+        postID = await postRecord.saveRecord(content, req.body.isNew, req.body.postID);
+    } catch(err) {
+        console.log(err);
         resContent.status = false;
     }
-    res.write(JSON.stringify(resContent));
-    res.end();
+    res.send(resContent);
+});
+
+router.get("/setFinal", async (req, res, next)=> {
+    var resContent = {
+        "status": false
+    }
+    if(req.query.postID) {
+        try{
+            await postRecord.setFinal(req.query.postID);
+            resContent.status = true;
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    res.send(resContent);
+});
+
+router.get("/articles", async (req, res, next)=> {
+    var resContent = {
+        "status": false,
+        "content": undefined
+    }
+    if(req.query.postID) {
+        try{
+            var content = await postRecord.getRecord(req.query.postID);
+            resContent.status = true;
+            resContent.content = content;
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    res.send(resContent);
+});
+
+router.delete("/delete",async (req,res,next)=>{
+    var resContent = {
+        "status": false
+    }
+    var json = {
+        "deleteByID": -1
+    };
+    if(req.query.postID) {
+        try{
+            json.deleteByID = req.query.postID;
+            await postRecord.deleteRecord(json);
+            resContent.status = true;
+        }
+        catch(err) {
+            console.log(err);
+        }
+    }
+    res.send(resContent);
 });
 
 //NOTE: Not supported in early stage

@@ -1,14 +1,15 @@
-const teamOp = require('./teamOperation');
+var team = require("./teamOperation");
 
-//{'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
-
-var jsIn = {'teamID':2,'introduction' : 'shuaiqidezu', 'teamTitle' : 'blah_blah', 'maxMember' : 9 , 'category' : 'Eating', 'status' : 'hiring', 'reminder' : 'zhuyiyanzhi'};
-
-teamOp.editTeam(jsIn,(err,result)=>{
-  if(err){
-    console.log(err);
-  }
-  else{
-    console.log(result);
-  }
+var intro = "This is a test introduction. This team is heading for Shenzhen and will go to the happy valley. We are seeking for challengers.";
+var json = {
+    introduction : intro,
+    teamTitle : "JustTeam",
+    maxMember : 4,
+    category : "Travel",
+    status : "recruiting",
+    reminder : "Don't forget to bring your umbrella."
+}
+team.createTeam(json,(err,result)=>{
+    //pass
+    if(err) console.log(err);
 });

@@ -50,7 +50,6 @@ class OneTeamPage extends Component{
                         </Col>
                         <Divider type="vertical"/>
                         <Col span={8}>
-
                             <Card className="TimeLineCard" style={{margin:"20px"}}>
                                 <h2>TimeLine<Divider type="vertical">edit</Divider></h2>
                                 <Steps className="StepLine" direction="vertical">
@@ -60,8 +59,6 @@ class OneTeamPage extends Component{
                                 </Steps>
                             </Card>
                         </Col>
-
-
                     </Card>
                 </div>
             </div>

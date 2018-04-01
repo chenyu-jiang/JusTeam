@@ -44,6 +44,10 @@ router.get('/getUserTeams',(req,res)=>{
           result.state = 'part';
           console.log(i);
           if(i == teamList.length - 1){
+            function down(x, y) {
+              return (x.age < y.age) ? 1 : -1
+            }
+            teams.sort(down);
             result.teams = teams;
             res.send(result);
           }

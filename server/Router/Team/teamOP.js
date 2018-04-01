@@ -162,7 +162,7 @@ router.get('/addMember',(req,res)=>{
     else{
       var newMembers = [];
       newMembers.push(newMember);
-      var notification = new TeamMemberUpdate(aimTeamID,newMembers,[]);
+      var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'a new teammates has been added to your team');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
@@ -200,7 +200,7 @@ router.get('/deleteMember',(req,res)=>{
       var quitedMembers = [];
       quitedMembers.push(deletedMember);
 
-      var notification = new TeamMemberUpdate(aimTeamID,[],quitedMembers);
+      var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'one of your teammates has quited the team');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
@@ -240,7 +240,7 @@ router.get('/editAuthority',(req,res)=>{
     else{
       var a = {state : 'success'};
 
-      var notification = new TeamPublicMessage(changingTeam,req.user.id,'the authority of one of your teammates has been changed');
+      var notification = new notiOP.TeamPublicMessage(changingTeam,req.user.id,'the authority of one of your teammates has been changed');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{

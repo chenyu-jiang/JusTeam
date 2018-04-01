@@ -16,7 +16,7 @@ function userInformation(phone, institution, major, nickname){
     this.nickname = nickname;
 }
 
-var createUser = async function(identity, userInfo, callBack){
+var createUser = async function (identity, userInfo, callBack){
     //Refer to example from documentation of bcryptjs
     //Also online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
     //if(!identity instanceof userIdentity) throw error("Unmatched identity type!")
@@ -181,6 +181,16 @@ var getUserFromId = async function(id, callBack){
 
 }
 
+var getEmailFromUsername = async function (username, callBack){
+    var query = 'SELECT email FROM identity WHERE username = ' + '\'' + username + '\'';
+    try{
+        var result = await connection.sqlQuery(query);
+        callBack(null, result[0]);
+    }catch(err){
+        callBack(err, null);
+    }
+}
+
 module.exports= {
     isUserExist : isUserExist,
     userIdentity : userIdentity,
@@ -188,7 +198,6 @@ module.exports= {
     regValidate : regValidate,
     loginCheck : loginCheck,
     getUserFromId: getUserFromId,
-    userInformation: userInformation
-    //checkUser   : checkUser,
-    //checkPassword: checkPassword()
+    userInformation: userInformation,
+    getEmailFromUsername: getEmailFromUsername
 };

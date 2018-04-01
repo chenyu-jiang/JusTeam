@@ -1,14 +1,14 @@
 const mysql = module.require("mysql");
 const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
-const dbPassword = 'JusTeam3100Project!';                // plain text password? Really?
+const dbPassword = '123456';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
 const dbName = 'teamsystem';
-const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
-const teamUpdateSQL = 'UPDATE formal_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ?, `status` = ? WHERE `teamID` = ?';
-const teamQuerySQL = 'SELECT * FROM formal_team';
-const teamQueryByID = 'SELECT * FROM formal_team WHERE teamID = ?';
-const teamDeleteSQL = 'DELETE FROM formal_team WHERE teamID = ?';
+const teamInsertSQL = 'INSERT INTO test_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
+const teamUpdateSQL = 'UPDATE test_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ? `status` = ? WHERE `teamID` = ?';
+const teamQuerySQL = 'SELECT * FROM test_team';
+const teamQueryByID = 'SELECT * FROM test_team WHERE teamID = ?';
+const teamDeleteSQL = 'DELETE FROM test_team WHERE teamID=?';
 
 var teamSystemPool = undefined;
 
@@ -48,7 +48,6 @@ module.exports = {
   },
 
 askTeamInfo : function sqlQuery(teamID,callback){
-  this.establishPool();
   if(teamID == null){
     teamSystemPool.query(teamQuerySQL,(err,rows,fields)=>{
       if(err) {
@@ -72,7 +71,7 @@ askTeamInfo : function sqlQuery(teamID,callback){
         callback(newErr,null,null);
       }
       else{
-      for(let i = 0; i < rows.length; i++){
+        for(let i = 0; i < rows.length; i++){
           rows[i].memberList = JSON.parse(rows[i].memberList);
           rows[i].eventList = JSON.parse(rows[i].eventList);
         }
@@ -98,7 +97,7 @@ insertNewTeam : function insertNewTeam(newTeam,callback){
 
 updateTeamInfo: function updateTeamInfo(teamToBeUpdated, callback){
   teamToBeUpdated.recentEditTime = this.getDBTime();
-  var teamUpdate_Params = [teamToBeUpdated.introduction,teamToBeUpdated.teamTitle,teamToBeUpdated.maxMember,JSON.stringify(teamToBeUpdated.memberList),JSON.stringify(teamToBeUpdated.eventList),teamToBeUpdated.recentEditTime,teamToBeUpdated.category,teamToBeUpdated.reminder,teamToBeUpdated.status,teamToBeUpdated.teamID];
+  var teamUpdate_Params = [teamToBeUpdated.introduction,teamToBeUpdated.teamTitle,teamToBeUpdated.maxMember,JSON.stringify(teamToBeUpdated.memberList),JSON.stringify(teamToBeUpdated.eventList),newTeam.recentEditTime,newTeam.category,newTeam.reminder,newTeam.status,newTeam.teamID];
   teamSystemPool.query(teamUpdateSQL,teamUpdate_Params,(err,result) =>{
     if(err){
       var newErr = new Error("[DB Update Error] -" + err);

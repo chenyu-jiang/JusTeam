@@ -1,11 +1,9 @@
 var router = require("express").Router();
-var posts = require("./Post");
+var postFileUpload = require("./Post/fileUpload");
 var notification = require("./Notification/notification");
-var search = require("./Search");
 
 //all routers under /api will be processed here
-router.use("/posts",posts);
-router.use("/notifications", notification);
-router.use("/search", search);
+router.use("/posts/upload",postFileUpload);
+router.user("/notifications/", notification);
 
 module.exports = router;

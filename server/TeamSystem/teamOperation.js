@@ -1,7 +1,6 @@
 const dbTeam = require('./dbConnectionForTeamSystem');
 const Team = require('./Team');
 
-//status: recruiting, fighting, finished
 //create input interface: {'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
 //edit input interface: {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
 //add member input interface : {teamID: integer, userID: integer}
@@ -11,7 +10,7 @@ const Team = require('./Team');
 
 
 module.exports = {
-  createTeam : function createTeam(jsonIn,callback){
+  creatTeam : function createTeam(jsonIn,callback){
     var newTeamID = undefined;
     var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder);
     async function insertNow(){
@@ -54,7 +53,7 @@ module.exports = {
         teamUpdating.launchTime = rows[0].launchTime;
         teamUpdating.eventList = rows[0].eventList;
         teamUpdating.memberList = rows[0].memberList;
-        dbTeam.updateTeamInfo(teamUpdating,(err,result)=>{
+        dbTeam.updateTeamInfo(jsonIn,(err,result)=>{
           if(err){
             callback(err,null);
           }
@@ -84,7 +83,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(err) {
+          if(error) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -95,6 +94,7 @@ module.exports = {
           }
         });
       });
+
       switchTeam.memberList.num = switchTeam.memberList.IDList.push(jsonIn.userID);
       switchTeam.memberList.right.push(1);
 
@@ -115,7 +115,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(err) {
+          if(error) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -166,7 +166,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(err) {
+          if(error) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -207,7 +207,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(err) {
+          if(error) {
             var newErr = new Error('[addEvent0 err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -238,7 +238,7 @@ module.exports = {
     async function foo(){
       await new Promise((resolve,reject)=>{
         dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
-          if(err) {
+          if(error) {
             var newErr = new Error('[addMember err when asking Team info] - ' + err);
             callback(newErr,null);
             return;
@@ -256,7 +256,7 @@ module.exports = {
       }
       else{
         for(var i = 0; i < switchTeam.eventList.num; i++){
-          if(switchTeam.eventList.IDList[i] == jsonIn.eventID){
+          if(switchTeam.eventList.IDList[i] == jsonIn.userID){
             switchTeam.eventList.IDList.splice(i,1);
             switchTeam.eventList.num = switchTeam.eventList.IDList.length;
             break;

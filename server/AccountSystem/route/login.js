@@ -3,6 +3,7 @@ var router = express.Router();
 var identity = require('../entity/identity');
 var passport = require('passport');
 var Local = require('passport-local').Strategy;
+var passwordHash = require('password-hash');
 
 //Refer to online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
 passport.use(new Local({
@@ -20,7 +21,7 @@ passport.use(new Local({
                 else{
                     return done(null, user);
                 }
-            })
+            });
         } catch (err){
             return done(err);
         }
@@ -31,6 +32,8 @@ router.post('/', function(req, res){
     var email = req.body.email;
     var password = req.body.password;
     var remember = true;
+
+
 
     passport.authenticate('local', function(err, user, info){
         console.log("Success check!");

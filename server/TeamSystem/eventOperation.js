@@ -8,7 +8,7 @@ const dbEvent = require('./dbConnectionForEvent')
 
 
 module.exports = {
-  createEvent : function createEvent(jsonIn,callback){
+  creatEvent : function createEvent(jsonIn,callback){
     var newEventID = undefined;
     var newEvent = new Event(null,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
     async function insertNow(){
@@ -90,7 +90,6 @@ module.exports = {
           }
         });
       });
-      console.log(eventAttaching);
       //eventAttaching.postList = JSON.parse(eventAttaching.postList);
       eventAttaching.postList.num = eventAttaching.postList.IDList.push(jsonIn.postID);
       dbEvent.updateEventInfo(eventAttaching,(err,result)=>{

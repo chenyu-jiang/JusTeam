@@ -1,85 +1,76 @@
 # JusTeam
 ## Client-Server Interfaces
 
-* /api
-    * /api/posts
-        * api/posts/upload
-          * api/posts/upload/pictures
+## /api
 
-              Post pictures to this url.
+### /api/posts
 
-              **Requirements**: One file at a time.
+* api/posts/upload
+  * api/posts/upload/pictures
 
-              **Method**: POST
+      Post pictures to this url.
 
-              **Fields**:
+      **Requirements**: One file at a time.
 
-              1. *image* : image file
+      **Method**: POST
 
-              **Response**:
+      **Fields**:
 
-              ```json
-              {"path" :"RELATIVE_PATH/TO/FILE.png"}
-              ```
+      1. *image* : image file
 
-          * api/posts/upload/articles
+      **Response**:
 
-            Post text content to this url.
+      ```json
+      {"path" :"RELATIVE_PATH/TO/FILE.png"}
+      ```
 
-            **Requirements**: One file at a time.
+  * api/posts/upload/articles
 
-            **Method**: POST
+    Post text content to this url.
 
-            **Fields**:
+    **Requirements**: One file at a time.
 
-            1. *article*: article content
-            2. *isNew*: new post or draft
-            3. *postID*: if not new post, the old postID must be submitted
+    **Method**: POST
 
-            **Response**:
-            ```json
-            {
-                "status": true,
-                "postID": 12345
-            }
-            ```
+    **Fields**:
 
-        * api/posts/set-stat
+    1. *article*: article content
 
-          Set the status of the post (Draft/Final).
+    2. postTitle: title of the post
 
-          **Requirements**: None.
+    3. *teamID*: the team this post will be attached to
 
-          **Method**: GET
+    4. *eventID*: the event this post will be attached to
 
-          **Parameters**:
+    5. *tags*: an json array object containing tags
 
-          1. postID: id of the post that needs changing status
+       *example:*
 
-          **Response**:
-          ```json
-          {"status": true}
-          ```
+       ```json
+       {tags:["tag1","tag2"]}
+       ```
 
-        * api/posts/attach_activity
+    6. *isNew*: If isNew is true, it will generate a new item and a new postID. If it's false, it will update the old post item.
 
-          Attach a post to an activity.
+    7. *postID*: If not new post, the old postID must be submitted
 
-          **Requirements**: TBA.
+    8. isFinal: If isFinal is true, it will be set to Final and can be searched through SearchSystem, and be visible from team and event system.
 
-          **Method**: GET
+       **NOTE:**once a post is set as Final, it cannot be set back to draft.
 
-          **Parameters**:
+    **Response**:
+    ```json
+    {
+        "status": true,
+        "postID": 12345
+    }
+    ```
 
-          1. postID: id of the post
-          2. activityID: id of the activity
+* api/posts/setFinal
 
-          **Response**:
-          ```json
-          {"status": true}
-          ```
+  Set the status of the post to Final if it is a draft.
 
-    * api/team
+  **Requirements**: None.
 
         * api/team/TeamOP
 
@@ -166,97 +157,223 @@
 
             **Response**: {state : 'success' / 'fail'}
 
-        * api/team/teamInfo
+  Get the content of the post.
 
-            * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
+  **Requirements**: None.
 
-              get team information for recommend usage
+  **Method**: GET
 
-              **Requirements**: None.
+  **Parameters**:
 
-              **Method** : GET
+  1. postID: id of the post
 
-              **Parameters**: None
+  **Response**:
+    ```json
+  {
+      "status":true,
+      "content":{
+          "post_ID": 1,
+          "path": "path/on/server",
+          "timeStamp": "LastEditTime",
+          "team_ID": 123,
+          "event_ID": 234,
+          "isFinal": 1,
+          "postTitle": "Title",
+          "tags": "[\"test1\",\"test2\"]",
+          "content": "Article Content."
+      }
+  }
+    ```
 
-              **Response**:
+* api/posts/delete
 
-            * api/team/teamInfo/getUserTeams
+  Delete a post.
 
-              **Requirements**: None.
+  **Requirements:** None.
 
-              **Method** : GET
+  **Method:** DELETE
 
-              **Parameters**:
-                1. userID : integer
+  **Parameters:**
 
-              **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
+  1. postID: id of the post
 
-            * api/team/teamInfo/viewOneTeam
+  **Response:**
 
-              **Requirements**: None.
+  ```json
+  {"status": true}
+  ```
 
-              **Method** : GET
+###api/team
 
-              **Parameters**:
-                  1. teamID : integer;
+* api/team/createTeam  
 
               **Response**: {state : 'success'/'fail', team : teamObject}
     * api/
 
-    * api/accounts
+  **Method** : POST
 
-    * api/notifications
+  **Parameters**:
+    1. userID : integer
+    2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
 
-        * api/notifications/new/content
+  **Response**: {state: 'success'/'fail', insertID: integer}
 
-          Get new notifications of a user.
+* api/team/teamInfo
 
-          **Requirements**: None.
+    * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
 
-          **Method** : GET
+      get team information for recommend usage
 
-          **Parameters**: None
+      **Requirements**: None.
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+      **Method** : GET
 
-        * api/notifications/new/number
+      **Parameters**: None
 
-          Get number of new notifications of a user.
+      **Response**:
 
-          **Requirements**: None.
+    * api/team/teamInfo/getUserTeams
 
-          **Method** : GET
+      **Requirements**: None.
 
-          **Parameters**: None
+      **Method** : GET
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+      **Parameters**:
+        1. userID : integer
 
-        * api/notifications/history
+      **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
 
-          Get notification history of a user.
+    * api/team/teamInfo/viewOneTeam
 
-          **Requirements**: None.
+      **Requirements**: None.
 
-          **Method** : GET
+      **Method** : GET
 
-          **Parameters**:
+      **Parameters**:
+          1. teamID : integer;
 
-          1. start: starting from
-          3. end: end with
+      **Response**: {state : 'success'/'fail', team : teamObject}
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+### api/accounts
 
-        * api/notifications/delete
 
-          Delete a notification history of a user.
 
-          **Requirements**: None.
+### api/notifications
 
-          **Method** : DELETE
+* api/notifications/new/content
 
-          **Parameters**:
+  Get new notifications of a user.
 
-          1. messageID
-          2. messageType
+  **Requirements**: None.
 
-          **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+  **Method** : GET
+
+  **Parameters**: None
+
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+* api/notifications/new/number
+
+  Get number of new notifications of a user.
+
+  **Requirements**: None.
+
+  **Method** : GET
+
+  **Parameters**: None
+
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+* api/notifications/history
+
+  Get notification history of a user.
+
+  **Requirements**: None.
+
+  **Method** : GET
+
+  **Parameters**:
+
+  1. start: starting from
+  3. end: end with
+
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+* api/notifications/delete
+
+  Delete a notification history of a user.
+
+  **Requirements**: None.
+
+  **Method** : DELETE
+
+  **Parameters**:
+
+  1. messageID
+  2. messageType
+
+  **Response**: See [NotificationSystem](./NotificationSystem/README.md)
+
+
+
+### api/search
+
+* api/search
+
+  * api/search/team
+
+    This is the entry for team search function.
+
+    **Requirements:**None.
+
+    **Method:** GET
+
+    **Parameters:**
+
+    1. query : a string of keywords.
+    2. offset: the offset number of results, default is 0.
+    3. limit: the maximum number of items returned, default is 20.
+
+    **Response:**
+
+      ```json
+      {
+          results:
+          [
+              id: 1234,
+              content: {"A team Object": "Please see team documentation"}
+          ]
+      }
+      ```
+
+  * api/search/post
+
+    This is the entry for post search function.
+
+    **Requirements:**None.
+
+    **Method:** GET
+
+    **Parameters:**
+
+    1. query : a string of keywords.
+    2. offset: the offset number of results, default is 0.
+    3. limit: the maximum number of items returned, default is 20.
+
+    **Response:**
+
+      ```json
+      {
+          results:
+          [
+              {
+                  id: 1234,
+                  content: {
+                    postTitle: "Team Title",
+                    tags: ["tag1","tag2"],
+                  	content: "postContent"                 
+                  }
+              }
+          ]
+      }
+      ```

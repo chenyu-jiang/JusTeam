@@ -12,3 +12,6 @@ node_modules/
 #customer files and debug
 upload/
 main.js
+
+#ide
+.idea/

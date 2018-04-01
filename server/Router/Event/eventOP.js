@@ -75,6 +75,8 @@ router.get('/deleteEvent', (req,res)=>{
 
           //TODO: delete all the post attached to this event
 
+
+
           var notification = new notiOP.TeamPublicMessage(aimTeam, req.user.id, 'one event has been deleted');
           var users = undefined;
           async function f(){

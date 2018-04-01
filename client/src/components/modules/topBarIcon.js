@@ -40,8 +40,8 @@ const mapDispatchToProps= ()=>{
     if(userID)
       return (
           <span align="right">
-          <span>
-              Hello,{userID}!
+          <span style={{color:'#fff', marginRight:'10px'}}>
+              Hello, {userID}!
           </span>
           <span>
               <Dropdown overlay={menu}>
@@ -50,7 +50,6 @@ const mapDispatchToProps= ()=>{
                           <img src={logo} alt='UserLogo' height="30" width="30"/>
                       </Button>
                   </Link>
-
               </Dropdown>
           </span>
           </span>
@@ -59,7 +58,7 @@ const mapDispatchToProps= ()=>{
 
           <span align="right">
               <Link to='/login'>
-                  <Button type="primary" className="LoginButton">
+                  <Button ghost className="LoginButton">
                       Login
                   </Button>
               </Link>

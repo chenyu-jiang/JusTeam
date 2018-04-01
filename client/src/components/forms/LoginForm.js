@@ -2,9 +2,13 @@ import { Form, Icon, Input, Button, Checkbox ,message,notification} from 'antd';
 import React,{Component} from 'react'
 import {Link,Redirect} from'react-router-dom';
 import 'antd/dist/antd.css'
-import {logIn} from '../../services/accountService'
+import {logIn,logInAuth} from '../../services/accountService'
 import {connect} from 'react-redux'
+import passwordHash from 'password-hash'
+
+
 const FormItem = Form.Item;
+
 
 const mapStateToProps=state=>{
     return{
@@ -15,7 +19,8 @@ const mapDispatchToProps=dispatch=>{
     return{
         logInDispatch: userID=>{
             dispatch(logIn(userID));
-        }
+        },
+
     }
 }
 class LoginFormTemp extends Component {
@@ -28,24 +33,18 @@ class LoginFormTemp extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                //logIn(store,values.userID);
-
-                /*message.success('Form received ：' + JSON.stringify(values, (k, v) => {
-                    if (typeof v === 'undefined') {
-                        return '';
+                const hide=message.loading('Logging in...',0);
+                console.log('ID:  '+values.userID+' password: '+passwordHash.generate(values.password));
+                logInAuth(values.userID,passwordHash.generate(values.password)).then(
+                    (response)=>{
+                        if(response.error) message.error('Failed to login: '+response.error);
+                        //else this.props.logInDispatch(values.userID);
+                        hide();
+                        this.props.logInDispatch(values.userID);
                     }
-                    return v;
-                }));*/
-                this.props.logInDispatch(values.userID);
-                /*console.log('userID for dispatch:',values.userID)
-                message.success('Get redux state:'+ JSON.stringify(this.props));
-                const args = {
-                    message: 'Data Received',
-                    description: JSON.stringify(values),
-                    duration: 5,
-                };
-                notification.open(args);
-                console.log('Received values of form: ', values);*/
+                )
+
+
             }
         });
     }
@@ -82,8 +81,8 @@ class LoginFormTemp extends Component {
                         Log in
                     </Button>
                     <Link to='/signUp'>
-                    <Button type="primary">Sign up</Button>
-                </Link>
+                        <Button type="primary">Sign up</Button>
+                    </Link>
                 </FormItem>
             </Form>
 

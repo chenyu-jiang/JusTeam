@@ -1,7 +1,7 @@
 const mysql = module.require("mysql");
 const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
-const dbPassword = '123456';                // plain text password? Really?
+const dbPassword = 'JusTeam3100Project!';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
 const dbName = 'teamSystem';
 const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';

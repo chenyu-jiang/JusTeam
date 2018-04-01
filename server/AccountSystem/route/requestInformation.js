@@ -1,29 +1,31 @@
 var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
-var connection = require('../view/dbConnection');
+var dbCommon = require('../../dbCommon');
+var connection = new dbCommon('account');
 
-router.get('/requestInformation', function(req, res){
-    //Validate for user authority here;
+router.post('/', function(req, res){
+    //Test
+    var id = req.body.id;
+    var item = ['nickname', 'major', 'institution'];
+    var ri = new information.requestInfo(item, id);
 
-    //Then check the validity of requested edition (e.g. information format)
     if(!req.requestInfo instanceof information.requestInfo) throw new Error("Illigal request!");
-
-    var editItem = req.editItem;
-    connection.connect(function(err){
-        if(err) throw err;
-    });
-
-    connection.query('USE account', function(err, results, fields){
-        if(err) throw err;
-        var query = req.requestInfo.getSearchQuery('information');
-        connection.query(query, function (err, results, fields) {
-            if(err) throw err;
-            else{
-                //Notify the user for successfully updated.
+    //req.requestInfo.getSearchQuery('information', async (query) => {
+    try{
+        ri.getSearchQuery('information', async (query) => {
+            try{
+                var result = await connection.sqlQuery(query);
+                res.send(JSON.stringify({editState: true}));
+            } catch(err){
+                res.send(JSON.stringify({editState: false, editError: error}));
             }
         });
-    })
+    } catch(err){
+        res.send(JSON.stringify({editState: false, editError: error}));
+    }
+
 
 });
 
+module.exports = router;

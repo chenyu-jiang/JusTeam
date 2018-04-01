@@ -7,9 +7,10 @@ import NotiPage from "./NotiPage";
 import AccountInfoPage from "./AccountInfoPage";
 import TopBarIcon from '../modules/topBarIcon'
 import Dashboard from './Dashboard'
+import Footer from '../../antdm/Footer';
 
-const {Footer}= Layout;
 
+const Search = Input.Search;
 
 
 class HomePage extends Component{
@@ -17,55 +18,41 @@ class HomePage extends Component{
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
     <div className="HomePage">
-    <Affix><div style={{background:'#f50'}}>
-        <Col span={20}>
+    <Affix><div style={{background:'#36cfc9', padding:'10px'}}>
+    <Col span={18}>
         <Link to='/home/dash'>
             <Button size={30} shape="circle" >
             Logo
         </Button>
         </Link>
+        <Search
+            style={{ width: "70%",height: "120%",marginLeft:'10%'}}
+            placeholder="search for whatever you want!"
+            onSearch={value => console.log(value)}
+            enterButton
+        />
         </Col>
 
 
 
     <span>
-
+    <Col span={24}/>
         <TopBarIcon/>
     </span>
     </div></Affix>
 
 
-        <div style={{ background: '#fff', padding: '26px 0px 0px' }}>
+        <div style={{ background: '#fff', padding: '20px 0px 0px' }}>
             <Route path='/home/accountInfo'  component={AccountInfoPage} />
             <Route path='/home/dash'  component={Dashboard} />
             <Route path='/home/notification'  component={NotiPage} />
         </div>
+      <div>
+      <Footer/>
 
-        <div>
-            <Layout>
-                <Footer style={{ background:'#222', color:'#fff',textAlign: 'center' ,  width:'100%'}}>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
-                        <div class="GroupMember" style={{textAlign:"center", padding:"5%", size:"20px", color:"#DDD"}}>
-                            <div>JIANG Chenyu</div>
-                            <div>DENG Shiyuan</div>
-                            <div>WANG Yuxuan</div>
-                            <div>XU Lu</div>
-                            <div>ZHANG Yuechen</div>
-                        </div>
-                    </Col>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
+      </div>
 
-                    </Col>
-                    <Col class="FooterCol1" span={8}><h3><b style={{color:"#fff"}}>Contact us</b></h3>
 
-                    </Col>
-                    <Row>
-                        <div><br/>CSCI3100 Group23 Justeam <p/>
-                        </div>
-                    </Row>
-                </Footer>
-            </Layout>
-        </div>
 
 
     </div>

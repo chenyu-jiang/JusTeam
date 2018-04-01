@@ -1,26 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var identity = require('../entity/identity');
+var bodyParser = require('body-parser');
 //Refer to online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
-router.post('/register', function(req, res){
+
+router.post('/', function(req, res){
+    //console.log("Jiang!!!");
     var email = req.body.email;
-    var username = req.body.username;
+    var username = req.body.userID;
     var password = req.body.password;
-    var checkPassword = req.body.checkPassword;
-    var user = new identity.userIdentity(email, username, password);
-    user.checkPassword = checkPassword;
+    //var checkPassword = req.body.checkPassword;
+    var user = new identity.userIdentity(username, email, password);
+    user.checkPassword = req.body.checkPassword;
 
-    var validate = identity.regValidate(req, user, (result) => {
-        if(!result.isEmpty()){
-            throw result;
-        } else {
-            identity.createUser(user, function(err, user){
-                if(err) throw err;
-            })
+    var userInfo = new identity.userInformation(req.body.phone, req.body.institution,
+        req.body.major, req.body.userID);
 
-            //Hint message!!
-            //Following operations
-        }
+    if(password != user.checkPassword) return res.send({regState: false});
+    identity.isUserExist(user.email, (id, result, err) => {
+        if(err) res.send(JSON.stringify({err: err}));
+        if(result) return res.send(JSON.stringify({regState:false, regReason: 'User has already exist'}));
+        identity.createUser(user, userInfo, function(err){
+            if(err) throw err;
+            res.send(JSON.stringify({regState: true}));
+        })
     });
 });
 

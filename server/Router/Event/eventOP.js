@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const eventOP = require('../../TeamSystem/eventOperation');
 const teamOP = require('../../TeamSystem/teamOperation');
 const notiOP = require('../../NotificationSystem/NotificationSystem');
-
+const postOP = require('../../experienceSystem/postRecord');
 
 var router = express.Router();
 
@@ -74,7 +74,7 @@ router.get('/deleteEvent', (req,res)=>{
           var a = {state : 'success'};
 
           //TODO: delete all the post attached to this event
-
+          postOP.postRecord({deleteByEvent : deletedEvent});
 
 
           var notification = new notiOP.TeamPublicMessage(aimTeam, req.user.id, 'one event has been deleted');

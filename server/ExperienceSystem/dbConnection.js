@@ -1,9 +1,9 @@
 var dbCommon = new (require("../dbCommon"))("experienceSystem");
 
-async function insertRecord(path, teamID, eventID, postTitle, tags, isFinal) {
+async function insertRecord(path, userID ,teamID, eventID, postTitle, tags, isFinal) {
     var postID = undefined;
-    var sql = "INSERT INTO records (path, timeStamp, team_ID, event_ID, postTitle, tags ,isFinal) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    var argList = [path, dbCommon.getDBTime(), teamID, eventID, postTitle, JSON.stringify(tags), isFinal];
+    var sql = "INSERT INTO records (path, user_ID ,timeStamp, team_ID, event_ID, postTitle, tags ,isFinal) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    var argList = [path, userID, dbCommon.getDBTime(), teamID, eventID, postTitle, JSON.stringify(tags), isFinal];
     var result = undefined;
     result = await dbCommon.sqlQuery(sql, argList);
     if(result === undefined || result.insertId === undefined) {

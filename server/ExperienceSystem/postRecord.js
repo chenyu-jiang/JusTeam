@@ -1,5 +1,6 @@
 var dbConnection = require("./dbConnection");
 var esConnection = require("./esConnection");
+var accountInfo = require("../AccountSystem/entity/information");
 var eventOperation = require("../TeamSystem/eventOperation");
 var fs = require("fs");
 
@@ -7,7 +8,7 @@ async function saveRecord(content, isNew, oldPostID) {
     var newPostID = undefined;
     try {
         if (isNew) {
-            newPostID = await dbConnection.insertRecord(content.path, content.teamID, content.eventID, content.postTitle, content.tags, content.isFinal);
+            newPostID = await dbConnection.insertRecord(content.path, content.user ,content.teamID, content.eventID, content.postTitle, content.tags, content.isFinal);
             if (content.isFinal) {
                 if (newPostID) {
                     attachESCreate(newPostID, content.path, content.postTitle, content.tags, (err)=>{
@@ -16,6 +17,7 @@ async function saveRecord(content, isNew, oldPostID) {
                     eventOperation.postAttachEvent({"eventID": parseInt(content.eventID),"postID": parseInt(newPostID)},(err,result)=>{
                         if(err) console.log(err);
                     });
+                    accountInfo.addPost(parseInt(newPostID),parseInt(content.user));
                 }
             }
         } else {
@@ -33,6 +35,7 @@ async function saveRecord(content, isNew, oldPostID) {
                     eventOperation.postAttachEvent({"eventID": parseInt(content.eventID),"postID": parseInt(oldPostID)},(err,result)=>{
                         if(err) console.log(err);
                     });
+                    accountInfo.addPost(parseInt(oldPostID),parseInt(content.user));
                 }
             }
             var oldPath = await dbConnection.editRecord(oldPostID, content.path, content.teamID, content.eventID, content.postTitle, content.tags);
@@ -88,6 +91,7 @@ async function deleteRecord(json,callback){
         fs.unlink(record.path,(err)=>{
             if(err && callback) callback(err);
         })
+        accountInfo.deletePost(parseInt(record.post_ID),parseInt(content.user));
         dbConnection.deleteRecord(json.deleteByID);
         esConnection.deletePostItem(json.deleteByID);
         if(eventID){
@@ -95,11 +99,13 @@ async function deleteRecord(json,callback){
                 if(err) console.log(err);
             });
         }
+        accountInfo.deletePost(record.post_ID,record.user_ID);
     } else {
         if(json.deleteByEvent) {
             var itemList = await dbConnection.deleteRecordByEvent(json.deleteByEvent);
             itemList.forEach((listItem, index)=>{
                 esConnection.deletePostItem(listItem.post_ID);
+                accountInfo.deletePost(listItem.post_ID,listItem.user_ID);
                 fs.unlink(listItem.path,(err)=>{
                     if(err && callback) callback(err);
                 })
@@ -110,6 +116,7 @@ async function deleteRecord(json,callback){
                 var itemList = await dbConnection.deleteRecordByTeam(json.deleteByTeam);
                 itemList.forEach((listItem, index)=>{
                     esConnection.deletePostItem(listItem.post_ID);
+                    accountInfo.deletePost(listItem.post_ID,listItem.user_ID);
                     fs.unlink(listItem.path,(err)=>{
                         if(err && callback) callback(err);
                     })

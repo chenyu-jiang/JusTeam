@@ -114,10 +114,7 @@ router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
 });
 
 router.post("/upload/articles", uploadText.single('article'), async (req, res, next)=>{
-    //TODO: implement getUser
-    //var user = getUser();
-    //dev:
-    user = 12345;
+    var user = req.user.id;
     var resContent = {
         status: true
     };

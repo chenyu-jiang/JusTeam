@@ -1,8 +1,23 @@
 function instantChat(server) {
     var app = server;
     var io = require('socket.io')(app);
+
+    require('socketio-auth')(io,{
+        authenticate: authenticate,
+        postAuthenticate: postAuthenticate,
+        timeout: 1000
+    });
+
     var numOfChatRooms = 0;
     var clients={}
+
+    function authenticate(socket, data, callback) {
+        var username = data.username;
+        var password = data.password;
+        
+
+    }
+
     io.on("connection",function (socket) {
 
         //##########################################

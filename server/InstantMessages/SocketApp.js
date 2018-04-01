@@ -1,6 +1,7 @@
 function instantChat(server) {
     var app = server;
     var io = require('socket.io')(app);
+    var identity = require("../AccountSystem/entity/identity");
     var numOfChatRooms = 0;
     var clients={}
 
@@ -8,13 +9,23 @@ function instantChat(server) {
         socket.auth = undefined;
 
         socket.on("authentication", (data)=> {
-            var status = false;
             //Check
-            if(data.username === "Bob" && data.password === "Hunter2") status = true;
-            if(!status) {
-                socket.emit("unauthorized", {"status": false});
-            }
-            else socket.auth = true;
+            identity.getEmailFromUsername(data.username, (err, result)=>{
+                if(err) {
+                    socket.emit("unauthorized", {"error":"Invalid username or password."});
+                }
+                else {
+                    identity.loginCheck(result,data.password,(match, message)=>{
+                        if(match) {
+                            socket.auth = true;
+                            socket.emit("authorized");
+                        };
+                        else {
+                            socket.emit("unauthorized", {"error":"Invalid username or password."});
+                        }
+                    });
+                }
+            });
         });
 
         socket.userID = 12345;
@@ -26,24 +37,30 @@ function instantChat(server) {
                     return;
                 }
                 //first login, check userID
-                socket.userName = data.username;
-                socket.nickName = data.nickname;
-                socket.teamID = data.teamID;
-                socket.roomName = "#"+data.teamID;
-                socket.join(socket.roomName);
-                if (clients[socket.roomName] === undefined) {
-                    clients[socket.roomName] = [];
+                if(data.username && data.nickname && data.userID && data.teamID) {
+                    socket.userName = data.username;
+                    socket.nickName = data.nickname;
+                    socket.teamID = data.teamID;
+                    socket.roomName = "#"+data.teamID;
+                    socket.userID = data.userID;
+                    socket.join(socket.roomName);
+                    if (clients[socket.roomName] === undefined) {
+                        clients[socket.roomName] = [];
+                    }
+                    clients[socket.roomName].push({"userName": socket.userName,"nickName": socket.nickName, "userID": socket.userID});
+                    socket.broadcast.to(socket.roomName).emit("userJoinedRoom",{
+                        user: {
+                            userName: socket.userName,
+                            nickName: socket.nickName,
+                            userID: socket.userID
+                        },
+                        numberOfUsers: clients[socket.roomName].length,
+                        usersList: clients[socket.roomName]
+                    });
                 }
-                clients[socket.roomName].push({"userName": socket.userName,"nickName": socket.nickName, "userID": socket.userID});
-                socket.broadcast.to(socket.roomName).emit("userJoinedRoom",{
-                    user: {
-                        userName: socket.userName,
-                        nickName: socket.nickName,
-                        userID: socket.userID
-                    },
-                    numberOfUsers: clients[socket.roomName].length,
-                    usersList: clients[socket.roomName]
-                });
+                else {
+                    socket.emit("failure",{"error":"Incomplete data."});
+                }
             }
         });
 

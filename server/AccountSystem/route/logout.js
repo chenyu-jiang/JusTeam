@@ -4,7 +4,8 @@ var identity = require('../entity/identity');
 var passport = require('passport');
 var local = require('passport-local').Strategy;
 
-router.get('/', function(req, res){
+router.post('/', function(req, res){
+    console.log(req.user);
     if (req.session != undefined) {
         req.session.destroy(function (err) {
             if (err) res.send(JSON.stringify({logoutError: err}));

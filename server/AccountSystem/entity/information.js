@@ -126,3 +126,4 @@ module.exports = {
     deleteTeam: deleteTeam,
     deletePost: deletePost
 };
+

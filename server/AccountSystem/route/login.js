@@ -45,15 +45,12 @@ router.post('/', function(req, res){
                 req.login(user, function(err){
                     //console.log("Session biuld!");
                     if(err) throw err;
-                    return res.send(JSON.stringify({loginState: true}));
+                    //return res.send(JSON.stringify({loginState: true}));
+                    return res.redirect('/logout');
                 });
             })(req, res); //From website of the passport.js
         }
     });
-
-
-
-
 });
 
 module.exports = router;

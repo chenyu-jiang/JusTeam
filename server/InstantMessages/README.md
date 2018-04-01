@@ -21,6 +21,7 @@
 //data: user will join this team's chatroom
 { 
     "teamID": 12345,
+    "userID": 123,
     "nickname": "Nick",
     "username": "username"
 }
@@ -74,6 +75,17 @@
 {"status": false}
 ```
 
+* **authorized**
+
+```json
+//empty
+```
+
+* **failure**
+
+```json
+{"error": "message"}
+```
 
 ## Others
 

@@ -10,15 +10,14 @@ router.get('/getRecommend',(req,res)=>{
   var recommendTeams = getRecommendTeam();
   res.send(recommendTeams);
 });
-
+//TODO:
 router.get('/getUserTeams',(req,res)=>{
+  var teamList = JSON.parse(req.query.teamList);
   var teams = [];
   var aimUser = undefined;
-  //TODO: miss passport middleware
-  //TODO: somehow get the account information according to the userID
   function askOnce(var_i){
     return new Promise((resolve,reject)=>{
-      teamOP.askTeam(aimUser.teams.IDList[var_i],(err,result,fields)=>{
+      teamOP.askTeam(teamList[var_i],(err,result,fields)=>{
         if(err){
           reject(err);
         }
@@ -29,46 +28,45 @@ router.get('/getUserTeams',(req,res)=>{
       });
     });
   }
-  var result = {state: 1}; //NOTE:state is 1 means all teams are loaded, state is 0 means not all teams is loaded
-
-  for (var i = 0; i < aimUser.teams.IDList; i++){    //NOTE: teamList haven't been implemented now
-
+  var result = {state: 'all'};
+  var i = undefined;
+  for (i = 0; i < teamList.length; i++){    //NOTE: teamList haven't been implemented now
       async function f(){
         try{
+          var a = i;
           await askOnce(i);
+          if(a == teamList.length - 1){
+            result.teams = teams;
+            res.send(result);
+          }
         }
         catch(e){
-          result.state = 0;
+          result.state = 'part';
+          console.log(i);
+          if(i == teamList.length - 1){
+            result.teams = teams;
+            res.send(result);
+          }
         }
       }
       f();
   }
-
   //TODO: need to reorder the teams
-
-  result.teams = teams;
-  res.send(result);
 });
-
+//TODO: reorder
 router.get('/viewOneTeam',(req,res)=>{
-  var aimTeam = req.query.teamID;   //NOTE: here we require a teamID in the head
-
-  async function getOneTeam(){
-    try{
-      await new Promise((resolve,reject)=>{
-        teamOP.askTeam(aimTeam,(err,result,fields)=>{
-          var a = {state : 'success'};
-          a.team = result;
-          res.send(a);
-        });
-      });
+  var aimTeam = parseInt(req.query.teamID);   //NOTE: here we require a teamID in the head
+  teamOP.askTeam(aimTeam,(err,result, fields)=>{
+    if(err){
+      var a = {state : 'fail'};
+      res.send(a);
     }
-    catch(e){
-        var a = {state : 'fail'};
-        res.send(a);
+    else{
+      var a = {state : 'success'};
+      a.team = result;
+      res.send(a);
     }
-  }
-  getOneTeam();
+  });
 });
 
 module.exports = router;

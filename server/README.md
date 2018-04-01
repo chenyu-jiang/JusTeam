@@ -54,7 +54,7 @@
 
     7. *postID*: If not new post, the old postID must be submitted
 
-    8. isFinal: If isFinal is true, it will be set to Final and can be searched through SearchSystem, and be visible from team and event system. 
+    8. isFinal: If isFinal is true, it will be set to Final and can be searched through SearchSystem, and be visible from team and event system.
 
        **NOTE:**once a post is set as Final, it cannot be set back to draft.
 
@@ -72,18 +72,90 @@
 
   **Requirements**: None.
 
-  **Method**: GET
+        * api/team/TeamOP
 
-  **Parameters**:
+          * api/team/TeamOP/createTeam
 
-  1. *postID*: id of the post that needs setting status
+            **Requirements**: None.
 
-  **Response**:
-  ```json
-  {"status": true}
-  ```
+            **Method** : POST
 
-* api/posts/articles
+            **Parameters**:
+
+              1. userID : integer
+
+              2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
+
+            **Response**: {state: 'success'/'fail', insertID: integer}
+
+          * api/team/TeamOP/deleteTeam
+
+            **Requirements**: None.
+
+            **Method** : GET
+
+            **Parameters**:
+
+              1. teamID : integer // the ID of team which is going to be deleted
+
+            **Response**:  {state : 'success' / 'fail'}
+
+          * api/team/TeamOP/editTeam
+
+            **Requirements**: None.
+
+            **Method** : POST
+
+            **Parameters**:
+
+              1. a form contain all the information to change:
+                {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
+
+            **Response**:  {state : 'success' / 'fail'}
+
+          * api/team/TeamOP/addMember
+
+            **Requirements**: None.
+
+            **Method** : GET
+
+            **Parameters**:
+
+              1. teamID : integer
+
+              2. newMember : integer // which is the userID to be added
+
+            **Response**: {state : 'success' / 'fail'}
+
+          * api/team/TeamOP/deleteMember
+
+            **Requirements**: None.
+
+            **Method** : GET
+
+            **Parameters**:
+
+              1. teamID : integer
+
+              2. deletedMember : integer //which is the userID to be deleted
+
+            **Response**: {state : 'success' / 'fail'}
+
+          * api/team/TeamOP/editAuthority
+
+            **Requirements**: None.
+
+            **Method** : GET
+
+            **Parameters**:
+
+              1. userToChange : integer
+
+              2. rightToChange : integer
+
+              3. teamID : integer
+
+            **Response**: {state : 'success' / 'fail'}
 
   Get the content of the post.
 
@@ -135,7 +207,8 @@
 
 * api/team/createTeam  
 
-  **Requirements**: None.
+              **Response**: {state : 'success'/'fail', team : teamObject}
+    * api/
 
   **Method** : POST
 
@@ -265,7 +338,7 @@
 
       ```json
       {
-          results: 
+          results:
           [
               id: 1234,
               content: {"A team Object": "Please see team documentation"}
@@ -291,7 +364,7 @@
 
       ```json
       {
-          results: 
+          results:
           [
               {
                   id: 1234,

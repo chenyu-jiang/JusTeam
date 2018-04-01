@@ -1,7 +1,7 @@
 const Event = require('./Event');
 const dbEvent = require('./dbConnectionForEvent')
 
-//create input interface: {'startTime' = string(datetime), 'endTime' = string(datetime), 'title' = string, 'location' = string, 'specification' = string}
+//create input interface: {'startTime' = string, 'endTime' = string, 'title' = string, 'location' = string, 'specification' = string}
 //edit input interface: {'eventID' = integer,'startTime' = string(datetime), 'endTime' = string(datetime), 'title' = string, 'location' = string, 'specification' = string}
 //post attach interface: {'eventID': integer, 'postID': integer}
 //post delete interface: {'eventID': integer, 'postID': integer}
@@ -10,19 +10,31 @@ const dbEvent = require('./dbConnectionForEvent')
 module.exports = {
   createEvent : function createEvent(jsonIn,callback){
     var newEventID = undefined;
-    var newEvent = new Event(null,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
+    var newEvent = new Event(jsonIn.teamID,null,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
     async function insertNow(){
       await dbEvent.establishPool();
-      dbEvent.insertNewEvent(newEvent,(err,result)=>{
+      dbEvent.insertNewEvent(newEvent,(err,result,fields)=>{
         if(err){
           callback(err,null);
         }
         else{
-          callback(null,result.insertID);
+          callback(null,result.insertId);
         }
       });
     };
     insertNow();
+  },
+
+  deleteEventByTeam(teamID,callback){
+    dbEvent.establishPool();
+    dbEvent.deleteEventByTeam(teamID,(err,result)=>{
+      if(err){
+        callback(err,null);
+      }
+      else{
+        callback(null,result);
+      }
+    });
   },
 
   deleteEvent : function deleteEvent(eventID,callback){
@@ -47,7 +59,7 @@ module.exports = {
         callback(err,null);
       }
       else{
-        var eventUpdating = new Event(jsonIn.eventID,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
+        var eventUpdating = new Event(jsonIn.teamID, jsonIn.eventID,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
         eventUpdating.launchTime = rows[0].launchTime;
         eventUpdating.postList = rows[0].postList;
         dbEvent.updateEventInfo(eventUpdating,(err,result)=>{
@@ -90,7 +102,6 @@ module.exports = {
           }
         });
       });
-      console.log(eventAttaching);
       //eventAttaching.postList = JSON.parse(eventAttaching.postList);
       eventAttaching.postList.num = eventAttaching.postList.IDList.push(jsonIn.postID);
       dbEvent.updateEventInfo(eventAttaching,(err,result)=>{

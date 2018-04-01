@@ -5,11 +5,11 @@
     // (TeamID, UserID, String)
     function JoinRequest(teamToBeJoined, applicant, joinInfo) {};
     // (boolean, TeamID)
-    function NewAppcationResult(result, teamApplied) {};
+    function NewApplicationResult(result, teamApplied) {};
     // (TeamID, ActivityID, ActivityID, ActivityID)
     function TeamActivityUpdate(teamToBeUpdated, newActivity, deletedActivity, editedActivity) {};
     // (TeamID, Array of UserID, Array of UserID)
-    function TeamMemberUpdate(teamToBeUpdated,newMembers,quittedMembers) {};
+    function TeamMemberUpdate(teamToBeUpdated,newMembers,quitedMembers) {};
     // (TeamID, UserID, String)
     function TeamPublicMessage(teamToBeUpdated,sender,message) {};
     // (String)

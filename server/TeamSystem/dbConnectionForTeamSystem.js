@@ -3,7 +3,7 @@ const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
 const dbPassword = 'JusTeam3100Project!';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
-const dbName = 'teamsystem';
+const dbName = 'teamSystem';
 const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
 const teamUpdateSQL = 'UPDATE formal_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ?, `status` = ? WHERE `teamID` = ?';
 const teamQuerySQL = 'SELECT * FROM formal_team';

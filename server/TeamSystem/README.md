@@ -12,8 +12,9 @@ TeamSystem
 
 * introduction : this part do the related work to team
 
-* definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
-                    for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
+    * definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
+                        for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
+                        for the **category** we have *hiking*, *eating*, *studying*
 
 * functions:
 
@@ -79,35 +80,35 @@ TeamSystem
   **createEvent**
 
     1. Parameters : Jason : {'startTime' = string (data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
-    
+
     2. Output : insertID : integer
 
   **deleteEvent**
 
     1. Parameters : eventID : integer
-    
+
     2. Output : insertID : integer
 
   **editEvent**
 
     1. Parameters : Jason : {'eventID' = integer,'startTime' = string(data time), 'endTime' = string(data time), 'title' = string, 'location' = string, 'specification' = string}
-    
+
     2. Output : (err, result)
 
   **askEvent**
 
     1. Parameters : eventID : integer
-    
+
     2. Output : (err, eventObject, fields)
 
   **postAttachEvent**
 
     1. Parameters : {'eventID': integer, 'postID': integer}
-    
+
     2. Output : (err, result)
 
   **postDeleteEvent**
 
     1. Parameters : {'eventID': integer, 'postID': integer}
-    
+
     2. Output : (err, result)

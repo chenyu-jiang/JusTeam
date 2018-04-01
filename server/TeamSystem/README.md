@@ -15,6 +15,21 @@ TeamSystem
     * definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
                         for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
                         for the **category** we have *hiking*, *eating*, *studying*
+                        for status we have *recruiting*, *fighting*, *finished*
+    * fields:
+    {
+      category : string
+      status : string
+      reminder : string
+      recentEditTime : datetime
+      teamID : integer
+      introduction : string
+      teamTitle : string
+      maxMember : integer
+      launchTime : datetime
+      memberList = {'num':0,'IDList':[],'right':[]};
+      eventList = {'num':0,'IDList':[]};
+    }
 
 * functions:
 

@@ -263,4 +263,35 @@ router.get('/editAuthority',(req,res)=>{
   });
 });
 
+router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
+  var teamID = req.body.teamID;
+  var applicant = req.user.id;
+  var appliForm = req.body.application;
+  var notification = new noti.JoinRequest(teamID, applicant,appliForm);
+  var users = undefined;
+
+  async function f(){
+    await new Promise((resolve, reject)=>{
+      teamOP.askTeam(teamID,(err,result)=>{
+        if(err){
+          res.send({state : 'fail'});
+        }
+        else{
+          for(var i = 0; i < result.memberList.IDList.length; i++){
+            if(result.memberList.right[i] >= 2) {
+              users.push(result.memberList.IDList[i]);
+            }
+          }
+        }
+      });
+    });
+  }
+  f();
+  notification.send(users,(err)=>{
+    console.log(err);
+    res.send({state : "fail"});
+  });
+  res.send({state : 'success'});
+});
+
 module.exports = router;

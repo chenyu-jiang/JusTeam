@@ -64,10 +64,14 @@ async function getRecord(postID) {
     return record;
 }
 
-function setFinal(postID) {
+async function setFinal(postID) {
+    var querySQL = "SELECT * FROM records WHERE post_ID = ?;";
+    var queryArgList = [postID];
+    var result = await dbCommon.sqlQuery(querySQL, queryArgList);
     var sql = "UPDATE records SET isFinal = TRUE WHERE post_ID = ?;";
     var argList = [postID];
     dbCommon.sqlQuery(sql, argList);
+    return result[0].isFinal;
 }
 
 module.exports = {

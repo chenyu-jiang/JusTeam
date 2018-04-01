@@ -1,5 +1,6 @@
 var dbConnection = require("./dbConnection");
 var esConnection = require("./esConnection");
+var eventOperation = require("../TeamSystem/eventOperation");
 var fs = require("fs");
 
 async function saveRecord(content, isNew, oldPostID) {
@@ -12,16 +13,27 @@ async function saveRecord(content, isNew, oldPostID) {
                     attachESCreate(newPostID, content.path, content.postTitle, content.tags, (err)=>{
                         if(err) console.log(err);
                     });
+                    eventOperation.postAttachEvent({"eventID": parseInt(content.eventID),"postID": parseInt(newPostID)},(err,result)=>{
+                        if(err) console.log(err);
+                    });
                 }
             }
         } else {
             if(content.isFinal) {
-                dbConnection.setFinal(oldPostID);
-                attachESCreate(oldPostID, content.path, content.postTitle, content.tags, (err)=>{
+                var oldStatus = dbConnection.setFinal(oldPostID);
+                if(oldStatus) {
                     attachESUpdate(content.path, oldPostID, content.postTitle, content.tags, (err)=>{
                         if(err) console.log(err);
                     });
-                });
+                }
+                else {
+                    attachESCreate(oldPostID, content.path, content.postTitle, content.tags, (err)=>{
+                        if(err) console.log(err);
+                    });
+                    eventOperation.postAttachEvent({"eventID": parseInt(content.eventID),"postID": parseInt(oldPostID)},(err,result)=>{
+                        if(err) console.log(err);
+                    });
+                }
             }
             var oldPath = await dbConnection.editRecord(oldPostID, content.path, content.teamID, content.eventID, content.postTitle, content.tags);
             fs.unlink(oldPath, (err) => {
@@ -72,11 +84,17 @@ function setFinal(postID) {
 async function deleteRecord(json,callback){
     if(json.deleteByID) {
         var record = await dbConnection.getRecord(json.deleteByID);
+        var eventID = record.event_ID;
         fs.unlink(record.path,(err)=>{
             if(err && callback) callback(err);
         })
         dbConnection.deleteRecord(json.deleteByID);
         esConnection.deletePostItem(json.deleteByID);
+        if(eventID){
+            eventOperation.postDeleteEvent({"eventID": parseInt(eventID),"postID": parseInt(json.deleteByID)},(err,result)=>{
+                if(err) console.log(err);
+            });
+        }
     } else {
         if(json.deleteByEvent) {
             var itemList = await dbConnection.deleteRecordByEvent(json.deleteByEvent);

@@ -3,17 +3,18 @@ const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
 const dbPassword = '123456';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
-const dbName = 'teamsystem';
-const eventInsertSQL = 'INSERT INTO test_event (startTime, endTime, title, location, specification,launchTime,recentEditTime,postList) VALUES(?,?,?,?,?,?,?,?)';
-const eventUpdateSQL = 'UPDATE test_event SET startTime=?, endTime=?, title=?, location=?, specification=?,recentEditTime=?,postList=? WHERE eventID = ?';
-const eventQuerySQL = 'SELECT * FROM test_event';
-const eventQueryByID = 'SELECT * FROM test_event WHERE eventID = ?';
-const eventDeleteSQL = 'DELETE FROM test_event WHERE eventID=?';
-
+const dbName = 'teamSystem';
+const eventInsertSQL = 'INSERT INTO formal_event (teamID, startTime, endTime, title, location, specification,launchTime,recentEditTime,postList) VALUES(?,?,?,?,?,?,?,?,?)';
+const eventUpdateSQL = 'UPDATE formal_event SET startTime=?, endTime=?, title=?, location=?, specification=?,recentEditTime=?,postList=? WHERE eventID = ?';
+const eventQuerySQL = 'SELECT * FROM formal_event';
+const eventQueryByID = 'SELECT * FROM formal_event WHERE eventID = ?';
+const eventDeleteSQL = 'DELETE FROM formal_event WHERE eventID=?';
+const eventDeleteByTeamID = 'DELETE FROM formal_event WHERE teamID=?';
 
 var eventSystemPool = undefined;
 
 module.exports = {
+
 getDBTime : function getDBTime(){
     var date = new Date(Date.now());
     var Y = date.getFullYear() + '-';
@@ -50,6 +51,21 @@ establishPool : function createPool(){
   },
 
 
+
+deleteEventByTeam : function deleteEventByTeam(teamID,callback){
+  var deleteEvent_Params = [teamID];
+  eventSystemPool.query(eventDeleteByTeamID,deleteEvent_Params,(err,result) =>{
+    if(err){
+      var newErr = new Error("[DB deleteEventByTeam Error] -" + err);
+      callback(newErr,null);
+    }
+    else{
+      callback(null,result);
+    }
+  });
+},
+
+
 askEventInfo : function askEventInfo(eventID,callback){
     var eventQueryByID_Params = [eventID];
     eventSystemPool.query(eventQueryByID,eventQueryByID_Params,(err,rows,fields)=>{
@@ -68,12 +84,10 @@ askEventInfo : function askEventInfo(eventID,callback){
 
 
 insertNewEvent : function insertNewEvent(newevent,callback){
-  console.log(4);
-  console.log(newevent);
   newevent.launchTime = this.getDBTime();
   newevent.recentEditTime = newevent.launchTime;
-  var eventInsertSQL_Params = [newevent.startTime, newevent.endTime, newevent.title, newevent.location, newevent.specification,newevent.launchTime,newevent.recentEditTime,JSON.stringify(newevent.postList)];
-  eventSystemPool.query(eventInsertSQL,eventInsertSQL_Params,(err,result) =>{
+  var eventInsertSQL_Params = [newevent.teamID, newevent.startTime, newevent.endTime, newevent.title, newevent.location, newevent.specification,newevent.launchTime,newevent.recentEditTime,JSON.stringify(newevent.postList)];
+  eventSystemPool.query(eventInsertSQL,eventInsertSQL_Params,(err,result)=>{
     if(err){
       var newErr = new Error("[DB Insert Error] -" + err);
       callback(newErr,null);
@@ -87,7 +101,9 @@ insertNewEvent : function insertNewEvent(newevent,callback){
 
 updateEventInfo: function updateEventInfo(eventToBeUpdated, callback){
   eventToBeUpdated.recentEditTime = this.getDBTime();
+  console.log(eventToBeUpdated);
   var eventUpdate_Params = [eventToBeUpdated.startTime, eventToBeUpdated.endTime, eventToBeUpdated.title, eventToBeUpdated.location, eventToBeUpdated.specification,eventToBeUpdated.recentEditTime,JSON.stringify(eventToBeUpdated.postList),eventToBeUpdated.eventID];
+  console.log(eventUpdate_Params);
   eventSystemPool.query(eventUpdateSQL,eventUpdate_Params,(err,result) =>{
     if(err){
       var newErr = new Error("[DB Update Error] -" + err);

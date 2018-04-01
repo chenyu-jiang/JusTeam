@@ -14,6 +14,7 @@ TeamSystem
 
     * definitions : note for the **status : string** we have *recruiting*, *fighting*, *finished*
                         for the **right : integer** we have  1  *common teammates*, 2  *have right to prove application or edit Team*, 3  *The owner of this team*
+                        for the **category** we have *hiking*, *eating*, *studying*
 
     * functions:
 

@@ -1,6 +1,7 @@
 class Event {
-  constructor (eventID,startTime, endTime, title, location, specification){
+  constructor (teamID, eventID,startTime, endTime, title, location, specification){
   if(!(new.target)) throw new TypeError("You need to create a event with new");
+  this.teamID = teamID;
   this.eventID = eventID;
   this.startTime = startTime;
   this.endTime = endTime;

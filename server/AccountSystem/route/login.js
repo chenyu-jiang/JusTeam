@@ -5,46 +5,47 @@ var passport = require('passport');
 var Local = require('passport-local').Strategy;
 
 //Refer to online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
-passport.use(new Local(
-    function(email, password, done) {
+passport.use(new Local({
+        usernameField: 'email',
+        passwordField: 'password'
+    }, function(email, password, done) {
+        console.log("Start checking!");
         try{
-            identity.loginCheck(email, password, (check, message) => {
-                if(!check){
+            identity.loginCheck(email, password, (user, message) => {
+                if(!user){
                     return done(null, false, {
                         message: message
                     });
                 }
                 else{
-                    return done(null, true);
+                    return done(null, user);
                 }
             })
-        }
-        catch{
-            //Catch the error from verification failure.
+        } catch (err){
+            return done(err);
         }
     } //Referred to Example of http://www.passportjs.org/docs/configure/
 ));
 
-router.post('/login', function(req, res){
-    var username = req.username;
-    var password = req.password;
+router.post('/', function(req, res){
+    var email = req.body.email;
+    var password = req.body.password;
     var remember = true;
 
-    passport.authenticate('local', { successRedirect: '/' + username,
-        failureRedirect: '/login',
-        failureFlash: true }, function(err, state, info){
+    passport.authenticate('local', function(err, user, info){
+        console.log("Success check!");
         if(err) throw err;
-        if(!state){
+        if(!user){
             return res.redirect('/login');
         }
 
-        req.login(state, function(err){
+        req.login(user, function(err){
+            console.log("Session biuld!");
             if(err) throw err;
-        }, function (){
-            //After done
+            return res.redirect('/register');
         });
+    })(req, res); //From website of the passport.js
+});
 
-    }); //From website of the passport.js
-
-})
+module.exports = router;
 

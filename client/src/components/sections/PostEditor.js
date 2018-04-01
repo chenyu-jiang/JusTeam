@@ -50,7 +50,7 @@ class PostEditor extends Component {
 
     contentSubmit=()=>{
         console.log("submitting post:  "+JSON.stringify(this.state.contentState));
-        console.log("submitting json:  "+convertToRaw( this.state.contentState));
+       // console.log("submitting json:  "+convertToRaw( this.state.contentState));
     }
 
     onContentStateChange= (contentState) => {

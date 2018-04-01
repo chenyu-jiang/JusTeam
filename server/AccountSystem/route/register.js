@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 //Refer to online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
 
 router.post('/', function(req, res){
-    //console.log("Jiang!!!");
     var email = req.body.email;
     var username = req.body.userID;
     var password = req.body.password;
@@ -23,7 +22,7 @@ router.post('/', function(req, res){
         identity.createUser(user, userInfo, function(err){
             if(err) throw err;
             res.send(JSON.stringify({regState: true}));
-        })
+        });
     });
 });
 

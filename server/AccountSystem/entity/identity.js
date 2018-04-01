@@ -1,6 +1,8 @@
 var dbCommon = require('../../dbCommon');
 var bcrypt = require('bcrypt');
 var connection = new dbCommon('account');
+var moment = require('moment');
+var passwordHash = require('password-hash');
 
 function userIdentity(name, email, password, nickname) {
     this.username = name;
@@ -16,7 +18,7 @@ function userInformation(phone, institution, major, nickname){
     this.nickname = nickname;
 }
 
-var createUser = async function(identity, userInfo, callBack){
+var createUser = async function (identity, userInfo, callBack){
     //Refer to example from documentation of bcryptjs
     //Also online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
     //if(!identity instanceof userIdentity) throw error("Unmatched identity type!")
@@ -25,8 +27,11 @@ var createUser = async function(identity, userInfo, callBack){
         //if(err) callBack(err, null);
         //identity.hashPassword = hash;
         //Store the information into the database
-        var query = 'INSERT INTO identity (username, email, password) VALUES (' +
-            "\'" + identity.username + "\' "  + ',' + "\'" + identity.email + "\' " + ',' + "\'" + identity.plainPassword + "\' " +  ')';
+        var query = 'INSERT INTO identity (username, email, password, regtime) VALUES (' +
+            "\'" + identity.username + "\' "  + ',' +
+            "\'" + identity.email + "\' " + ',' +
+            "\'" + identity.plainPassword + "\' " + ',' +
+            '\'' + moment(Date.now()).format('YYYY-MM-DD HH:mm:ss') + '\'' + ')';
         var request = await connection.sqlQuery(query);
 
         query = 'SELECT id FROM identity WHERE email = ' + '\'' + identity.email + '\'';
@@ -121,16 +126,13 @@ var isPasswordMatch = async function(id, pwCandidate, callBack){
         callBack(false, {error: 'User is not exist!'});
     }
     else{
-        //bcrypt.genSalt(20, function(err, salt) {
-            //if(err) throw err;
-            //bcrypt.hash(pwCandidate, salt, function(err, hash) {
-                //if(err) throw err;
-                // Store hash in your password DB.
-                //Store the information into the database
         try{
             var pw = result[0].password.toString();
-            for(var i = 0; i < pwCandidate.length; i++){
-                if(pwCandidate[i] != pw[i]) return callBack(false, {error: 'Password is not matched!'});
+            if(passwordHash.isHashed(pwCandidate)){
+                var result = passwordHash.verify(pw, pwCandidate);
+                if(!result) return callBack(false, {error: 'Password is not matched!'});
+            } else {
+                if(pw != pwCandidate) return callBack(false, {error: 'Password is not matched!'});
             }
             return callBack(true, null);
         }
@@ -162,13 +164,6 @@ var loginCheck = function(email, password, callBack) {
 
 }
 
-var checkLog = function(req, next){
-    if(req.isLoggedIn) {return next;}
-    else {
-        //Handle
-    }
-}
-
 var getUserFromId = async function(id, callBack){
     try{
         var query = 'SELECT * FROM identity WHERE id = ' + id;
@@ -181,6 +176,16 @@ var getUserFromId = async function(id, callBack){
 
 }
 
+var getEmailFromUsername = async function (username, callBack){
+    var query = 'SELECT email FROM identity WHERE username = ' + '\'' + username + '\'';
+    try{
+        var result = await connection.sqlQuery(query);
+        callBack(null, result[0]);
+    }catch(err){
+        callBack(err, null);
+    }
+}
+
 module.exports= {
     isUserExist : isUserExist,
     userIdentity : userIdentity,
@@ -188,7 +193,6 @@ module.exports= {
     regValidate : regValidate,
     loginCheck : loginCheck,
     getUserFromId: getUserFromId,
-    userInformation: userInformation
-    //checkUser   : checkUser,
-    //checkPassword: checkPassword()
+    userInformation: userInformation,
+    getEmailFromUsername: getEmailFromUsername
 };

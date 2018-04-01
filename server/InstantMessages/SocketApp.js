@@ -1,71 +1,67 @@
 function instantChat(server) {
     var app = server;
     var io = require('socket.io')(app);
-
-    require('socketio-auth')(io,{
-        authenticate: authenticate,
-        postAuthenticate: postAuthenticate,
-        timeout: 1000
-    });
-
     var numOfChatRooms = 0;
     var clients={}
 
-    function authenticate(socket, data, callback) {
-        var username = data.username;
-        var password = data.password;
-        
-
-    }
-
     io.on("connection",function (socket) {
+        socket.auth = undefined;
 
-        //##########################################
-        // TODO: Authentication (cookie checking)
-        // Get userName from the cookie itself.
-        //##########################################
+        socket.on("authentication", (data)=> {
+            var status = false;
+            //Check
+            if(data.username === "Bob" && data.password === "Hunter2") status = true;
+            if(!status) {
+                socket.emit("unauthorized", {"status": false});
+            }
+            else socket.auth = true;
+        });
 
-        //socket.userID = getUserID(); //TODO: implement this in router module
         socket.userID = 12345;
-        //socket.userName = getUserName(); //TODO: implement this in router module
-        //socket.userName = "Michael";
 
         socket.on("userJoined", (data) => {
-            if (socket.userName !== undefined) {
-                //Not first login
-                return;
+            if(socket.auth){
+                if (socket.userName !== undefined) {
+                    //Not first login
+                    return;
+                }
+                //first login, check userID
+                socket.userName = data.username;
+                socket.nickName = data.nickname;
+                socket.teamID = data.teamID;
+                socket.roomName = "#"+data.teamID;
+                socket.join(socket.roomName);
+                if (clients[socket.roomName] === undefined) {
+                    clients[socket.roomName] = [];
+                }
+                clients[socket.roomName].push({"userName": socket.userName,"nickName": socket.nickName, "userID": socket.userID});
+                socket.broadcast.to(socket.roomName).emit("userJoinedRoom",{
+                    user: {
+                        userName: socket.userName,
+                        nickName: socket.nickName,
+                        userID: socket.userID
+                    },
+                    numberOfUsers: clients[socket.roomName].length,
+                    usersList: clients[socket.roomName]
+                });
             }
-            //first login, check userID
-            socket.userName = "Michael";
-            //validateUser(user,data.teamID); //TODO: implement this in router module
-            socket.teamID = data.teamID;
-            socket.roomName = "#"+data.teamID;
-            socket.join(socket.roomName);
-            if (clients[socket.roomName] === undefined) {
-                clients[socket.roomName] = [];
-                clients[socket.roomName].push({"userName": socket.userName, "userID": socket.userID});
-            }
-            socket.broadcast.to(socket.roomName).emit("userJoinedRoom",{
-                user: {
-                    userName: socket.userName,
-                    userID: socket.userID
-                },
-                numberOfUsers: clients[socket.roomName].length,
-                usersList: clients[socket.roomName]
-            });
         });
 
         socket.on("newMessage", (data)=> {
-            socket.broadcast.to(socket.roomName).emit("newMessage",{
-                sender: {
-                    userName: socket.userName,
-                    userID: socket.userID,
-                },
-                message: data
-            });
+            if(socket.auth){
+                socket.broadcast.to(socket.roomName).emit("newMessage",{
+                    sender: {
+                        userName: socket.userName,
+                        nickName: socket.nickName,
+                        userID: socket.userID,
+                    },
+                    message: data
+                });
+            }
         });
 
         socket.on("disconnect", ()=> {
+            socket.auth = false;
             if (clients[socket.roomName] === undefined) {
                 clients[socket.roomName] = [];
                 return;
@@ -85,6 +81,7 @@ function instantChat(server) {
             socket.broadcast.to(socket.roomName).emit("userLeftRoom",{
                 user: {
                     userName: socket.userName,
+                    nickName: socket.nickName,
                     userID: socket.userID
                 },
                 numberOfUsers: clients[socket.roomName].length,

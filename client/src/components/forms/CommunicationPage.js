@@ -26,15 +26,21 @@ class CommunicationPage extends Component{
       socket.emit("newMessage", sendingMessage);
   }
   componentDidMount() {
-      socket.emit("userJoined",{"teamID": TeamID});
+      socket.emit("authentication",{"username": "Bob", "password": "Hunter2"});
+      socket.emit("userJoined",{"teamID": TeamID,"nickname":"Nick"+Date.now(),"username":"Bob"});
       socket.on("userJoinedRoom", (data)=>{
-          addResponseMessage("User "+ data.user.userName + " joined room!");
+          addResponseMessage("User "+ data.user.nickName + " joined room!");
       });
       socket.on("newMessage", (data)=>{
-          addResponseMessage("User "+ data.sender.userName + " said: "+ data.message);
+          addResponseMessage("User "+ data.sender.nickName + " said: "+ data.message);
       });
       socket.on("userLeftRoom", (data)=>{
-          addResponseMessage("User "+ data.user.userName + " left.");
+          addResponseMessage("User "+ data.user.nickName + " left.");
+      });
+      socket.on("unauthorized", (data)=>{
+            addResponseMessage("Authorization Failed.");
+            socket.emit("authentication",{"username": "Bob", "password": "Hunter2"});
+            socket.emit("userJoined",{"teamID": TeamID,"nickname":"Nick"+Date.now(),"username":"Bob"});
       });
   }
 

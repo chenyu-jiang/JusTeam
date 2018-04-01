@@ -6,11 +6,24 @@
 
 ### Events from client:
 
+* authentication
+
+```json
+{
+    "username": "username",
+    "password": "password"
+}
+```
+
 * **userJoined:**
 
 ```json
 //data: user will join this team's chatroom
-{ "teamID": 12345 }
+{ 
+    "teamID": 12345,
+    "nickname": "Nick",
+    "username": "username"
+}
 ```
 
 * **newMessage:**
@@ -24,16 +37,20 @@
 ```json
 //data:
 {
-    "user": {"userName": "JusTeam", "userID": 123},
+    "user": {"userName": "JusTeam", "nickName": "Nick","userID": 123},
     "numberOfUsers": 2,
-    "usersList": [{"userName": "JusTeam", "userID": 456}]
+    "usersList": [{
+        "nickName": "JusTeam",
+        "userName": "root",
+        "userID": 456
+    }]
 }
 ```
 * **newMessage:**
 ```json
 //data: user is the message sender
 {
-    "user": {"userName": "JusTeam", "userID": 123},
+    "user": {"userName": "JusTeam", "nickName" : "Nick","userID": 123},
     "message": {"data package": "data package"}
 }
 ```
@@ -41,11 +58,22 @@
 ```json
 //data:
 {
-    "user": {"userName": "JusTeam", "userID": 123},
+    "user": {"userName": "JusTeam", "nickName" : "Nick", "userID": 123},
     "numberOfUsers": 2,
-    "usersList": [{"userName": "JusTeam", "userID": 456}]
+    "usersList": [{
+        "nickName": "JusTeam",
+        "userName": "root",
+        "userID": 456
+    }]
 }
 ```
+
+* **unauthorized**
+
+```json
+{"status": false}
+```
+
 
 ## Others
 

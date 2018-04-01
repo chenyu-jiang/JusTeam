@@ -1,7 +1,6 @@
 var express = require("express");
 var app = express();
 
-
 app.use("/api",require("./Router/api"));
 
 //test fileUpload
@@ -15,5 +14,6 @@ app.get("/art", function(req,res) {
     res.end();
 });
 
-app.listen(3000);
-console.log("Server started on port 3000.");
+var server = app.listen(3001);
+var instantChat = require("./InstantMessages/SocketApp")(server);
+console.log("Server started on port 3001.");

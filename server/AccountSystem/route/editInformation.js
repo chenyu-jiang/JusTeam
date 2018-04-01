@@ -6,7 +6,6 @@ var connection = new dbCommon('account');
 
 router.post('/', function(req, res){
     //Validate for user authority here;
-
     //Then check the validity of requested edition (e.g. information format)
     var id = 26;
     var item = ['nickname', 'institution'];

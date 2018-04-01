@@ -5,6 +5,7 @@ import 'antd/dist/antd.css'
 import '../pages/AccountInfoPage.css'
 import PostEditor from '../sections/PostEditor'
 import PostContentViewer from '../modules/PostContentViewer'
+import PostTag from '../modules/PostTag'
 const { Header, Content, Sider } = Layout;
 
 const TimeLine=[{Time:'2018.2.19', DoItem:'Do something1', Description:'I am so bad guy', Status:'finish',},
@@ -69,7 +70,7 @@ class OneTeamPage extends Component{
                   </Content>
                 </Layout>
                <div>
-                   <PostContentViewer/>
+                   <PostTag/>
                </div>
             </div>
         );

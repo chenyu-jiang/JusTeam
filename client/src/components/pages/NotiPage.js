@@ -1,5 +1,7 @@
 import React from 'react'
 import NotificationItem from '../forms/Notification'
+import {getNewNotiList,getNewNotiNum,getNotiHistory,deleteNoti} from '../../services/notiService'
+
 
 const NotiPage=()=>
     (

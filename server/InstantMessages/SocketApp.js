@@ -19,7 +19,7 @@ function instantChat(server) {
                         if(match) {
                             socket.auth = true;
                             socket.emit("authorized");
-                        };
+                        }
                         else {
                             socket.emit("unauthorized", {"error":"Invalid username or password."});
                         }

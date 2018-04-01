@@ -1,6 +1,5 @@
 var dbCommon = require('../../dbCommon');
-var bcrypt = require('bcrypt');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 var moment = require('moment');
 var passwordHash = require('password-hash');
 
@@ -11,7 +10,6 @@ function userIdentity(name, email, password, nickname) {
 };
 
 function userInformation(phone, institution, major, nickname){
-
     this.phone = phone;
     this.institution = institution;
     this.major = major;
@@ -23,12 +21,12 @@ var createUser = async function (identity, userInfo, callBack){
     //Also online tutorial: https://www.youtube.com/watch?v=OnuC3VtEQks&t=407s
     //if(!identity instanceof userIdentity) throw error("Unmatched identity type!")
     //bcrypt.hash(identity.plainPassword, 20).then(async function(err, hash) {
-        console.log("Yep!!!");
         //if(err) callBack(err, null);
         //identity.hashPassword = hash;
         //Store the information into the database
+    try {
         var query = 'INSERT INTO identity (username, email, password, regtime) VALUES (' +
-            "\'" + identity.username + "\' "  + ',' +
+            "\'" + identity.username + "\' " + ',' +
             "\'" + identity.email + "\' " + ',' +
             "\'" + identity.plainPassword + "\' " + ',' +
             '\'' + moment(Date.now()).format('YYYY-MM-DD HH:mm:ss') + '\'' + ')';
@@ -44,22 +42,22 @@ var createUser = async function (identity, userInfo, callBack){
         term.push('id');
         mid.push(request[0].id);
 
-        if(userInfo.phone !== undefined) {
+        if (userInfo.phone !== undefined) {
             term.push('phone');
             mid.push(userInfo.phone);
         }
 
-        if(userInfo.institution !== undefined) {
+        if (userInfo.institution !== undefined) {
             term.push('institution');
             mid.push(userInfo.institution);
         }
 
-        if(userInfo.major !== undefined) {
+        if (userInfo.major !== undefined) {
             term.push('major');
             mid.push(userInfo.major);
         }
 
-        if(userInfo.nickname !== undefined) {
+        if (userInfo.nickname !== undefined) {
             term.push('nickname');
             mid.push(userInfo.nickname);
         }
@@ -67,11 +65,10 @@ var createUser = async function (identity, userInfo, callBack){
         var value = '(';
         var column = '(';
 
-        for(var i = 0; i < mid.length; i++){
+        for (var i = 0; i < mid.length; i++) {
             value += '\'' + mid[i] + '\'';
             column += term[i];
-            if(!(i === (mid.length - 1)))
-            {
+            if (!(i === (mid.length - 1))) {
                 value += ', ';
                 column += ', ';
             }
@@ -79,9 +76,12 @@ var createUser = async function (identity, userInfo, callBack){
 
         column += ')';
 
-        query = 'INSERT INTO information ' + column +  ' VALUES ' + value + ')';
+        query = 'INSERT INTO information ' + column + ' VALUES ' + value + ')';
         request = await connection.sqlQuery(query);
-        callBack(request);
+        callBack(request, null);
+    } catch (err) {
+        callBack(null, err);
+    }
     //});
     //callback
 }

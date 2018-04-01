@@ -5,7 +5,7 @@ class dbCommon {
         this.mysql = module.require("mysql");
         this.dbHost = '127.0.0.1';                 // localhost for dev
         this.dbUser = 'root';                      // root for dev
-        this.dbPassword = 'worldofwonder';   // plain text password? Really?
+        this.dbPassword = 'JusTeam3100Project!';   // plain text password? Really?
         this.dbPort = '3306';                      // port for dev
         this.pool = undefined;
         this.sqlQuery = this.sqlQuery.bind(this);

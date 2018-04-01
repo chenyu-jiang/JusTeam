@@ -19,9 +19,9 @@ router.post('/', function(req, res){
     identity.isUserExist(user.email, (id, result, err) => {
         if(err) res.send(JSON.stringify({err: err}));
         if(result) return res.send(JSON.stringify({regState:false, regReason: 'User has already exist'}));
-        identity.createUser(user, userInfo, function(err){
-            if(err) throw err;
-            res.send(JSON.stringify({regState: true}));
+        identity.createUser(user, userInfo, function(result, err){
+            if(err) return res.send(JSON.stringify({regState: false, error: err}));
+            else return res.send(JSON.stringify({regState: true}));
         });
     });
 });

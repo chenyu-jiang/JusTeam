@@ -1,6 +1,6 @@
 var fs = require("fs");
 var path = require("path");
-
+const localPath = "http://localhost:3000/"
 //fileUpload middleware
 const picMimetypes = {
     "image/bmp": true,
@@ -108,7 +108,7 @@ var uploadText = multer({storage: textStorage});
 router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
     //return the path
     var resContent = {
-        path: req.file.path
+        path: localPath+req.file.path.split(path.resolve("./").length,req.file.path.length)
     };
     res.send(resContent);
 });

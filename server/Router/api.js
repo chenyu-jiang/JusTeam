@@ -18,6 +18,7 @@ router.use("/team/teamOP",teamOP);
 router.use("/team/teamInfo",teamInfo);
 router.use("/event/eventInfo",eventInfo);
 router.use("/event/eventOP",eventOP);
+router.use("/account",accountSystem);
 
 
 module.exports = router;

@@ -11,7 +11,8 @@ router.get("/team", async (req, res, next) => {
     if (req.query.limit !== undefined) {
         limit = req.query.limit;
     }
-    var result = await searchSystem.searchTeam(queryString, offset, limit);
+    var result = {};
+    result = await searchSystem.searchTeam(queryString, offset, limit).catch((err)=>{});
     res.send(result);
 });
 

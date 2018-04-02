@@ -167,7 +167,7 @@ router.get('/addMember',async (req,res)=>{
     await accountOP.addTeam(aimTeamID, newMember);
       var newMembers = [];
       newMembers.push(newMember);
-      var notification = new TeamMemberUpdate(aimTeamID,newMembers,[]);
+      var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'a new teammates has been added to your team');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
@@ -207,7 +207,7 @@ router.get('/deleteMember',async (req,res)=>{
       var quitedMembers = [];
       quitedMembers.push(deletedMember);
 
-      var notification = new TeamMemberUpdate(aimTeamID,[],quitedMembers);
+      var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'one of your teammates has quited the team');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
@@ -247,7 +247,7 @@ router.get('/editAuthority',async (req,res)=>{
     else{
       var a = {state : 'success'};
 
-      var notification = new TeamPublicMessage(changingTeam,req.user.id,'the authority of one of your teammates has been changed');
+      var notification = new notiOP.TeamPublicMessage(changingTeam,req.user.id,'the authority of one of your teammates has been changed');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
@@ -268,6 +268,37 @@ router.get('/editAuthority',async (req,res)=>{
       res.send(a);
     }
   });
+});
+
+router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
+  var teamID = req.body.teamID;
+  var applicant = req.user.id;
+  var appliForm = req.body.application;
+  var notification = new noti.JoinRequest(teamID, applicant,appliForm);
+  var users = undefined;
+
+  async function f(){
+    await new Promise((resolve, reject)=>{
+      teamOP.askTeam(teamID,(err,result)=>{
+        if(err){
+          res.send({state : 'fail'});
+        }
+        else{
+          for(var i = 0; i < result.memberList.IDList.length; i++){
+            if(result.memberList.right[i] >= 2) {
+              users.push(result.memberList.IDList[i]);
+            }
+          }
+        }
+      });
+    });
+  }
+  f();
+  notification.send(users,(err)=>{
+    console.log(err);
+    res.send({state : "fail"});
+  });
+  res.send({state : 'success'});
 });
 
 module.exports = router;

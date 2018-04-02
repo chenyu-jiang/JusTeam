@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const eventOP = require('../../TeamSystem/eventOperation');
 var router = express.Router();
 
-router.get('/getUserEvents',(req,res)=>{
-  var eventList = JSON.parse(req.query.eventList);
+router.get('/getTeamEvents',(req,res)=>{
+  var eventLists = JSON.parse(req.query.eventList);
+  var eventList = eventLists.IDList;
   var events = [];
   var result = {state : 'all'};
 
@@ -30,6 +31,14 @@ router.get('/getUserEvents',(req,res)=>{
         await askOnce(i);
         if(a == eventList.length - 1){
           result.events = events;
+
+          var postList = [];
+          for(var j = 0; j < events.length; j++){
+            postList.concat(events[j].postList.IDList);
+          }
+
+          result.postList = postList;
+
           res.send(result);
         }
       }

@@ -175,7 +175,7 @@ router.get('/addMember',async (req,res)=>{
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
-          teamOP.askTeam(aimTeamID,(err,result)=>{
+          teamOP.askTeam(aimTeamID,async (err,result)=>{
             if(!err){
 
               try{

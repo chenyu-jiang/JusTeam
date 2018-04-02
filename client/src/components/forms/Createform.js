@@ -1,8 +1,12 @@
 import React from 'react';
 import { Form, Input, Tooltip, Icon, Cascader, Select,
     Row, Col, Checkbox, Button, AutoComplete,
-    DatePicker, TimePicker, Slider } from 'antd';
+    DatePicker, TimePicker, Slider,message } from 'antd';
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
+import {createNewTeam} from "../../services/teamService";
 import '../pages/AccountInfoPage.css';
+import {logIn} from "../../services/accountService";
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
@@ -10,8 +14,38 @@ const AutoCompleteOption = AutoComplete.Option;
 const RangePicker = DatePicker.RangePicker;
 const {TextArea}=Input;
 let uuid = 0;
+let topath='';
 function teamrange(value) {
     return `${(value+20)/10}`;
+}
+
+
+const mapStateToProps=state=>{
+    return{
+        userID: state.userID,
+        viewingTeamID:state.viewingTeamID,
+        toPath:state.toPath,
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+       createTeamDispatch: teamID=>{
+            dispatch({
+                type:"SET_TEAMID",
+                viewingTeamID:teamID,
+            });
+            dispatch({
+                type:"SET_TOPATH",
+                toPath:"/home/dash/myTeams/viewTeam"
+            });
+        },
+       resetPathDispatch: ()=>{
+           dispatch({
+               type:"SET_TOPATH",
+               toPath:"/null"
+           });
+       }
+    }
 }
 
 class RegistrationForm extends React.Component {
@@ -60,11 +94,30 @@ class RegistrationForm extends React.Component {
             // Should format date value before submit.
             const rangeValue = fieldsValue['timespan'];
             const values = {
-                ...fieldsValue,
-                'timespan': [rangeValue[0], rangeValue[1]],
-            };
+               introduciton:fieldsValue.description,
+                teamTitle:fieldsValue.teamTitle,
+                maxMember:fieldsValue.teamSize ? fieldsValue.teamSize : 2,
+                category:fieldsValue.category,
+                startTime:rangeValue[0],
+                endTime:rangeValue[1],
+                status:"Recruiting",
+                reminder:"Nothing to inform yet.",
 
+            };
+           const response= createNewTeam(values);
+           if(response.status){
+               if(response.status === 'success') {
+                   if(response.insertID) this.props.createTeamDispatch(response.insertID);
+                   console.log('create team successful')
+               }
+               else {
+                  message.error('Failed to create, please retry!')
+               }
+           }
+           if(response.error) console.log(response.error);
             console.log('Received values of form: ', JSON.stringify(values));
+           // this.props.createTeamDispatch(response.insertID);
+            topath='home/dash/myTeams/viewTeam'
         });
     }
 
@@ -124,20 +177,20 @@ class RegistrationForm extends React.Component {
             return (
                 <FormItem
                     {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                    label={index === 0 ? 'Activities' : ''}
+                    label={index === 0 ? 'Tags' : ''}
                     required={false}
                     key={k}
                 >
 
-                    {getFieldDecorator(`names[${k}]`, {
+                    {getFieldDecorator(`category[${k}]`, {
                         validateTrigger: ['onChange', 'onBlur'],
                         rules: [{
                             required: true,
                             whitespace: true,
-                            message: "You cannot create an empty activity.",
+                            message: "You cannot create an empty tag.",
                         }],
                     })(
-                        <Input placeholder="Timeline activity" style={{width:"68%", marginRight: 8}} />
+                        <Input placeholder="Tag Desctiption" style={{width:"68%", marginRight: 8}} />
                     )}
                     {keys.length > 1 ? (
                         <Icon
@@ -147,17 +200,16 @@ class RegistrationForm extends React.Component {
                             onClick={() => this.remove(k)}
                         />
                     ) : null}
-                    {getFieldDecorator(`dates[${k}]`,{
-                        validateTrigger: ['onChange'],
-                        rules: [{
-                            required: true,
-                            message: "Please pick a date",
-                        }],
-                    })(<DatePicker style={{marginRight: 8}}/>)}
+
                 </FormItem>
             );
         });
-
+        if(topath==='home/dash/myTeams/viewTeam') {
+            topath='';
+            console.log("the toPath is:", this.state.toPath)
+             this.props.resetPathDispatch();
+            return(<Redirect to='/home/dash/myTeams/viewTeam' />);
+        }
         return (
             <div>
                 <Col span={6}></Col>
@@ -209,7 +261,7 @@ class RegistrationForm extends React.Component {
                     {formItems}
                     <FormItem {...formItemLayoutWithOutLabel}>
                         <Button type="dashed" onClick={this.add} style={{ width: '100%' }}>
-                            <Icon type="plus" /> Add new activity...
+                            <Icon type="plus" /> Add a tag to categorize your team...
                         </Button>
                     </FormItem>
 
@@ -233,5 +285,5 @@ class RegistrationForm extends React.Component {
     }
 }
 
-const WrappedRegistrationForm = Form.create()(RegistrationForm);
+const WrappedRegistrationForm = connect(mapStateToProps,mapDispatchToProps)( Form.create()(RegistrationForm));
 export default WrappedRegistrationForm;

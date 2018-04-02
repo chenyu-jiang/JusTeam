@@ -7,8 +7,9 @@ var interceptor = function (req, res, next) {
     else {
         var status = false;
         for(var i=0;i<matchList.length;i++) {
+            console.log(req.path);
+            console.log(req.path.match(matchList[i]));
             if(req.path.match(matchList[i])) {
-                console.log(req.path.match(matchList[i]));
                 status = true;
                 break;
             }

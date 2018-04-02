@@ -133,25 +133,25 @@ function calls(err,response) {
     if(err) console.log(err);
 }
 
-async function test() {
-    // await addEmptyUser(134,calls);
-    // await updateUser(134,"Terminator",calls);
-    // await updateUser(134,"Titanic",calls);
-    // await updateUser(134,"Florida",calls);
-    // await updateUser(134,"James",calls);
-    // await updateUser(134,"Bob",calls);
-    // await addEmptyUser(135,calls);
-    // await updateUser(135,"Titanic",calls);
-    // await updateUser(135,"James",calls);
-    // await updateUser(135,"Bob",calls);
-    // await addEmptyUser(136,calls);
-    // await updateUser(136,"James",calls);
-    // await updateUser(136,"Bob",calls);
-    // await updateUser(136,"Alice",calls);
-    await aggregation(134,calls);
-}
-
-test();
+// async function test() {
+//     // await addEmptyUser(134,calls);
+//     // await updateUser(134,"Terminator",calls);
+//     // await updateUser(134,"Titanic",calls);
+//     // await updateUser(134,"Florida",calls);
+//     // await updateUser(134,"James",calls);
+//     // await updateUser(134,"Bob",calls);
+//     // await addEmptyUser(135,calls);
+//     // await updateUser(135,"Titanic",calls);
+//     // await updateUser(135,"James",calls);
+//     // await updateUser(135,"Bob",calls);
+//     // await addEmptyUser(136,calls);
+//     // await updateUser(136,"James",calls);
+//     // await updateUser(136,"Bob",calls);
+//     // await updateUser(136,"Alice",calls);
+//     await aggregation(134,calls);
+// }
+//
+// test();
 
 module.exports = {
     "addEmptyUser" : addEmptyUser,

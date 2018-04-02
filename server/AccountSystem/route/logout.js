@@ -4,11 +4,25 @@ var identity = require('../entity/identity');
 var passport = require('passport');
 var local = require('passport-local').Strategy;
 
-router.get('/', function(req, res){
-    req.logout();
-    //Redirect or something else;
-    res.redirect('/');
-})
+router.post('/', function(req, res){
+    if (req.session != undefined) {
+        req.session.destroy(function (err) {
+            if (err) res.send(JSON.stringify({error: err}));
+            //res.redirect('/login');
+            try {
+                req.logout();
+            } catch (err) {
+                res.send(JSON.stringify({error: err}));
+            }
+
+        });
+    }
+    try {
+        req.logout();
+    } catch (err) {
+        res.send(JSON.stringify({error: err}));
+    }
+
+});
 
 module.exports = router;
-

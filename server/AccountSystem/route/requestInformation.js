@@ -2,30 +2,33 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 
 router.post('/', function(req, res){
     //Test
     var id = req.body.id;
-    var item = ['nickname', 'major', 'institution'];
-    var ri = new information.requestInfo(item, id);
+    const identityItem = ['*'];
+    const informationItem = ['*'];
 
-    if(!req.requestInfo instanceof information.requestInfo) throw new Error("Illigal request!");
+    var identityRequest = new information.requestInfo(identityItem, id);
+    var informationRequest = new information.requestInfo(informationItem, id);
+
     //req.requestInfo.getSearchQuery('information', async (query) => {
-    try{
-        ri.getSearchQuery('information', async (query) => {
-            try{
-                var result = await connection.sqlQuery(query);
-                res.send(JSON.stringify({editState: true}));
-            } catch(err){
-                res.send(JSON.stringify({editState: false, editError: error}));
-            }
+    var identityResult, informationResult;
+    identityRequest.getSearchQuery('identity', async (query) => {
+        identityResult = await connection.sqlQuery(query).catch((err)=>{
+            return res.send(JSON.stringify({requestState: false, error: err}));
         });
-    } catch(err){
-        res.send(JSON.stringify({editState: false, editError: error}));
-    }
 
+        informationRequest.getSearchQuery('information', async (query) => {
+            informationResult = await connection.sqlQuery(query).catch((err)=>{
+                return res.send(JSON.stringify({requestState: false, error: err}));
+            });;
 
+            var result = Object.assign(identityResult, informationResult);
+            res.send({requestState: true, result: result});
+        });
+    });
 });
 
 module.exports = router;

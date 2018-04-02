@@ -4,6 +4,7 @@ import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affi
 import 'antd/dist/antd.css'
 import '../pages/AccountInfoPage.css'
 import PostEditor from '../sections/PostEditor'
+import EditableTable from './editableActivityList'
 import PostContentViewer from '../modules/PostContentViewer'
 import PostTag from '../modules/PostTag'
 const { Header, Content, Sider } = Layout;
@@ -72,6 +73,7 @@ class OneTeamPage extends Component{
                <div>
                    <PostTag/>
                </div>
+               <EditableTable/>
             </div>
         );
     }

@@ -1,5 +1,5 @@
 import React,{Component} from'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message} from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card} from 'antd';
 import {logIn, signUpSubmit} from '../../services/accountService'
 import {connect} from 'react-redux'
 import {Redirect}  from'react-router-dom'
@@ -11,6 +11,7 @@ const mapStateToProps=state=>{
         userID: state.userID,
     }
 }
+
 const mapDispatchToProps=dispatch=>{
     return{
         logInDispatch: userID=>{
@@ -77,11 +78,11 @@ class RegistrationForm extends Component {
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 4 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 20 },
             },
         };
         const tailFormItemLayout = {
@@ -108,6 +109,8 @@ class RegistrationForm extends Component {
 
         if(this.props.userID) return(<Redirect to='/' />)
         return (
+          <div>
+          <Card className="signup-form">
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
@@ -202,6 +205,8 @@ class RegistrationForm extends Component {
                     <Button type="primary" htmlType="submit">Sign Up!</Button>
                 </FormItem>
             </Form>
+            </Card>
+            </div>
         );
     }
 }

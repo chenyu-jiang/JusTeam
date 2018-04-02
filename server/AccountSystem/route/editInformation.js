@@ -2,25 +2,25 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 
 router.post('/', function(req, res){
     //Validate for user authority here;
-
     //Then check the validity of requested edition (e.g. information format)
-    var id = 26;
-    var item = ['nickname', 'institution'];
+    var id = req.user.id;
+    var itemList = ['region', 'gender', 'photo', 'cover', 'introduction', 'career', 'birthday',
+                'nickname', 'phone', 'major'];
+    var item = [];
     var value = [];
-    value.push(req.body.nickname);
-    value.push(req.body.institution);
 
-    var ei = new information.editItem(id, item, value, (err) => {
+    for(var elements in req.body){
+        if(itemList.includes(elements)){
+            item.push(elements);
+            value.push(req.body[elements]);
+        }
+    }
 
-    });
-
-    //if(!req.editItem instanceof information.editItem) throw new Error("Illigal edit request!");
-
-    //var editItem = req.editItem;
+    var ei = new information.editItem(id, item, value);
     try{
         ei.getEditQuery('information', async (query) =>{
             try{
@@ -36,4 +36,3 @@ router.post('/', function(req, res){
 });
 
 module.exports = router;
-

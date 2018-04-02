@@ -6,17 +6,26 @@ router.use("/new", newNotis);
 
 router.get("/history", async (req, res, next) => {
     var userID = req.user.id;
-    var start = req.params.start;
-    var end = req.params.end;
-    var response = await notiInterface.getNotificationHistory(userID, start, end);
-    res.send(response);
+    var start = req.query.start;
+    var end = req.query.end;
+    if(start && end && userID) {
+        console.log("start:"+start);
+        console.log("end:"+end);
+        var response = await notiInterface.getNotificationHistory(userID, start, end);
+        res.send(response);
+    }
+    else {
+        res.setHeader("status",404);
+        res.send("Error: Data incomplete.");
+    }
+
 });
 
 router.delete("/delete", async (req, res, next) => {
         var userID = req.user.id;
-        var messageType = req.params.messageType;
-        var messageID = req.params.messageID;
-        var response = await notiInterface.deleteUserNotification(messageID, messageType, userID);
+        var messageType = req.query.messageType;
+        var messageID = req.query.messageID;
+        var response = await notiInterface.deleteNotification(messageID, messageType, userID);
         res.send(response);
     });
 

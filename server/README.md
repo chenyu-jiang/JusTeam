@@ -72,90 +72,19 @@
 
   **Requirements**: None.
 
-        * api/team/TeamOP
-        
-          * api/team/TeamOP/createTeam
-        
-            **Requirements**: None.
-        
-            **Method** : POST
-        
-            **Parameters**:
-        
-              1. userID : integer
-        
-              2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
-        
-            **Response**: {state: 'success'/'fail', insertID: integer}
-        
-          * api/team/TeamOP/deleteTeam
-        
-            **Requirements**: None.
-        
-            **Method** : GET
-        
-            **Parameters**:
-        
-              1. teamID : integer // the ID of team which is going to be deleted
-        
-            **Response**:  {state : 'success' / 'fail'}
-        
-          * api/team/TeamOP/editTeam
-        
-            **Requirements**: None.
-        
-            **Method** : POST
-        
-            **Parameters**:
-        
-              1. a form contain all the information to change:
-                {'teamID' : integer,'introduction' : string, 'teamTitle' : string, 'maxMember' = integer , 'category' : string, 'status' : 'string', 'reminder' : string}
-        
-            **Response**:  {state : 'success' / 'fail'}
-        
-          * api/team/TeamOP/addMember
-        
-            **Requirements**: None.
-        
-            **Method** : GET
-        
-            **Parameters**:
-        
-              1. teamID : integer
-        
-              2. newMember : integer // which is the userID to be added
-        
-            **Response**: {state : 'success' / 'fail'}
-        
-          * api/team/TeamOP/deleteMember
-        
-            **Requirements**: None.
-        
-            **Method** : GET
-        
-            **Parameters**:
-        
-              1. teamID : integer
-        
-              2. deletedMember : integer //which is the userID to be deleted
-        
-            **Response**: {state : 'success' / 'fail'}
-        
-          * api/team/TeamOP/editAuthority
-        
-            **Requirements**: None.
-        
-            **Method** : GET
-        
-            **Parameters**:
-        
-              1. userToChange : integer
-        
-              2. rightToChange : integer
-        
-              3. teamID : integer
-        
-            **Response**: {state : 'success' / 'fail'}
+  **Method:** GET
+
+  **Parameters:**
+
+  1. postID
+
+  **Response**:
+
+  ```json
+  {"status":true}
+  ```
+
+* api/posts/articles
 
   Get the content of the post.
 
@@ -254,6 +183,8 @@
           1. teamID : integer;
 
       **Response**: {state : 'success'/'fail', team : teamObject}
+
+      ​
 
 ### api/accounts
 

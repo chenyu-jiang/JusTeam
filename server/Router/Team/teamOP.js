@@ -10,7 +10,7 @@ var router = express.Router();
 
 
 
-router.post('/createTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
+router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res)=>{
   var userID = req.user.id;
   var body = req.body;
   body.maxMember = parseInt(body.maxMember);
@@ -45,7 +45,7 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
   });
 });
 
-router.get('/deleteTeam',(req,res)=>{
+router.get('/deleteTeam',async (req,res)=>{
   var userID = req.user.id;
   var deleteId = parseInt(req.query.teamID);
   var deletedTeam =undefined;
@@ -57,6 +57,7 @@ router.get('/deleteTeam',(req,res)=>{
           reject(err);
         }
         else{
+            console.log(result);
           deletedTeam = result;
           memberList = result.memberList;
           resolve();
@@ -72,6 +73,7 @@ router.get('/deleteTeam',(req,res)=>{
           if(err){
             reject(err);
           }
+          resolve();
         });
       });
     }
@@ -80,26 +82,27 @@ router.get('/deleteTeam',(req,res)=>{
       res.send(result);
     }
   }
-  f();
-
+  await f();
 
   //TODO: need to implement delete teamID from the teamList in an account; dl();
-  var list = deletedTeam.memberList.IDlist;
-  for(var j = 0; j < list.length - 1; j++){
-    accountOP.deleteTeam(deleteID,req.IDlist[j]);
+  console.log(deletedTeam);
+  var list = deletedTeam.memberList.IDList;
+  for(var j = 0; j < list.length ; j++){
+    await accountOP.deleteTeam(deleteId,list[j]);
+    console.log('once delete yu xuan');
   }
 
 
 
-  var notification = new notiOP.TeamPublicMessage(deleteID, req.user.id ,deletedTeam.teamTitle + ' has been deleted');
-  var users = deletedTeam.memberList.IDlist;
+  var notification = new notiOP.TeamPublicMessage(deleteId, req.user.id ,deletedTeam.teamTitle + ' has been deleted');
+  var users = deletedTeam.memberList.IDList;
   notification.send(users,(err)=>{
     console.log(err);
   });
 
   //TODO: delete all the post attach to a team
 
-  eventOP.deleteEventByTeam(deleteTeam.teamID,(err,result)=>{
+  eventOP.deleteEventByTeam(deletedTeam.teamID,(err,result)=>{
     if(err) {
       var a = {state : 'fail'};
       res.send(a);
@@ -111,13 +114,13 @@ router.get('/deleteTeam',(req,res)=>{
   });
 });
 
-router.post('/editTeam', bodyParser.urlencoded({extended: true}), (req,res)=>{
+router.post('/editTeam', bodyParser.urlencoded({extended: true}), async (req,res)=>{
   var teamNew = req.body;
   console.log(req.body);
   teamNew.maxMember = parseInt(teamNew.maxMember);
   teamNew.teamID = parseInt(teamNew.teamID);
   var userID = req.user.id;
-  teamOP.editTeam(teamNew,(err,result)=>{
+  teamOP.editTeam(teamNew, async (err,result)=>{
     if(err){
       var a = {state : 'fail'};
       res.send(a);
@@ -129,9 +132,9 @@ router.post('/editTeam', bodyParser.urlencoded({extended: true}), (req,res)=>{
 
       async function f(){
         await new Promise((resolve,reject)=>{
-          teamOP.askTeam(teamNew.teamID,(err,result)=>{
+          teamOP.askTeam(teamNew.teamID,async (err,result)=>{
             if(!err){
-              users = result.memberList.IDlist;
+              users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
               });
@@ -141,25 +144,27 @@ router.post('/editTeam', bodyParser.urlencoded({extended: true}), (req,res)=>{
           });
         });
       }
-      f();
+      await f();
 
       res.send(a);
     }
   });
 });
 
-router.get('/addMember',(req,res)=>{
+router.get('/addMember',async (req,res)=>{
 
   var aimTeamID = parseInt(req.query.teamID);
   var newMember = parseInt(req.query.newMember);
   var jsIn = {teamID : aimTeamID, userID : newMember};
-  teamOP.addMember(jsIn, (err,result)=>{
+  teamOP.addMember(jsIn, async (err,result)=>{
     if(err){
       console.log(err);
       var a = {state : 'fail'};
       res.send(a);
     }
     else{
+
+    await accountOP.addTeam(aimTeamID, newMember);
       var newMembers = [];
       newMembers.push(newMember);
       var notification = new TeamMemberUpdate(aimTeamID,newMembers,[]);
@@ -168,7 +173,7 @@ router.get('/addMember',(req,res)=>{
         await new Promise((resolve,reject)=>{
           teamOP.askTeam(aimTeamID,(err,result)=>{
             if(!err){
-              users = result.memberList.IDlist;
+              users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
               });
@@ -178,7 +183,7 @@ router.get('/addMember',(req,res)=>{
           });
         });
       }
-      f();
+      await f();
 
       var a = {state: 'success'};
       res.send(a);
@@ -186,17 +191,19 @@ router.get('/addMember',(req,res)=>{
   });
 });
 
-router.get('/deleteMember',(req,res)=>{
+router.get('/deleteMember',async (req,res)=>{
   var aimTeamID = parseInt(req.query.teamID);
   var quitedMember = parseInt(req.query.deletedMember);
   var jsIn = {teamID : aimTeamID, userID : quitedMember};
-  teamOP.deleteMember(jsIn, (err,result)=>{
+  teamOP.deleteMember(jsIn, async (err,result)=>{
     if(err){
-      console.log(err);tea
+      console.log(err);
       var a = {state : 'fail'};
       res.send(a);
     }
     else{
+        await accountOP.deleteTeam(quitedMember, aimTeamID);
+
       var quitedMembers = [];
       quitedMembers.push(deletedMember);
 
@@ -204,9 +211,9 @@ router.get('/deleteMember',(req,res)=>{
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
-          teamOP.askTeam(aimTeamID,(err,result)=>{
+          teamOP.askTeam(aimTeamID,async (err,result)=>{
             if(!err){
-              users = result.memberList.IDlist;
+              users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
               });
@@ -216,7 +223,7 @@ router.get('/deleteMember',(req,res)=>{
           });
         });
       }
-      f();
+      await f();
 
       var a = {state: 'success'};
       res.send(a);
@@ -224,14 +231,14 @@ router.get('/deleteMember',(req,res)=>{
   });
 });
 
-router.get('/editAuthority',(req,res)=>{
+router.get('/editAuthority',async (req,res)=>{
   var aimUser = parseInt(req.query.userToChange);
   var changingRight = parseInt(req.query.rightToChange);
   var changingTeam = parseInt(req.query.teamID);
   var jsIn = {teamID : changingTeam, userID : aimUser, newRight : changingRight};
   console.log(jsIn);
   //edit authority input interface : {teamID: integer, userID : integer, newRight: integer}
-  teamOP.editAuthority(jsIn, (err, result)=>{
+  teamOP.editAuthority(jsIn, async (err, result)=>{
     if(err){
       console.log(err);
       var a = {state : 'fail'};
@@ -244,9 +251,9 @@ router.get('/editAuthority',(req,res)=>{
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
-          teamOP.askTeam(changingTeam,(err,result)=>{
+          teamOP.askTeam(changingTeam, async (err,result)=>{
             if(!err){
-              users = result.memberList.IDlist;
+              users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
               });
@@ -256,7 +263,7 @@ router.get('/editAuthority',(req,res)=>{
           });
         });
       }
-      f();
+      await f();
 
       res.send(a);
     }

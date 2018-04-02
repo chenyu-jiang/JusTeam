@@ -2,7 +2,6 @@ const matchList = ["^/$","/static","/login","/api/account/register","/api/accoun
 
 var interceptor = function (req, res, next) {
     if(req.user) {
-        console.log(req.user);
         next();
     }
     else {

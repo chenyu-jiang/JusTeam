@@ -44,6 +44,8 @@ router.post('/', function(req, res){
 
                 req.login(user, function(err){
                     //console.log("Session biuld!");
+                    if(req.body.remember == 'on') req.session.cookie.maxAge = 2592000000;
+                    else req.session.cookie.expires = false;
                     if(err) throw err;
                     //return res.send(JSON.stringify({loginState: true}));
                     return res.redirect('/logout');

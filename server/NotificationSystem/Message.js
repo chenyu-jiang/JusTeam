@@ -11,9 +11,9 @@ class Message {
             var messageID = await dbConnection.insertMessageBody(this.messageType, JSON.stringify(this.content));
             if (users instanceof Array) {
                 for (var i = 0; i < users.length; i++) {
-                    dbConnection.insertUserNotification(users[i], messageID);
+                    await dbConnection.insertUserNotification(users[i], messageID);
                 }
-            } else dbConnection.insertUserNotification(users, messageID);
+            } else await dbConnection.insertUserNotification(users, messageID);
         } catch (err) {
             if (callback !== undefined) {
                 callback(err);

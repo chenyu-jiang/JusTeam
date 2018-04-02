@@ -77,6 +77,7 @@ app.get("/logout", function(req, res){
         '\n' +
         '    <button type="submit">Log out</button>\n' +
         '    <label>\n' +
+        '    <label>\n' +
         '      <input type="checkbox" checked="checked" name="remember"> Remember me\n' +
         '    </label>\n' +
         '  </div>\n' +
@@ -86,6 +87,16 @@ app.get("/logout", function(req, res){
         '    <span class="psw">Forgot <a href="#">password?</a></span>\n' +
         '  </div>\n' +
         '</form> ' +
+        '<br>'+
+        '<form action = "/api/team/teamOP/createTeam" method = "post"> '+
+        '<input type="input" name="introduction">introduction</input><br>'+
+        '<input type="input" name="teamTitle">title</input>'+
+        '<input type="input" name="maxMember">max</input>'+
+        '<input type="input" name="category">cate</input>'+
+        '<input type="input" name="status">status</input>'+
+        '<input type="input" name="reminder">remind</input>'+
+        '<button type="submit">Post</button>\n' +
+        "</form>"+
         '</html>');
     res.end();
 });

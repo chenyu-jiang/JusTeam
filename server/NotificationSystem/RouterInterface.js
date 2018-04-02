@@ -105,7 +105,7 @@ exports.getNotificationHistory = async function getNotificationHistory(user, sta
     //get UserNotifications
     try{
         //getUserNotification
-        notis = await db.getUserNotification(user,start,end);
+        notis = await db.getUserNotification(user,parseInt(start),parseInt(end));
         if(notis === undefined) throw new Error("[DB Error] - Cannot get content.");
         //process notifications asynchronously
         await parallelProcessing(notis,response.messages);

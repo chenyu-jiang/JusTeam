@@ -13,6 +13,8 @@ router.post('/createEvent',bodyParser.urlencoded({extended : true}),(req,res)=>{
   var teamID = req.body.teamID;
   eventOP.createEvent(newEvent, (err,insertID)=>{
     if(err){
+
+        console.log(err);
       var a = {state : 'fail'};
       res.send(a);
     }
@@ -35,7 +37,7 @@ router.post('/createEvent',bodyParser.urlencoded({extended : true}),(req,res)=>{
             await new Promise((resolve,reject)=>{
               teamOP.askTeam(teamID,(err,result)=>{
                 if(!err){
-                  users = result.memberList.IDlist;
+                  users = result.memberList.IDList;
                   notification.send(users,(err)=>{
                     console.log(err);
                   });
@@ -74,7 +76,11 @@ router.get('/deleteEvent', (req,res)=>{
           var a = {state : 'success'};
 
           //TODO: delete all the post attached to this event
-          postOP.postRecord({deleteByEvent : deletedEvent});
+          postOP.deleteRecord({deleteByEvent : deletedEvent},(err)=>{
+              if(err){
+                  console.log(err);    
+              }
+          });
 
 
           var notification = new notiOP.TeamPublicMessage(aimTeam, req.user.id, 'one event has been deleted');
@@ -118,13 +124,13 @@ router.post('/editEvent',bodyParser.urlencoded({extended : true}),(req,res)=>{
       //TODO: notiOP.TeamPublicMessage(aimTeam, req.user.id, 'An event has been edited by your teammates');
 
 
-      var notification = new notiOP.TeamPublicMessage(teamID, req.user.id, 'one event has been edited');
+      var notification = new notiOP.TeamPublicMessage(aimTeam, req.user.id, 'one event has been edited');
       var users = undefined;
       async function f(){
         await new Promise((resolve,reject)=>{
-          teamOP.askTeam(teamID,(err,result)=>{
+          teamOP.askTeam(aimTeam,(err,result)=>{
             if(!err){
-              users = result.memberList.IDlist;
+              users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
               });

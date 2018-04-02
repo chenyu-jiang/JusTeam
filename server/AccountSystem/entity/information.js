@@ -12,7 +12,9 @@ var addTeam = async function (teamID, userID){
     try{
         var query = 'SELECT team FROM information WHERE id = ' + userID;
         var result = await connection.sqlQuery(query);
-        var team = JSON.parse(result[0].team);
+        var team;
+        if(result[0].team == null) team = [];
+        else team = JSON.parse(result[0].team);
         team.push(teamID);
         query = 'UPDATE information SET team = ' + '\'[' + team + ']\' WHERE id = ' + userID;
         result = await connection.sqlQuery(query);
@@ -25,9 +27,11 @@ var addPost = async function (postID, userID){
     try {
         var query = 'SELECT post FROM information WHERE id = ' + userID;
         var result = await connection.sqlQuery(query);
-        var post = JSON.parse(result[0].post);
-        post.push(teamID);
-        query = 'UPDATE information SET team = ' + '\'[' + post + ']\' WHERE id = ' + userID;
+        var post;
+        if(result[0].post == null) post = [];
+        else post = JSON.parse(result[0].post);
+        post.push(postID);
+        query = 'UPDATE information SET post = ' + '\'[' + post + ']\' WHERE id = ' + userID;
         result = await connection.sqlQuery(query);
     } catch(err){
         throw err;

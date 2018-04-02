@@ -116,7 +116,8 @@ router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
 router.post("/upload/articles", uploadText.single('article'), async (req, res, next)=>{
     var user = req.user.id;
     var resContent = {
-        status: true
+        status: true,
+        postID: -1
     };
     //save record in database
     try{
@@ -133,6 +134,7 @@ router.post("/upload/articles", uploadText.single('article'), async (req, res, n
             "eventID": req.body.eventID
         }
         postID = await postRecord.saveRecord(content, req.body.isNew, req.body.postID);
+        resContent.postID = postID;
     } catch(err) {
         console.log(err);
         resContent.status = false;
@@ -146,7 +148,7 @@ router.get("/setFinal", async (req, res, next)=> {
     }
     if(req.query.postID) {
         try{
-            await postRecord.setFinal(req.query.postID);
+            await postRecord.setFinal(req.query.postID,req.user.id);
             resContent.status = true;
         }
         catch(err) {

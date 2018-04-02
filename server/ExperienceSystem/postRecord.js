@@ -15,15 +15,17 @@ async function saveRecord(content, isNew, oldPostID) {
                         if(err) console.log(err);
                     });
                     eventOperation.postAttachEvent({"eventID": parseInt(content.eventID),"postID": parseInt(newPostID)},(err,result)=>{
-                        if(err) console.log(err);
+                        if(err) console.log('attach err ----'+err);
                     });
                     accountInfo.addPost(parseInt(newPostID),parseInt(content.user));
                 }
             }
         } else {
             if(content.isFinal) {
-                var oldStatus = dbConnection.setFinal(oldPostID);
+                var oldStatus = await dbConnection.setFinal(oldPostID);
+                console.log("oldStatus: " + oldStatus);
                 if(oldStatus) {
+                    console.log(oldStatus);
                     attachESUpdate(content.path, oldPostID, content.postTitle, content.tags, (err)=>{
                         if(err) console.log(err);
                     });
@@ -71,12 +73,18 @@ function getRecord(postID) {
     });
 }
 
-function setFinal(postID) {
+function setFinal(postID, userID) {
     return new Promise(async (resolve, reject) => {
         try {
-            dbConnection.setFinal(postID);
+            var oldStatus = await dbConnection.setFinal(postID);
             var record = await getRecord(postID);
-            esConnection.createPostItem(postID, record.postTitle, record.tags, record.content);
+            if(!oldStatus) {
+                esConnection.createPostItem(postID, record.postTitle, record.tags, record.content);
+                eventOperation.postAttachEvent({"eventID": parseInt(record.event_ID),"postID": parseInt(record.post_ID)},(err,result)=>{
+                    if(err) console.log(err);
+                });
+                accountInfo.addPost(parseInt(record.post_ID),parseInt(userID));
+            }
             resolve();
         } catch (err) {
             reject(err);
@@ -135,9 +143,6 @@ function attachESCreate(postID, path, postTitle, tags,callback) {
             if (postTitle && tags && postArticle) {
                     esConnection.createPostItem(postID, postTitle, tags, postArticle,callback);
             } else throw new Error("[Error]-Data incomplete.");
-            /////////////////////////////////////
-            //TODO:Associate with Account System and TeamSystem
-            /////////////////////////////////////
         }
     });
 }

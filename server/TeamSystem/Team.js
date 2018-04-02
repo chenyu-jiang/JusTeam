@@ -1,5 +1,5 @@
 class Team {
-  constructor (teamID, introduction, teamTitle, maxMember,category,status,reminder){
+  constructor (teamID, introduction, teamTitle, maxMember,category,status,reminder,startTime,endTime){
     if(!(new.target)) throw new TypeError("You need to create a new Team with new");
 
     this.category = category;
@@ -13,6 +13,8 @@ class Team {
     this.launchTime = null;
     this.memberList = {'num':0,'IDList':[],'right':[]};
     this.eventList = {'num':0,'IDList':[]};
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 
   /*createNewTeam : createNewTeam(){

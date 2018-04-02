@@ -4,7 +4,7 @@ const dbUser = 'root';                      // root for dev
 const dbPassword = 'JusTeam3100Project!';                // plain text password? Really?
 const dbPort = '3306';                      // port for dev
 const dbName = 'teamSystem';
-const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`) VALUES(?,?,?,?,?,?,?,?,?,?)';
+const teamInsertSQL = 'INSERT INTO formal_team (`introduction`, `teamTitle`, `maxMember`, `launchTime`, `memberList`, `eventList`, `recentEditTime`,`category`,`reminder`,`status`,`startTime`,`endTime`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
 const teamUpdateSQL = 'UPDATE formal_team SET `introduction`=?, `teamTitle`=?, `maxMember`=?, `memberList`=?, `eventList`=?,`recentEditTime`=? ,`category` = ?, `reminder` = ?, `status` = ? WHERE `teamID` = ?';
 const teamQuerySQL = 'SELECT * FROM formal_team';
 const teamQueryByID = 'SELECT * FROM formal_team WHERE teamID = ?';
@@ -84,7 +84,7 @@ askTeamInfo : function sqlQuery(teamID,callback){
 insertNewTeam : function insertNewTeam(newTeam,callback){
   newTeam.launchTime = this.getDBTime();
   newTeam.recentEditTime = newTeam.launchTime;
-  var teamInsertSQL_Params = [newTeam.introduction, newTeam.teamTitle, newTeam.maxMember, newTeam.launchTime, JSON.stringify(newTeam.memberList), JSON.stringify(newTeam.eventList), newTeam.recentEditTime,newTeam.category,newTeam.reminder,newTeam.status];
+  var teamInsertSQL_Params = [newTeam.introduction, newTeam.teamTitle, newTeam.maxMember, newTeam.launchTime, JSON.stringify(newTeam.memberList), JSON.stringify(newTeam.eventList), newTeam.recentEditTime,newTeam.category,newTeam.reminder,newTeam.status,newTeam.startTime,newTeam.endTime];
   teamSystemPool.query(teamInsertSQL,teamInsertSQL_Params,(err,result) =>{
     if(err){
       var newErr = new Error("[DB Insert Error] -" + err);

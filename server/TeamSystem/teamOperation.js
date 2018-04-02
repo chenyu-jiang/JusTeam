@@ -13,7 +13,7 @@ const Team = require('./Team');
 module.exports = {
   createTeam : function createTeam(jsonIn,callback){
     var newTeamID = undefined;
-    var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder);
+    var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder,jsonIn.startTime,jsonIn.endTime);
     async function insertNow(){
       await dbTeam.establishPool();
       dbTeam.insertNewTeam(newTeam,(err,result)=>{

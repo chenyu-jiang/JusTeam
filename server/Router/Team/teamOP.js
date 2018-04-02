@@ -202,10 +202,8 @@ router.get('/deleteMember',async (req,res)=>{
       res.send(a);
     }
     else{
-        await accountOP.deleteTeam(quitedMember, aimTeamID);
+        await accountOP.deleteTeam(aimTeamID,quitedMember);
 
-      var quitedMembers = [];
-      quitedMembers.push(deletedMember);
 
       var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'one of your teammates has quited the team');
       var users = undefined;
@@ -270,18 +268,21 @@ router.get('/editAuthority',async (req,res)=>{
   });
 });
 
-router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
+router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),async(req,res)=>{
   var teamID = req.body.teamID;
   var applicant = req.user.id;
   var appliForm = req.body.application;
-  var notification = new noti.JoinRequest(teamID, applicant,appliForm);
-  var users = undefined;
+  var notification = new notiOP.JoinRequest(teamID, applicant,appliForm);
+  var users = [];
+
+console.log('here 1');
 
   async function f(){
     await new Promise((resolve, reject)=>{
       teamOP.askTeam(teamID,(err,result)=>{
         if(err){
           res.send({state : 'fail'});
+          resolve();
         }
         else{
           for(var i = 0; i < result.memberList.IDList.length; i++){
@@ -289,16 +290,21 @@ router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
               users.push(result.memberList.IDList[i]);
             }
           }
+          resolve();
         }
       });
     });
   }
-  f();
+  await f();
+
+console.log('here 2');
+
   notification.send(users,(err)=>{
-    console.log(err);
-    res.send({state : "fail"});
+
+      if(!err) res.send({state : 'success'});
+     else {console.log(err);
+    res.send({state : "fail"});}
   });
-  res.send({state : 'success'});
 });
 
 module.exports = router;

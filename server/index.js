@@ -35,7 +35,7 @@ passport.deserializeUser(function (id, done) {
 
 app.use("/", interceptor);
 app.use("/api",require("./Router/api"));
-app.use("/",express.static("static"));
+app.use("/",express.static("client"));
 app.use("/upload/pictures",express.static("upload/pictures"));
 
 app.get("/login", function(req, res){

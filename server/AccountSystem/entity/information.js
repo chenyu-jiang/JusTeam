@@ -45,7 +45,7 @@ var deleteTeam = async function (teamID, userID){
         var team = JSON.parse(result[0].team);
         var deleteID = team.findIndex((element) => {
             return element == teamID;
-        });
+        }); 
         team.splice(deleteID, 1);
         query = 'UPDATE information SET team = ' + '\'[' + team + ']\' WHERE id = ' + userID;
         result = await connection.sqlQuery(query);
@@ -58,12 +58,12 @@ var deletePost = async function (postID, userID){
     try {
         var query = 'SELECT post FROM information WHERE id = ' + userID;
         var result = await connection.sqlQuery(query);
-        var post = JSON.parse(result[0].team);
+        var post = JSON.parse(result[0].post);
         var deleteID = post.findIndex((element) => {
             return element == postID;
         });
         post.splice(deleteID, 1);
-        query = 'UPDATE information SET team = ' + '\'[' + post + ']\' WHERE id = ' + userID;
+        query = 'UPDATE information SET post = ' + '\'[' + post + ']\' WHERE id = ' + userID;
         result = await connection.sqlQuery(query);
     } catch(err){
         throw err;

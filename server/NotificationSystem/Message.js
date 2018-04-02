@@ -14,6 +14,7 @@ class Message {
                     await dbConnection.insertUserNotification(users[i], messageID);
                 }
             } else await dbConnection.insertUserNotification(users, messageID);
+            callback(null);
         } catch (err) {
             if (callback !== undefined) {
                 callback(err);

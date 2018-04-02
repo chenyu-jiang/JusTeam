@@ -5,6 +5,7 @@ import '../pages/HomePage.css'
 import CommunicationPage from '../forms/CommunicationPage'
 import OneTeamPage from '../forms/OneTeamPage'
 import JoinRequest from '../forms/JoinForm'
+import {Route} from 'react-router-dom'
 const TabPane = Tabs.TabPane;
 
 
@@ -71,7 +72,7 @@ const data = [
 ];
 
 
-const MyTeamsPage=()=>
+const MyTeamsSection=()=>
     (
         <div>
             All My Teams
@@ -127,4 +128,15 @@ const MyTeamsPage=()=>
         </div>
 
     );
+
+const MyTeamsPage=()=>{
+    return(
+      <div>
+          <Route path="/home/dash/myTeams/viewTeam" component={OneTeamPage} />
+          <Route path="/home/dash/myTeams" exact component={MyTeamsSection} />
+      </div>
+    );
+
+
+}
 export default MyTeamsPage;

@@ -3,6 +3,7 @@ import { Form, Input, Tooltip, Icon, Cascader, Select,
     Row, Col, Checkbox, Button, AutoComplete,
     DatePicker, TimePicker, Slider,message } from 'antd';
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {createNewTeam} from "../../services/teamService";
 import '../pages/AccountInfoPage.css';
 import {logIn} from "../../services/accountService";
@@ -13,6 +14,7 @@ const AutoCompleteOption = AutoComplete.Option;
 const RangePicker = DatePicker.RangePicker;
 const {TextArea}=Input;
 let uuid = 0;
+let topath='';
 function teamrange(value) {
     return `${(value+20)/10}`;
 }
@@ -22,6 +24,7 @@ const mapStateToProps=state=>{
     return{
         userID: state.userID,
         viewingTeamID:state.viewingTeamID,
+        toPath:state.toPath,
     }
 }
 const mapDispatchToProps=dispatch=>{
@@ -31,8 +34,17 @@ const mapDispatchToProps=dispatch=>{
                 type:"SET_TEAMID",
                 viewingTeamID:teamID,
             });
+            dispatch({
+                type:"SET_TOPATH",
+                toPath:"/home/dash/myTeams/viewTeam"
+            });
         },
-
+       resetPathDispatch: ()=>{
+           dispatch({
+               type:"SET_TOPATH",
+               toPath:"/null"
+           });
+       }
     }
 }
 
@@ -104,6 +116,8 @@ class RegistrationForm extends React.Component {
            }
            if(response.error) console.log(response.error);
             console.log('Received values of form: ', JSON.stringify(values));
+           // this.props.createTeamDispatch(response.insertID);
+            topath='home/dash/myTeams/viewTeam'
         });
     }
 
@@ -190,7 +204,12 @@ class RegistrationForm extends React.Component {
                 </FormItem>
             );
         });
-
+        if(topath==='home/dash/myTeams/viewTeam') {
+            topath='';
+            console.log("the toPath is:", this.state.toPath)
+             this.props.resetPathDispatch();
+            return(<Redirect to='/home/dash/myTeams/viewTeam' />);
+        }
         return (
             <div>
                 <Col span={6}></Col>

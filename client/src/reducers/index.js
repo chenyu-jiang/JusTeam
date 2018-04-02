@@ -12,6 +12,18 @@ const SetViewingTeam=(state=initState,action={})=>{
     }
 
 }
+const SetToPath=(state=initState,action={})=>{
+    console.log('SetToPath called: ',JSON.stringify(state),JSON.stringify(action));
+    switch (action.type){
+        case 'SET_TOPATH':
+            console.log('set path ',action.toPath)
+            if(action.toPath==='/null') return undefined;
+            return action.toPath;
+        default: return state;
+
+    }
+
+}
 
  const RootReducer= (state=initState,action)=>{
     let nextstate=state;
@@ -25,6 +37,11 @@ const SetViewingTeam=(state=initState,action={})=>{
         case 'SET_TEAMID':
             console.log('setting a new current team id:',JSON.stringify(action),'state=',JSON.stringify(state));
             nextstate=Object.assign({},state,{viewingTeamID: SetViewingTeam(state.viewingTeamID,action)});
+            console.log('generating new state:', JSON.stringify(nextstate));
+            return nextstate;
+        case 'SET_TOPATH':
+            console.log('setting a new current path:',JSON.stringify(action),'state=',JSON.stringify(state));
+            nextstate=Object.assign({},state,{toPath: SetToPath(state.toPath,action)});
             console.log('generating new state:', JSON.stringify(nextstate));
             return nextstate;
         default:

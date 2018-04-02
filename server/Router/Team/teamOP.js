@@ -4,6 +4,7 @@ const notiOP = require('../../NotificationSystem/NotificationSystem')
 const teamOP = require('../../TeamSystem/teamOperation');
 const eventOP = require('../../TeamSystem/eventOperation');
 const accountOP = require('../../AccountSystem/entity/information');
+const searchOP = require('../../SearchSystem/index')
 
 
 var router = express.Router();
@@ -35,6 +36,9 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res
               res.send(a);
             }
             else{
+              try{searchOP.updateUser(userID, body.category);}
+              catch(e){
+              }
               var a = {state: 'success', insertId: jsIn.teamID};
               res.send(a);
             }
@@ -173,6 +177,13 @@ router.get('/addMember',async (req,res)=>{
         await new Promise((resolve,reject)=>{
           teamOP.askTeam(aimTeamID,(err,result)=>{
             if(!err){
+
+              try{
+                await searchOP.updateUser(newMember, result.category);
+              }
+              catch(e){
+              }
+
               users = result.memberList.IDList;
               notification.send(users,(err)=>{
                 console.log(err);
@@ -202,8 +213,10 @@ router.get('/deleteMember',async (req,res)=>{
       res.send(a);
     }
     else{
-        await accountOP.deleteTeam(aimTeamID,quitedMember);
+        await accountOP.deleteTeam(quitedMember, aimTeamID);
 
+      var quitedMembers = [];
+      quitedMembers.push(deletedMember);
 
       var notification = new notiOP.TeamPublicMessage(aimTeamID,req.user.id,'one of your teammates has quited the team');
       var users = undefined;
@@ -268,21 +281,18 @@ router.get('/editAuthority',async (req,res)=>{
   });
 });
 
-router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),async(req,res)=>{
+router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
   var teamID = req.body.teamID;
   var applicant = req.user.id;
   var appliForm = req.body.application;
-  var notification = new notiOP.JoinRequest(teamID, applicant,appliForm);
-  var users = [];
-
-console.log('here 1');
+  var notification = new noti.JoinRequest(teamID, applicant,appliForm);
+  var users = undefined;
 
   async function f(){
     await new Promise((resolve, reject)=>{
       teamOP.askTeam(teamID,(err,result)=>{
         if(err){
           res.send({state : 'fail'});
-          resolve();
         }
         else{
           for(var i = 0; i < result.memberList.IDList.length; i++){
@@ -290,21 +300,16 @@ console.log('here 1');
               users.push(result.memberList.IDList[i]);
             }
           }
-          resolve();
         }
       });
     });
   }
-  await f();
-
-console.log('here 2');
-
+  f();
   notification.send(users,(err)=>{
-
-      if(!err) res.send({state : 'success'});
-     else {console.log(err);
-    res.send({state : "fail"});}
+    console.log(err);
+    res.send({state : "fail"});
   });
+  res.send({state : 'success'});
 });
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { Form, Icon, Input, Button, Checkbox ,message,notification} from 'antd';
+import { Form, Icon, Input, Button, Checkbox ,message,notification,Card} from 'antd';
 import React,{Component} from 'react'
 import {Link,Redirect} from'react-router-dom';
 import 'antd/dist/antd.css'
@@ -52,6 +52,8 @@ class LoginFormTemp extends Component {
         const { getFieldDecorator } = this.props.form;
         if(this.props.userID) return <Redirect to='/' />
         return (
+          <div>
+          <Card className="login-form">
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('userID', {
@@ -80,11 +82,14 @@ class LoginFormTemp extends Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Log in
                     </Button>
+                    <h className="spacebetween">  </h>
                     <Link to='/signUp'>
                         <Button type="primary">Sign up</Button>
                     </Link>
                 </FormItem>
             </Form>
+            </Card>
+            </div>
 
 
         );

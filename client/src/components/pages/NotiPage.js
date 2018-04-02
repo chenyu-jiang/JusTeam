@@ -1,13 +1,17 @@
 import React from 'react'
+import{BackTop}from'antd'
 import NotificationItem from '../forms/Notification'
-import {getNewNotiList,getNewNotiNum,getNotiHistory,deleteNoti} from '../../services/notiService'
-
+import './AccountInfoPage.css'
 
 const NotiPage=()=>
     (
-      <div>
+      <div className="background">
          Notification Dashboard
-         <NotificationItem/>
+         <div className="secondspan"><h1>- Notification Board -</h1></div>
+         <NotificationItem />
+         <BackTop className="back-up">
+         <div className="ant-back-top-inner">BACK</div>
+         </BackTop>
       </div>
     );
 export default NotiPage;

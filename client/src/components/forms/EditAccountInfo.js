@@ -1,5 +1,5 @@
 import React,{Component} from'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card} from 'antd';
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message} from 'antd';
 import {logIn, signUpSubmit} from '../../services/accountService'
 import {connect} from 'react-redux'
 import {Redirect}  from'react-router-dom'
@@ -19,7 +19,7 @@ const mapDispatchToProps=dispatch=>{
 
     }
 }
-class RegistrationForm extends Component {
+class EditForm extends Component {
     state = {
 
         confirmDirty: false,
@@ -29,14 +29,12 @@ class RegistrationForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-               const formval={
-                   userID:values.userID,
-                   password:values.password,
-                   nickname:values.nickname,
-                   phone:values.phone ?(values.prefix+values.phone):undefined,
-                   institution:values.institution,
-                   major:values.major,
-               }
+                const formval={
+                    nickname:values.nickname,
+                    phone:values.phone ?(values.prefix+values.phone):undefined,
+                    institution:values.institution,
+                    major:values.major,
+                }
                 const hide=message.loading('Processing...',0);
                 signUpSubmit(formval)
                     .then(response=>{
@@ -77,11 +75,11 @@ class RegistrationForm extends Component {
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 4 },
+                sm: { span: 8 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 20 },
+                sm: { span: 16 },
             },
         };
         const tailFormItemLayout = {
@@ -108,8 +106,6 @@ class RegistrationForm extends Component {
 
         if(this.props.userID) return(<Redirect to='/' />)
         return (
-          <div>
-          <Card className="signup-form">
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
@@ -163,7 +159,7 @@ class RegistrationForm extends Component {
                     )}
                 >
                     {getFieldDecorator('nickname', {}
-                       )(
+                    )(
                         <Input />
                     )}
                 </FormItem>
@@ -191,7 +187,7 @@ class RegistrationForm extends Component {
                 >
                     { getFieldDecorator('major',{})
                     (<Input />)
-                   }
+                    }
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     {getFieldDecorator('agreement', {
@@ -204,11 +200,9 @@ class RegistrationForm extends Component {
                     <Button type="primary" htmlType="submit">Sign Up!</Button>
                 </FormItem>
             </Form>
-            </Card>
-            </div>
         );
     }
 }
 
-const SignUpForm =connect(mapStateToProps,mapDispatchToProps)( Form.create()(RegistrationForm));
-export default  SignUpForm;
+const EditAccountInfo =connect(mapStateToProps,mapDispatchToProps)( Form.create()(EditForm));
+export default  EditAccountInfo;

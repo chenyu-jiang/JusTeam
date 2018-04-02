@@ -18,8 +18,8 @@ class HomePage extends Component{
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
     <div className="HomePage">
-    <Affix><div style={{background:'#36cfc9', padding:'10px'}}>
-    <Col span={22}>
+    <Affix><div style={{background:'rgba(26,165,122,0.7)', padding:'10px'}}>
+    <Col span={18}>
         <Link to='/home/dash'>
             <Button size={30} shape="circle" >
             Logo

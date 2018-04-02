@@ -1,5 +1,4 @@
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('accountSystem');
 
 function generalInfo(location, age, career, mobile) {
     this.location = location;
@@ -7,68 +6,6 @@ function generalInfo(location, age, career, mobile) {
     this.career = career;
     this.mobile = mobile;
 };
-
-var addTeam = async function (teamID, userID){
-    try{
-        var query = 'SELECT team FROM information WHERE id = ' + userID;
-        var result = await connection.sqlQuery(query);
-        var team;
-        if(result[0].team == null) team = [];
-        else team = JSON.parse(result[0].team);
-        team.push(teamID);
-        query = 'UPDATE information SET team = ' + '\'[' + team + ']\' WHERE id = ' + userID;
-        result = await connection.sqlQuery(query);
-    } catch(err){
-        throw err;
-    }
-}
-
-var addPost = async function (postID, userID){
-    try {
-        var query = 'SELECT post FROM information WHERE id = ' + userID;
-        var result = await connection.sqlQuery(query);
-        var post;
-        if(result[0].post == null) post = [];
-        else post = JSON.parse(result[0].post);
-        post.push(postID);
-        query = 'UPDATE information SET post = ' + '\'[' + post + ']\' WHERE id = ' + userID;
-        result = await connection.sqlQuery(query);
-    } catch(err){
-        throw err;
-    }
-}
-
-var deleteTeam = async function (teamID, userID){
-    try {
-        var query = 'SELECT team FROM information WHERE id = ' + userID;
-        var result = await connection.sqlQuery(query);
-        var team = JSON.parse(result[0].team);
-        var deleteID = team.findIndex((element) => {
-            return element == teamID;
-        }); 
-        team.splice(deleteID, 1);
-        query = 'UPDATE information SET team = ' + '\'[' + team + ']\' WHERE id = ' + userID;
-        result = await connection.sqlQuery(query);
-    } catch(err){
-        throw err;
-    }
-}
-
-var deletePost = async function (postID, userID){
-    try {
-        var query = 'SELECT post FROM information WHERE id = ' + userID;
-        var result = await connection.sqlQuery(query);
-        var post = JSON.parse(result[0].post);
-        var deleteID = post.findIndex((element) => {
-            return element == postID;
-        });
-        post.splice(deleteID, 1);
-        query = 'UPDATE information SET post = ' + '\'[' + post + ']\' WHERE id = ' + userID;
-        result = await connection.sqlQuery(query);
-    } catch(err){
-        throw err;
-    }
-}
 
 class requestInfo{
     constructor(item, id, callBack){
@@ -124,9 +61,6 @@ class editItem{
 
 module.exports = {
     editItem: editItem,
-    requestInfo: requestInfo,
-    addTeam: addTeam,
-    addPost: addPost,
-    deleteTeam: deleteTeam,
-    deletePost: deletePost
+    requestInfo: requestInfo
 };
+

@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('accountSystem');
+var connection = new dbCommon('account');
 
 router.post('/', function(req, res){
     //Validate for user authority here;
+
     //Then check the validity of requested edition (e.g. information format)
     var id = 26;
     var item = ['nickname', 'institution'];
@@ -35,3 +36,4 @@ router.post('/', function(req, res){
 });
 
 module.exports = router;
+

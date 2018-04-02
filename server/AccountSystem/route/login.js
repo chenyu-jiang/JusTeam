@@ -20,7 +20,7 @@ passport.use(new Local({
                 else{
                     return done(null, user);
                 }
-            });
+            })
         } catch (err){
             return done(err);
         }
@@ -28,31 +28,23 @@ passport.use(new Local({
 ));
 
 router.post('/', function(req, res){
-    var username = req.body.userID;
+    var email = req.body.email;
     var password = req.body.password;
-    identity.getEmailFromUsername(username, (err, email) => {
-        if(err) res.send(JSON.stringify({loginState: false, loginError: err}));
-        else{
-            if(email.length == 0) res.send(JSON.stringify({loginState: false, loginError: 'Cannot find the user'}));
-            req.body.email = email.email;
-            passport.authenticate('local', function(err, user, info){
-                console.log("Success check!");
-                if(err) throw err;
-                if(!user){
-                    return res.redirect('/login');
-                }
+    var remember = true;
 
-                req.login(user, function(err){
-                    //console.log("Session biuld!");
-                    if(req.body.remember == 'on') req.session.cookie.maxAge = 2592000000;
-                    else req.session.cookie.expires = false;
-                    if(err) throw err;
-                    //return res.send(JSON.stringify({loginState: true}));
-                    return res.redirect('/logout');
-                });
-            })(req, res); //From website of the passport.js
+    passport.authenticate('local', function(err, user, info){
+        console.log("Success check!");
+        if(err) throw err;
+        if(!user){
+            return res.redirect('/login');
         }
-    });
+
+        req.login(user, function(err){
+            console.log("Session biuld!");
+            if(err) throw err;
+            return res.redirect('/register');
+        });
+    })(req, res); //From website of the passport.js
 });
 
 module.exports = router;

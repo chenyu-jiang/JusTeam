@@ -12,7 +12,9 @@ router.get('/getRecommend',(req,res)=>{
 });
 //TODO:
 router.get('/getUserTeams',(req,res)=>{
-  var teamList = JSON.parse(req.query.teamList);
+  var l = req.query.teamList;
+  l = '['+l+']';
+  var teamList = JSON.parse(l);
   var teams = [];
   var aimUser = undefined;
   function askOnce(var_i){

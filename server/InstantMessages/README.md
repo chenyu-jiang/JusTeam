@@ -6,15 +6,6 @@
 
 ### Events from client:
 
-* authentication
-
-```json
-{
-    "username": "username",
-    "password": "password"
-}
-```
-
 * **userJoined:**
 
 ```json

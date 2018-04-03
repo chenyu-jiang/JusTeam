@@ -14,6 +14,7 @@ const signUpSubmit=(value)=>{
         fetch(_domain+_sign_up,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     'Content-Type':"application/json"
@@ -47,6 +48,7 @@ const logInAuth=(userID,password)=>{
         fetch(_domain+_log_in,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     'Content-Type':'application/json'
@@ -82,7 +84,6 @@ const requestTeam=(teamID)=>{
 const receiveTeam=(teamID,json)=>{
     console.log('calling view team action creator:',teamID);
     return({
-
         type:'Receive_TEAM',
         teamID:teamID,
         teamInfo: json.data.children.map(child=>child.data) ,
@@ -97,6 +98,7 @@ const receiveTeam=(teamID,json)=>{
          fetch(_domain+_upload_image,
              {
                  method:'POST',
+                 credentials: "include",
                  headers:{
                      Accept:'application/json',
                      'Content-Type':'multipart/form-data'

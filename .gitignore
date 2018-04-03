@@ -12,6 +12,8 @@ node_modules/
 #customer files and debug
 upload/
 main.js
+newTest.js
 
 #ide
 .idea/
+

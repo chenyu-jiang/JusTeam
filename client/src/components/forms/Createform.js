@@ -93,11 +93,13 @@ class RegistrationForm extends React.Component {
             }
             // Should format date value before submit.
             const rangeValue = fieldsValue['timespan'];
+            let cate="";
+                fieldsValue.category.forEach((element)=>{cate=cate+" "+element });
             const values = {
                introduciton:fieldsValue.description,
                 teamTitle:fieldsValue.teamTitle,
                 maxMember:fieldsValue.teamSize ? fieldsValue.teamSize : 2,
-                category:fieldsValue.category,
+                category:cate,
                 startTime:rangeValue[0],
                 endTime:rangeValue[1],
                 status:"Recruiting",

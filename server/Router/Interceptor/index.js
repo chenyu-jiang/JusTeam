@@ -2,13 +2,13 @@ const matchList = ["^/$","/static","/login","/api/account/register","/api/accoun
 
 var interceptor = function (req, res, next) {
     if(req.user) {
+        console.log("logged in: " +req.path);
         next();
     }
     else {
         var status = false;
+        console.log("Not logged in: "+req.path);
         for(var i=0;i<matchList.length;i++) {
-            console.log(req.path);
-            console.log(req.path.match(matchList[i]));
             if(req.path.match(matchList[i])) {
                 status = true;
                 break;

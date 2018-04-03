@@ -12,11 +12,15 @@ var router = express.Router();
 
 
 router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res)=>{
+    console.log('here');
   var userID = req.user.id;
   var body = req.body;
+  body.category = JSON.stringify(body.category);
+  body.introduction = body.introduciton;
   body.maxMember = parseInt(body.maxMember);
   teamOP.createTeam(body,(err,result)=>{
     if(err) {
+        console.log(err);
       var a = {state: 'fail'};
       res.send(a);
     }
@@ -26,12 +30,16 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res
       teamOP.addMember(jsIn, (err,result)=>{
         var editJs = {userID : userID, teamID : jsIn.teamID, newRight: 3};
         if(err){
+            console.log(err);
+
           var a = {state: 'fail'};
           res.send(a);
         }
         else{
           teamOP.editAuthority(editJs,(err,result)=>{
             if(err){
+                console.log(err);
+
               var a = {state: 'fail'};
               res.send(a);
             }

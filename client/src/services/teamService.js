@@ -14,6 +14,7 @@ const createNewTeam=(data)=> {
             fetch(_domain+_create_team,
                 {
                     method:'POST',
+                    credentials: "include",
                     headers:{
                         Accept:'application/json',
                         'Content-Type':'application/json'
@@ -36,7 +37,7 @@ const deleteTeam= (teamID)=> {
         fetch(_domain+_delete_team+"?teamID="+teamID,
             {
                 method:'GET',
-
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -54,6 +55,7 @@ const editTeam=(data)=> {
         fetch(_domain+_edit_team,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     'Content-Type':'application/json'
@@ -76,6 +78,7 @@ const addMember=(userID,teamID)=> {
         fetch(_domain+_add_team_member+"?teamID="+teamID+"&newMember="+userID,
             {
                 method: 'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -93,7 +96,7 @@ const editAuthority=(userToChange,rightToChange,teamID)=> {
         fetch(_domain+_edit_team_member_authority+"?userToChange="+userToChange+"&rightToChange="+rightToChange+"&teamID="+teamID,
             {
                 method:'GET',
-
+                credentials: "include",
 
             }
         )
@@ -112,6 +115,7 @@ const deleteMember=(userID,teamID)=> {
         fetch(_domain+_delete_team_member+"?teamID="+teamID+"&deletedMember="+userID,
             {
                 method: 'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -129,6 +133,7 @@ const getRecommendTeam=()=> {
         fetch(_domain+_get_recommend_team,
             {
                 method:'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -145,6 +150,7 @@ const getUserTeams=()=>{
         fetch(_domain+_get_user_teams,
             {
                 method:'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -160,6 +166,7 @@ const getTeamEvents=(teamID)=>{
         fetch(_domain+_get_team_events+"?teamID="+teamID,
             {
                 method:'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -176,6 +183,7 @@ const getOneEvent=(eventID)=>{
         fetch(_domain+_get_one_event+"?eventID="+eventID,
             {
                 method:'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -191,6 +199,7 @@ const createEvent=(data)=>{
         fetch(_domain+_create_event,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     'Content-Type':'application/json'
@@ -211,6 +220,7 @@ const deleteEvent=(teamID,eventID)=>{
         fetch(_domain+_delete_event+"?teamID="+teamID+"&eventID="+eventID,
             {
                 method:'GET',
+                credentials: "include",
             }
         )
             .then((response)=>response.json())
@@ -226,6 +236,7 @@ const editEvent=(data)=>{
     fetch(_domain+_edit_event,
         {
             method:'POST',
+            credentials: "include",
             headers:{
                 Accept:'application/json',
                 'Content-Type':'application/json'

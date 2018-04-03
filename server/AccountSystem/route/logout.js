@@ -5,6 +5,7 @@ var passport = require('passport');
 var local = require('passport-local').Strategy;
 
 router.post('/', function(req, res){
+    console.log("logout");
     if (req.session != undefined) {
         req.session.destroy(function (err) {
             if (err) res.send(JSON.stringify({error: err}));

@@ -33,10 +33,14 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
+var options = {
+    redirect: false
+}
+
 app.use("/", interceptor);
 app.use("/api",require("./Router/api"));
-app.use("/",express.static("client"));
-app.use("/upload/pictures",express.static("upload/pictures"));
+app.use("/",express.static("client",options));
+app.use("/upload/pictures",express.static("upload/pictures",options));
 
 app.get("/login", function(req, res){
     res.write(

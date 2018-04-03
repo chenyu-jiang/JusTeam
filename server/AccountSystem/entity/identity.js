@@ -34,7 +34,7 @@ var createUser = async function (identity, userInfo, callBack){
             '\'' + moment(Date.now()).format('YYYY-MM-DD HH:mm:ss') + '\'' + ')';
         var request = await connection.sqlQuery(query);
 
-        query = 'SELECT id FROM identity WHERE email = ' + '\'' + identity.email + '\'';
+        query = 'SELECT id FROM identity WHERE username = ' + '\'' + identity.username + '\'';
         request = await connection.sqlQuery(query);
 
 
@@ -79,7 +79,7 @@ var createUser = async function (identity, userInfo, callBack){
         column += ')';
 
         query = 'INSERT INTO information ' + column + ' VALUES ' + value + ')';
-        request = await connection.sqlQuery(query);
+        var re = await connection.sqlQuery(query);
         callBack(request[0].id, null);
     } catch (err) {
         callBack(null ,err);
@@ -100,10 +100,10 @@ function regValidate(req, checkUser, callBack)
     callBack(result);
 }
 
-var isUserExist = async function(email, callBack){
+var isUserExist = async function(username, callBack){
     try{
         var exist = false;
-        var query = 'SELECT id FROM identity WHERE email = \'' + email + '\'';
+        var query = 'SELECT id FROM identity WHERE username = \'' + username + '\'';
 
         var result = await connection.sqlQuery(query);
 
@@ -132,7 +132,8 @@ var isPasswordMatch = async function(id, pwCandidate, callBack){
             var pw = result[0].password.toString();
             if(passwordHash.isHashed(pwCandidate)){
                 var result = passwordHash.verify(pw, pwCandidate);
-                if(!result) return callBack(false, {error: 'Password is not matched!'});
+                //if(!result) return callBack(false, {error: 'Password is not matched!'});
+                return callBack(true, null);
             } else {
                 if(pw != pwCandidate) return callBack(false, {error: 'Password is not matched!'});
             }
@@ -148,8 +149,8 @@ var isPasswordMatch = async function(id, pwCandidate, callBack){
     }
 }
 
-var loginCheck = function(email, password, callBack) {
-    isUserExist(email, (id, exist, err) => {
+var loginCheck = function(username, password, callBack) {
+    isUserExist(username, (id, exist, err) => {
         if(err) throw err;
         if(!exist) callBack(false, 'User does not exist!');
         else {
@@ -157,7 +158,6 @@ var loginCheck = function(email, password, callBack) {
                 if(!match) callBack(false, message);
                 else callBack({
                     id: id,
-                    email: email,
                     password: password
                 }, 'Valid information!');
             });

@@ -10,16 +10,15 @@ const logIn=(userID)=>{
     });}
 
 const signUpSubmit=(value)=>{
-    console.log(JSON.stringify(value));
     return (
         fetch(_domain+_sign_up,
             {
                 method:'POST',
                 headers:{
                     Accept:'application/json',
-                    'Content-Type':'application/x-www-form-urlencoded'
+                    'Content-Type':"application/json"
                 },
-                body: value,
+                body: JSON.stringify(value)
             }
         )
             .then((response)=>response.json())

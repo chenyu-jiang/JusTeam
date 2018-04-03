@@ -30,5 +30,5 @@ module.exports=
     _delete_event:"api/event/eventOP/deleteEvent/",
     _edit_event:"api/event/eventOP/editEvent/",
 
-
+    _send_post:"api/posts/upload/articles",
 }

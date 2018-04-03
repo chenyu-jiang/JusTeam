@@ -1,9 +1,8 @@
 import React,{Component} from'react'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card,Radio, Upload} from 'antd';
-import {logIn, signUpSubmit,fetchActInfo,uploadImage} from '../../services/accountService'
+import {logIn,fetchActInfo,uploadImage,editInformation} from '../../services/accountService'
 import {connect} from 'react-redux'
 import {Redirect}  from'react-router-dom'
-const UserAccount= fetchActInfo() ;
 const RadioGroup=Radio.Group;
 const RadioButton=Radio.Button;
 const FormItem = Form.Item;
@@ -28,18 +27,20 @@ const mapDispatchToProps=dispatch=>{
 }
 class RegistrationForm extends Component {
     state = {
-        UserAccount:{UserAccount},
+        UserAccount:undefined,
         confirmDirty: false,
         autoCompleteResult: [],
     };
+
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 const formval={
                     photo:imgurl,
-                    userID:values.userID,
-                    birthday:values.password,
+                    userID:this.props.userID,
+                    birthday:values.birthday,
                     nickname:values.nickname,
                     gender:values.gender,
                     photo:values.photo,
@@ -51,10 +52,13 @@ class RegistrationForm extends Component {
                     major:values.major,
                 }
                 const hide=message.loading('Processing...',0);
-                signUpSubmit(formval)
+                editInformation(formval)
                     .then(response=>{
                         console.log('response received: '+JSON.stringify(response));
-                        this.props.logInDispatch(values.userID);
+                        if(response.editState){
+                            if(response.editState===true) message.success("Edit Succeeded!")
+                        }
+                        if(response.error) message.error("Failed to edit! Error:"+response.error);
                         hide();
 
                     });
@@ -117,19 +121,19 @@ class RegistrationForm extends Component {
                 statefile=undefined;
             },
             beforeUpload: (file) => {
-               statefile=file;
+                statefile=file;
                 return false;
             },
             file:statefile,
         };
-      const handleUpload = () => {
-              const  fileList  = statefile;
-              uploading=true;
-              // You can use any AJAX library you like
-              const response=uploadImage(fileList);
-              if(response.path) imgurl=response.path;
-              console.log("imgurl=  ",imgurl);
-          }
+        const handleUpload = () => {
+            const  fileList  = statefile;
+            uploading=true;
+            // You can use any AJAX library you like
+            const response=uploadImage(fileList);
+            if(response.path) imgurl=response.path;
+            console.log("imgurl=  ",imgurl);
+        }
 
         return (
             <div>
@@ -166,7 +170,7 @@ class RegistrationForm extends Component {
                             label="nickname"
                         >
                             {getFieldDecorator('userID', {
-                                initialValue: UserAccount.nickname,
+                                initialValue: this.state.UserAccount?this.state.UserAccount.nickname:"",
                                 rules: [ {
                                     required: true, message: 'Please input your nickname!',
                                 }],
@@ -179,7 +183,7 @@ class RegistrationForm extends Component {
                             label="Birthday"
                         >
                             {getFieldDecorator('birthday', {
-                                initialValue: UserAccount.birthday,
+                                initialValue: this.state.UserAccount?this.state.UserAccount.birthday:"",
                                 rules: [{
                                     required: false, message: 'You can input your birthday in yyyy-mm-dd format.',
                                 }, {
@@ -193,7 +197,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Gender"
                         >
-                            {getFieldDecorator('radio-button',{initialValue:UserAccount.gender,})(
+                            {getFieldDecorator('radio-button',{initialValue:this.state.UserAccount?this.state.UserAccount.gender:"",})(
                                 <RadioGroup>
                                     <RadioButton value="male">Male</RadioButton>
                                     <RadioButton value="female">Female</RadioButton>
@@ -205,7 +209,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Region"
                         >
-                            {getFieldDecorator('region', {initialValue:UserAccount.region,}
+                            {getFieldDecorator('region', {initialValue:this.state.UserAccount?this.state.UserAccount.region:"",}
                             )(
                                 <Input />
                             )}
@@ -215,7 +219,7 @@ class RegistrationForm extends Component {
                             label="Phone Number"
                         >
                             {getFieldDecorator('phone', {
-                                initialValue:UserAccount.phone,
+                                initialValue:this.state.UserAccount?this.state.UserAccount.phone:"",
                             })(
                                 <Input style={{ width: '100%' }} />
                             )}
@@ -224,7 +228,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Current Institution"
                         >
-                            { getFieldDecorator('institution',{initialValue:UserAccount.institution})
+                            { getFieldDecorator('institution',{initialValue:this.state.UserAccount?this.state.UserAccount.institution:""})
                             (<Input />)
                             }
                         </FormItem>
@@ -232,7 +236,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Major"
                         >
-                            { getFieldDecorator('major',{initialValue:UserAccount.major})
+                            { getFieldDecorator('major',{initialValue:this.state.UserAccount?this.state.UserAccount.major:""})
                             (<Input />)
                             }
                         </FormItem>
@@ -240,7 +244,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Personal description"
                         >
-                            { getFieldDecorator('des',{initialValue:UserAccount.introduction})
+                            { getFieldDecorator('des',{initialValue:this.state.UserAccount?this.state.UserAccount.introduction:""})
                             (<Input />)
                             }
                         </FormItem>
@@ -252,6 +256,20 @@ class RegistrationForm extends Component {
             </div>
         );
     }
+    componentDidMount(){
+        if(this.props.userID) {
+            fetchActInfo(this.props.userID).then((response)=>{
+                if(response)
+                if(response.userID) this.setState(
+                    {
+                        UserAccount:response,
+                    }
+                );
+            });
+        }
+
+    }
+
 }
 
 const EditAccountInfo =connect(mapStateToProps,mapDispatchToProps)( Form.create()(RegistrationForm));

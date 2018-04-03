@@ -94,6 +94,14 @@ const mapDispatchToProps=dispatch=>{
     }
 }
 
+const decideItem=(data)=>{
+    if(data.TeamData) {
+        if (data.TeamData.error) return ("Fetching user info failed, error: " + data.TeamData.error);
+        else if (data.TeamData) return (JSON.stringify(data.TeamData));
+    }
+    else return("You don't have any teams yet! Would you like to create one?");
+}
+
 class  MyTeamsSection extends Component {
     state={
         TeamData:undefined,
@@ -103,7 +111,7 @@ class  MyTeamsSection extends Component {
             <div>
                 All My Teams
                 <div>
-                    My teams:  {this.state.TeamData?(this.state.TeamData.error?"Error occurred!":JSON.stringify(this.state.TeamData)):"Failed to fetch teamdata"}
+                    My teams:  {decideItem(this.state)}
                 </div>
                 <Tabs defaultActiveKey="1" onChange={callback} style={{margin: "20px"}}>
                     <TabPane tab="Not Started" key="1"><Table columns={column1} dataSource={notstart}/>
@@ -126,10 +134,8 @@ class  MyTeamsSection extends Component {
     }
 
     componentDidMount(){
-      console.log("wang wang : "+ this.props.userID);
+
         fetchActInfo(this.props.userID).then((response)=>{
-          console.log('wang cheng la');
-          console.log(JSON.stringify(response));
            if(response.teamList){
 
                getUserTeams(response.teamList).then((response)=>{
@@ -137,9 +143,17 @@ class  MyTeamsSection extends Component {
                    this.setState({
                        TeamData:response.teams,
                    });
-                   else this.setState({
-                       TeamData:undefined,
-                   });
+                   else {
+                       if(response.error){
+                           this.setState({
+                              TeamData:{error:response.error,},
+                           });
+                       }
+                       else this.setState({
+                               TeamData: undefined,
+                           }
+                       );
+                   }
                    console.log("received user Teams: "+JSON.stringify(this.state.TeamData));
                });
            }

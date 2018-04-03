@@ -1,5 +1,5 @@
 
-var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info}=require( './Urlparams');
+var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info,_edit_info}=require( './Urlparams');
 
 const logIn=(userID)=>{
     console.log('calling action creator:',userID);
@@ -8,6 +8,27 @@ const logIn=(userID)=>{
         type:'LOG_INOUT',
         userID:userID,
     });}
+
+const editInformation=(data)=>{
+    return(
+        fetch(_domain+_edit_info,
+            {
+                method:'POST',
+                credentials: "include",
+                headers:{
+                    Accept:'application/json',
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(data),
+            }
+        )
+            .then((response)=>response.json())
+            .catch((error)=>{
+                console.log('Error occurred'+JSON.stringify(error));
+                return({error: error});
+            })
+    );
+}
 
 const signUpSubmit=(value)=>{
     return (
@@ -55,15 +76,42 @@ const fetchActInfo=(userID=undefined)=>{
                 },
                 body: JSON.stringify({
                     userID: userID,
-                })
+                }),
             }
         )
-            .then((response) => response.json())
+            .then((response) => {
+               const  resjson=response.json();
+                if(resjson.requestState){
+                    if(resjson.requestState===true){
+                        if(resjson.result) {
+                            const res=resjson.result;
+                            return(
+                                {
+                                    userID:res.username,
+                                    birthday:res.birthday,
+                                    teamList:res.team,
+                                    email:res.email,
+                                    gender:res.gender,
+                                    region:res.region,
+                                    cover:res.cover,
+                                    institution:res.institution,
+                                    introduction:res.introduction,
+                                    major:res.major,
+                                    postList:res.postList,
+                                    phone:res.phone,
+                                }
+                            );
+                        }
+                    }
+                    if(resjson.error) return({error:error,});
+                }
+
+            })
             .catch((error) => {
                 console.log('Error occurred' + JSON.stringify(error));
 
                 // only for development!!!
-               return(defaultinfo);
+               // return(defaultinfo);
 
                 return ({error: error});
             })
@@ -208,4 +256,5 @@ module.exports={
     signUpSubmit:signUpSubmit,
     uploadImage:uploadImage,
     logOutService:logOutService,
+    editInformation:editInformation,
 };

@@ -9,10 +9,57 @@ const searchOP = require('../../SearchSystem/index')
 
 var router = express.Router();
 
+router.get('/changeStatus',async(req,res)=>{
+  var teamID = parseInt(req.query.teamID);
+  var aimTeam = undefined;
+  console.log(teamID);
+  await new Promise((resolve,reject)=>{
+    teamOP.askTeam(teamID,(err,result)=>{
+      if(err) {
+        console.log(err);
+        res.send({state: 'fail'});
+        resolve();
+      }
+      else{
+        aimTeam = result;
+        resolve();
+      }
+    });
+  });
 
+  console.log(aimTeam);
+
+  if(aimTeam.status === 'Recruiting'){
+    aimTeam.status = 'Fighting';
+    teamOP.editTeam(aimTeam, (err,result)=>{
+      if(err){
+        console.log(err);
+        res.send({state : 'fail'});
+      }
+      else{
+        res.send({state : 'success'});
+      }
+    });
+  }
+  else if(aimTeam.status === 'Fighting'){
+    aimTeam.status = 'Finished';
+    teamOP.editTeam(aimTeam, (err,result)=>{
+      if(err){
+        console.log(err);
+        res.send({state : 'fail'});
+      }
+      else{
+        res.send({state : 'success'});
+      }
+    });
+  }
+  else{
+    res.send({state : 'fail'});
+  }
+
+});
 
 router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res)=>{
-    console.log('here');
   var userID = req.user.id;
   var body = req.body;
   body.category = JSON.stringify(body.category);
@@ -20,7 +67,7 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res
   body.maxMember = parseInt(body.maxMember);
   teamOP.createTeam(body,(err,result)=>{
     if(err) {
-        console.log(err);
+      console.log(err);
       var a = {state: 'fail'};
       res.send(a);
     }
@@ -30,16 +77,14 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res
       teamOP.addMember(jsIn, (err,result)=>{
         var editJs = {userID : userID, teamID : jsIn.teamID, newRight: 3};
         if(err){
-            console.log(err);
-
+          console.log(err);
           var a = {state: 'fail'};
           res.send(a);
         }
         else{
           teamOP.editAuthority(editJs,(err,result)=>{
             if(err){
-                console.log(err);
-
+              console.log(err);
               var a = {state: 'fail'};
               res.send(a);
             }

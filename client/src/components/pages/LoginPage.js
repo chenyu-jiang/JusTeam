@@ -9,7 +9,7 @@ class LoginPage extends Component {
     render() {
        /* const {store}= this.context;
         const state=store.getState();*/
-        if(this.props.userID) return(<Redirect to='home/dash' />);
+        if(this.props.userID) return(<Redirect to='/home/dash' />);
         return (
           <div>
             <div className="login-form">

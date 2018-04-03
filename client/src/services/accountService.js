@@ -1,12 +1,12 @@
 
-var {_domain,_log_in,_sign_up,_upload_image}=require( './Urlparams');
+var {_domain,_log_in,_sign_up,_upload_image,_log_out}=require( './Urlparams');
 
 const logIn=(userID)=>{
     console.log('calling action creator:',userID);
     return({
 
         type:'LOG_INOUT',
-        userID:userID
+        userID:userID,
     });}
 
 const signUpSubmit=(value)=>{
@@ -36,7 +36,11 @@ const fetchActInfo=(userID)=>{
         nickname:'world of wonder',
         birthday: '1919/8/10',
         phone: '+852-114514',
-        description: 'My name is van, I am an artist, a preformance artist.',
+        introduction: 'My name is van, I am an artist, a preformance artist.',
+        major:'computer Science',
+        institution:'CUHK',
+        region:'HK',
+        gender:'male',
     };
     return( defaultinfo
 
@@ -67,6 +71,29 @@ const logInAuth=(userID,password)=>{
     );
 }
 
+const logOutService=()=>{
+    return (
+        fetch(_domain+_log_out,
+            {
+                method:'POST',
+                headers:{
+                    Accept:'application/json',
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+
+                }),
+            }
+        )
+            .then((response)=>response.json())
+            .catch((error)=>{
+                console.log('Error occurred'+JSON.stringify(error));
+                return({error: error});
+            })
+    );
+
+}
+
 const logOut =()=>({
 
     type:'LOG_INOUT',
@@ -94,6 +121,13 @@ const receiveTeam=(teamID,json)=>{
  const uploadImage=(file)=>{
     const data=new FormData();
     console.log("loading image! ");
+
+    return(
+        {
+            path:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul"
+        }
+    )
+
      return (
          fetch(_domain+_upload_image,
              {
@@ -101,7 +135,7 @@ const receiveTeam=(teamID,json)=>{
                  credentials: "include",
                  headers:{
                      Accept:'application/json',
-                     'Content-Type':'multipart/form-data'
+                     'Content-Type':'application/json'
                  },
                  body: data.append('image',file),
              }
@@ -123,4 +157,5 @@ module.exports={
     fetchActInfo:fetchActInfo,
     signUpSubmit:signUpSubmit,
     uploadImage:uploadImage,
+    logOutService:logOutService,
 };

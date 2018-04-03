@@ -27,11 +27,6 @@ const column1= [{
   key: 'endTime',
 },
 {
-  title: 'Category',
-  dataIndex: 'category',
-  key: 'category',
-},
-{
   title:'Actions',
   key: 'action',
   render: (text, record) => (

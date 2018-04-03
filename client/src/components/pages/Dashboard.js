@@ -6,6 +6,7 @@ import MyTeamsPage from "../sections/MyTeamsPage";
 import Discover from '../sections/Discover'
 import Teaming from '../sections/Teaming'
 import LogDepButton from '../modules/LogDepButton'
+import {logIn} from "../../services/accountService";
 
 
 class Dashboard extends Component {
@@ -49,4 +50,4 @@ class Dashboard extends Component {
 }
 
 
-export  default  Dashboard;
+export  default Dashboard;

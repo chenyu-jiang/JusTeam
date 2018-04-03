@@ -82,7 +82,11 @@ class OneTeamPage extends Component{
                <div>
                    <PostTag/>
                </div>
+<<<<<<< HEAD
 
+=======
+               <EditableTable/>
+>>>>>>> frontend
             </div>
         );
     }

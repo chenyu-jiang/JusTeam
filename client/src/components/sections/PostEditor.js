@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { EditorState, convertToRaw, ContentState,convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import{Button} from 'antd'
+import{Button,message} from 'antd'
 import {uploadImage} from'../../services/accountService'
-
+import {sendNewPost} from '../../services/teamService'
 import 'antd/dist/antd.css'
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -50,6 +50,18 @@ class PostEditor extends Component {
 
     contentSubmit=()=>{
         console.log("submitting post:  "+JSON.stringify(this.state.contentState));
+       const response= sendNewPost(this.state.contentState);
+       if(response.status) {
+           if (response.postID) {
+               console.log("Post experience successful, postID= " + response.postID);
+           }
+       }
+       else {
+           let errormessage="Failed to upload new post!";
+           if(response.error) errormessage=errormessage+"  Error: "+ response.error;
+               message.error(errormessage);
+
+       }
        // console.log("submitting json:  "+convertToRaw( this.state.contentState));
     }
 

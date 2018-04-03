@@ -5,7 +5,8 @@ module.exports=
     _domain:"http://localhost:3001/",
 
     _log_in:"api/account/login/",
-    _sign_up:"api/account/register",
+    _log_out:"api/account/logout",
+    _sign_up:"api/account/register/",
     _new_noti_num:"api/notifications/new/number/",
     _new_noti_list:"api/notifications/new/content/",
     _noti_history:"api/notifications/history/",
@@ -29,5 +30,5 @@ module.exports=
     _delete_event:"api/event/eventOP/deleteEvent/",
     _edit_event:"api/event/eventOP/editEvent/",
 
-
+    _send_post:"api/posts/upload/articles",
 }

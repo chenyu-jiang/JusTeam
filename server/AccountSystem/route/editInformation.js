@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 
 router.post('/', function(req, res){
     //Validate for user authority here;

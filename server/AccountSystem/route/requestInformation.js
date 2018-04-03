@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 
 router.post('/', function(req, res){
     //Test
@@ -31,7 +31,7 @@ router.post('/', function(req, res){
                 return res.send(JSON.stringify({requestState: false, error: err}));
             });;
 
-            var result = Object.assign(identityResult, informationResult);
+            var result = Object.assign(identityResult[0], informationResult[0]);
             res.send({requestState: true, result: result});
         });
     });

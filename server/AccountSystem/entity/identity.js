@@ -1,5 +1,5 @@
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('account');
+var connection = new dbCommon('accountSystem');
 var moment = require('moment');
 var passwordHash = require('password-hash');
 

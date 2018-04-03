@@ -32,6 +32,8 @@ router.post('/', function(req, res){
             });;
 
             var result = Object.assign(identityResult[0], informationResult[0]);
+            result.team = JSON.parse(result.team);
+            result.post = JSON.parse(result.post);
             res.send({requestState: true, result: result});
         });
     });

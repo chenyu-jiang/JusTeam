@@ -12,6 +12,18 @@ const SetViewingTeam=(state=initState,action={})=>{
     }
 
 }
+const SetFromUrl=(state=initState,action={})=>{
+    console.log('SetFromUrl called: ',JSON.stringify(state),JSON.stringify(action));
+    switch (action.type){
+        case 'SET_FROMURL':
+            console.log('set fromUrl ',action.fromUrl)
+            return action.fromUrl;
+        default: return state;
+
+    }
+
+}
+
 const SetToPath=(state=initState,action={})=>{
     console.log('SetToPath called: ',JSON.stringify(state),JSON.stringify(action));
     switch (action.type){
@@ -42,6 +54,11 @@ const SetToPath=(state=initState,action={})=>{
         case 'SET_TOPATH':
             console.log('setting a new current path:',JSON.stringify(action),'state=',JSON.stringify(state));
             nextstate=Object.assign({},state,{toPath: SetToPath(state.toPath,action)});
+            console.log('generating new state:', JSON.stringify(nextstate));
+            return nextstate;
+        case 'SET_FROMURL':
+            console.log('setting a from url:',JSON.stringify(action),'state=',JSON.stringify(state));
+            nextstate=Object.assign({},state,{fromUrl: SetFromUrl(state.fromUrl,action)});
             console.log('generating new state:', JSON.stringify(nextstate));
             return nextstate;
         default:

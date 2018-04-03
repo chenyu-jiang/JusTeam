@@ -8,6 +8,7 @@ const getNewNotiNum=()=>{
         fetch(_domain+_new_noti_num,
             {
                 method:'GET',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                 },
@@ -22,123 +23,124 @@ const getNewNotiNum=()=>{
     );
 }
 const getNewNotiList=()=>{
-  const defaultNoti=
-{
-    "status": true,
-    "error": "Error message (string)",
-    "numOfMessages": 12,
-    "messages": [
-        {
-            "messageID" : 12306,
-            "messageType": "JoinRequest",
-            "timeStamp" : "2018-03-08T10:02:25.000Z",
-            "content": {
-              "teamToBeJoined":"CSCI3280Group",
-              "applicant":"lalala",
-              "joinInfo":"I want to join it.",
-            },
-        },
-        {
-          "messageID" : 12308,
-          "messageType": "NewAppcationResult",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {
-            "teamApplied":"CSCI3280Group",
-            "result":"your result is: Accepted",},
-        },
-        {
-          "messageID" : 12307,
-          "messageType": "TeamPublicMessage",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {  "teamToBeUpdated":"CSCI3280Group",
-          "sender":"lahala",
-          "message":"hahahahahahahhahahaha",},
-        },
-        {
-            "messageID" : 12306,
-            "messageType": "JoinRequest",
-            "timeStamp" : "2018-03-08T10:02:25.000Z",
-            "content": {
-              "teamToBeJoined":"CSCI3280Group",
-              "applicant":"lalala",
-              "joinInfo":"I want to join it.",
-            },
-        },
-        {
-          "messageID" : 12308,
-          "messageType": "NewAppcationResult",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {
-            "teamApplied":"CSCI3280Group",
-            "result":"your result is: Accepted",},
-        },
-        {
-          "messageID" : 12307,
-          "messageType": "TeamPublicMessage",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {  "teamToBeUpdated":"CSCI3280Group",
-          "sender":"lahala",
-          "message":"hahahahahahahhahahaha",},
-        },
-        {
-            "messageID" : 12306,
-            "messageType": "JoinRequest",
-            "timeStamp" : "2018-03-08T10:02:25.000Z",
-            "content": {
-              "teamToBeJoined":"CSCI3280Group",
-              "applicant":"lalala",
-              "joinInfo":"I want to join it.",
-            },
-        },
-        {
-          "messageID" : 12308,
-          "messageType": "NewAppcationResult",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {
-            "teamApplied":"CSCI3280Group",
-            "result":"your result is: Accepted",},
-        },
-        {
-          "messageID" : 12307,
-          "messageType": "TeamPublicMessage",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {  "teamToBeUpdated":"CSCI3280Group",
-          "sender":"lahala",
-          "message":"hahahahahahahhahahaha",},
-        },
-        {
-            "messageID" : 12306,
-            "messageType": "JoinRequest",
-            "timeStamp" : "2018-03-08T10:02:25.000Z",
-            "content": {
-              "teamToBeJoined":"CSCI3280Group",
-              "applicant":"lalala",
-              "joinInfo":"I want to join it.",
-            },
-        },
-        {
-          "messageID" : 12308,
-          "messageType": "NewAppcationResult",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {
-            "teamApplied":"CSCI3280Group",
-            "result":"your result is: Accepted",},
-        },
-        {
-          "messageID" : 12307,
-          "messageType": "TeamPublicMessage",
-          "timeStamp" : "2018-03-08T10:02:25.000Z",
-          "content": {  "teamToBeUpdated":"CSCI3280Group",
-          "sender":"lahala",
-          "message":"hahahahahahahhahahaha",},
-        },
-    ]
-};
-return(defaultNoti);
+//   const defaultNoti=
+// {
+//     "status": true,
+//     "error": "Error message (string)",
+//     "numOfMessages": 12,
+//     "messages": [
+//         {
+//             "messageID" : 12306,
+//             "messageType": "JoinRequest",
+//             "timeStamp" : "2018-03-08T10:02:25.000Z",
+//             "content": {
+//               "teamToBeJoined":"CSCI3280Group",
+//               "applicant":"lalala",
+//               "joinInfo":"I want to join it.",
+//             },
+//         },
+//         {
+//           "messageID" : 12308,
+//           "messageType": "NewAppcationResult",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {
+//             "teamApplied":"CSCI3280Group",
+//             "result":"your result is: Accepted",},
+//         },
+//         {
+//           "messageID" : 12307,
+//           "messageType": "TeamPublicMessage",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {  "teamToBeUpdated":"CSCI3280Group",
+//           "sender":"lahala",
+//           "message":"hahahahahahahhahahaha",},
+//         },
+//         {
+//             "messageID" : 12306,
+//             "messageType": "JoinRequest",
+//             "timeStamp" : "2018-03-08T10:02:25.000Z",
+//             "content": {
+//               "teamToBeJoined":"CSCI3280Group",
+//               "applicant":"lalala",
+//               "joinInfo":"I want to join it.",
+//             },
+//         },
+//         {
+//           "messageID" : 12308,
+//           "messageType": "NewAppcationResult",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {
+//             "teamApplied":"CSCI3280Group",
+//             "result":"your result is: Accepted",},
+//         },
+//         {
+//           "messageID" : 12307,
+//           "messageType": "TeamPublicMessage",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {  "teamToBeUpdated":"CSCI3280Group",
+//           "sender":"lahala",
+//           "message":"hahahahahahahhahahaha",},
+//         },
+//         {
+//             "messageID" : 12306,
+//             "messageType": "JoinRequest",
+//             "timeStamp" : "2018-03-08T10:02:25.000Z",
+//             "content": {
+//               "teamToBeJoined":"CSCI3280Group",
+//               "applicant":"lalala",
+//               "joinInfo":"I want to join it.",
+//             },
+//         },
+//         {
+//           "messageID" : 12308,
+//           "messageType": "NewAppcationResult",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {
+//             "teamApplied":"CSCI3280Group",
+//             "result":"your result is: Accepted",},
+//         },
+//         {
+//           "messageID" : 12307,
+//           "messageType": "TeamPublicMessage",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {  "teamToBeUpdated":"CSCI3280Group",
+//           "sender":"lahala",
+//           "message":"hahahahahahahhahahaha",},
+//         },
+//         {
+//             "messageID" : 12306,
+//             "messageType": "JoinRequest",
+//             "timeStamp" : "2018-03-08T10:02:25.000Z",
+//             "content": {
+//               "teamToBeJoined":"CSCI3280Group",
+//               "applicant":"lalala",
+//               "joinInfo":"I want to join it.",
+//             },
+//         },
+//         {
+//           "messageID" : 12308,
+//           "messageType": "NewAppcationResult",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {
+//             "teamApplied":"CSCI3280Group",
+//             "result":"your result is: Accepted",},
+//         },
+//         {
+//           "messageID" : 12307,
+//           "messageType": "TeamPublicMessage",
+//           "timeStamp" : "2018-03-08T10:02:25.000Z",
+//           "content": {  "teamToBeUpdated":"CSCI3280Group",
+//           "sender":"lahala",
+//           "message":"hahahahahahahhahahaha",},
+//         },
+//     ]
+// };
+// return(defaultNoti);
     return (
         fetch(_domain+_new_noti_list,
             {
                 method:'GET',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                 },
@@ -157,6 +159,7 @@ const getNotiHistory=(start,end)=>{
         fetch(_domain+_noti_history,
             {
                 method:'GET',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     start:start,
@@ -177,6 +180,7 @@ const deleteNoti=(notiId,notiType)=>{
         fetch(_domain+_noti_delete,
             {
                 method:'GET',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
                     messageID:notiId,

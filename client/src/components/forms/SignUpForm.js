@@ -83,10 +83,14 @@ class RegistrationForm extends Component {
                 signUpSubmit(formval)
 
                     .then(response=>{
-
-                        console.log('response received: '+JSON.stringify(response));
-
-                        this.props.logInDispatch(values.userID);
+                        console.log('response received: ' + JSON.stringify(response));
+                        if((!(response.regState))||(response.regState===false)){
+                            if(response.error) message.error("Failed to register:"+response.error);
+                        }
+                        if(response.regState===true) {
+                            message.success("Registered successfully!")
+                            this.props.logInDispatch(values.userID);
+                        }
 
                         hide();
 
@@ -94,7 +98,7 @@ class RegistrationForm extends Component {
 
                     });
 
-                console.log('Received values of form: ', JSON.stringify(formval));
+               // console.log('Received values of form: ', JSON.stringify(formval));
 
 
 

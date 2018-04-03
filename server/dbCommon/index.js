@@ -20,6 +20,8 @@ class dbCommon {
             try{
                 await this.checkConnection();
                 sql = this.mysql.format(sql,argList);
+                console.log('sql here: '+ sql);
+
                 this.pool.query(sql, (err,results,fields)=>{
                     if(err) {
                         throw new Error("[DB Error] - "+err);

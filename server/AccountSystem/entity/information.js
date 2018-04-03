@@ -1,5 +1,5 @@
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('accountSystem');
+var connection = new dbCommon('account');
 
 function generalInfo(location, age, career, mobile) {
     this.location = location;

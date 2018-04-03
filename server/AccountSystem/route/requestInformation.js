@@ -2,11 +2,17 @@ var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');
 var dbCommon = require('../../dbCommon');
-var connection = new dbCommon('accountSystem');
+var connection = new dbCommon('account');
 
 router.post('/', function(req, res){
     //Test
-    var id = req.body.id;
+    var id;
+    if(req.user !== undefined) id = req.user.id;
+    else if(req.body !== undefined){
+        if(req.body.id !== undefined)
+            id = req.body.id;
+    }
+    else return res.send(JSON.stringify({error: "Cannot get user id"}));
     const identityItem = ['*'];
     const informationItem = ['*'];
 

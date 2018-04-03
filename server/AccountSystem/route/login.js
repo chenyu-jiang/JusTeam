@@ -52,6 +52,7 @@ router.post('/', function(req, res){
             }*/
             return res.send(JSON.stringify({loginState: true}));
         });
+        console.log(req.user);
     })(req, res); //From website of the passport.js
 });
 

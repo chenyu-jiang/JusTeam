@@ -126,8 +126,10 @@ class  MyTeamsSection extends Component {
     }
 
     componentDidMount(){
-
+      console.log("wang wang : "+ this.props.userID);
         fetchActInfo(this.props.userID).then((response)=>{
+          console.log('wang cheng la');
+          console.log(JSON.stringify(response));
            if(response.teamList){
 
                getUserTeams(response.teamList).then((response)=>{

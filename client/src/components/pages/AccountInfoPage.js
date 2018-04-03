@@ -5,6 +5,8 @@ import './AccountInfoPage.css'
 import {fetchActInfo} from '../../services/accountService'
 import AccountInfoList from '../modules/AccountInfoList'
 import {connect} from 'react-redux'
+import EditAccountInfo from '../forms/EditAccountInfo'
+import EditableTable from "../forms/editableActivityList";
 
 //Just a simulation, in real-time get key from the server.
 var Personal=0;
@@ -60,7 +62,7 @@ const AccountInfoPage=connect(mapStateToProps,mapDispatchToProps)(({userID})=>{
             </Col>
 
 
-
+         <EditAccountInfo/>
 
         </div>
 

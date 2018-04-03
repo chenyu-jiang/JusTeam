@@ -34,7 +34,7 @@ class LoginFormTemp extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const hide=message.loading('Logging in...',0);
-                console.log('ID:  '+values.userID+' password: '+passwordHash.generate(values.password));
+                console.log('ID:   '+values.userID+' password: '+passwordHash.generate(values.password));
                 logInAuth(values.userID,passwordHash.generate(values.password)).then(
                     (response)=>{
                         if(response.error) message.error('Failed to login: '+response.error);

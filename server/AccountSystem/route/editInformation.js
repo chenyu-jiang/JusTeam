@@ -27,11 +27,11 @@ router.post('/', function(req, res){
                 var result = await connection.sqlQuery(query);
                 res.send(JSON.stringify({editState: true}));
             } catch(err){
-                res.send(JSON.stringify({editState: false, editError: err}));
+                res.send(JSON.stringify({editState: false, error: err}));
             }
         });
     } catch(err){
-        res.send(JSON.stringify({editState: false, editError: err}));
+        res.send(JSON.stringify({editState: false, error: err}));
     }
 });
 

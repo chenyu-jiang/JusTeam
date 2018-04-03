@@ -4,6 +4,7 @@ import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affi
 import './HomePage.css'
 import 'antd/dist/antd.css'
 import NotiPage from "./NotiPage";
+import SearchPage from './SearchPage';
 import AccountInfoPage from "./AccountInfoPage";
 import TopBarIcon from '../modules/topBarIcon'
 import Dashboard from './Dashboard'
@@ -14,6 +15,7 @@ const Search = Input.Search;
 
 
 class HomePage extends Component{
+
     render(){
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         return(
@@ -28,7 +30,7 @@ class HomePage extends Component{
         <Search
             style={{ width: "70%",height: "120%",marginLeft:'10%'}}
             placeholder="search for whatever you want!"
-            onSearch={value => console.log(value)}
+
             enterButton
         />
         </Col>
@@ -46,6 +48,7 @@ class HomePage extends Component{
             <Route path='/home/accountInfo'  component={AccountInfoPage} />
             <Route path='/home/dash'  component={Dashboard} />
             <Route path='/home/notification'  component={NotiPage} />
+              <Route path='/home/searchResult'  component={SearchPage} />
         </div>
       <div>
       <Footer/>

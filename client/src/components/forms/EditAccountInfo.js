@@ -1,11 +1,17 @@
 import React,{Component} from'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message} from 'antd';
-import {logIn, signUpSubmit} from '../../services/accountService'
+import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card,Radio, Upload} from 'antd';
+import {logIn, signUpSubmit,fetchActInfo,uploadImage} from '../../services/accountService'
 import {connect} from 'react-redux'
 import {Redirect}  from'react-router-dom'
+const UserAccount= fetchActInfo() ;
+const RadioGroup=Radio.Group;
+const RadioButton=Radio.Button;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
+function onChange(e) {
+  console.log(`radio checked:${e.target.value}`);
+}
 const mapStateToProps=state=>{
     return{
         userID: state.userID,
@@ -19,9 +25,9 @@ const mapDispatchToProps=dispatch=>{
 
     }
 }
-class EditForm extends Component {
+class RegistrationForm extends Component {
     state = {
-
+        UserAccount:{UserAccount},
         confirmDirty: false,
         autoCompleteResult: [],
     };
@@ -29,12 +35,19 @@ class EditForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                const formval={
-                    nickname:values.nickname,
-                    phone:values.phone ?(values.prefix+values.phone):undefined,
-                    institution:values.institution,
-                    major:values.major,
-                }
+               const formval={
+                   userID:values.userID,
+                   birthday:values.password,
+                   nickname:values.nickname,
+                   gender:values.gender,
+                   photo:values.photo,
+                   region:values.region,
+                   introduction:values.introduction,
+                   phone:values.phone ?(values.prefix+values.phone):undefined,
+                   institution:values.institution,
+                   email:values.email,
+                   major:values.major,
+               }
                 const hide=message.loading('Processing...',0);
                 signUpSubmit(formval)
                     .then(response=>{
@@ -52,21 +65,13 @@ class EditForm extends Component {
         const value = e.target.value;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     }
-    compareToFirstPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
-        } else {
-            callback();
-        }
-    }
-    validateToNextPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
-        }
-        callback();
-    }
+          normFile = (e) => {
+      console.log('Upload event:', e);
+      if (Array.isArray(e)) {
+        return e;
+      }
+      return e && e.fileList;
+      }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -75,11 +80,11 @@ class EditForm extends Component {
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 4 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 20 },
             },
         };
         const tailFormItemLayout = {
@@ -104,16 +109,33 @@ class EditForm extends Component {
         );
 
 
-        if(this.props.userID) return(<Redirect to='/' />)
         return (
+          <div>
+          <Card className="signup-form">
             <Form onSubmit={this.handleSubmit}>
+                        <FormItem
+                      {...formItemLayout}
+                      label="Upload Avatar"
+                    >
+                      {getFieldDecorator('upload', {
+                        valuePropName: 'fileList',
+                        getValueFromEvent: uploadImage(),
+                      })(
+                        <Upload name="logo" action="/upload.do" listType="picture">
+                          <Button>
+                            <Icon type="upload" /> Click to upload
+                          </Button>
+                        </Upload>
+                      )}
+                    </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Username"
+                    label="nickname"
                 >
                     {getFieldDecorator('userID', {
+                      initialValue: UserAccount.nickname,
                         rules: [ {
-                            required: true, message: 'Please input your username!',
+                            required: true, message: 'Please input your nickname!',
                         }],
                     })(
                         <Input />
@@ -121,45 +143,37 @@ class EditForm extends Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Password"
+                    label="Birthday"
                 >
-                    {getFieldDecorator('password', {
+                    {getFieldDecorator('birthday', {
+                      initialValue: UserAccount.birthday,
                         rules: [{
-                            required: true, message: 'Please input your password!',
+                            required: false, message: 'You can input your birthday in yyyy-mm-dd format.',
                         }, {
                             validator: this.validateToNextPassword,
                         }],
                     })(
-                        <Input type="password" />
+                        <Input/>
                     )}
                 </FormItem>
                 <FormItem
-                    {...formItemLayout}
-                    label="Confirm Password"
-                >
-                    {getFieldDecorator('confirm', {
-                        rules: [{
-                            required: true, message: 'Please confirm your password!',
-                        }, {
-                            validator: this.compareToFirstPassword,
-                        }],
-                    })(
-                        <Input type="password" onBlur={this.handleConfirmBlur} />
+          {...formItemLayout}
+                    label="Gender"
+                  >
+                    {getFieldDecorator('radio-button',{initialValue:UserAccount.gender,})(
+                      <RadioGroup>
+                        <RadioButton value="male">Male</RadioButton>
+                        <RadioButton value="female">Female</RadioButton>
+                        <RadioButton value="other">Other</RadioButton>
+                      </RadioGroup>
                     )}
-                </FormItem>
+                  </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={(
-                        <span>
-              Nickname&nbsp;
-                            <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-                    )}
+                    label="Region"
                 >
-                    {getFieldDecorator('nickname', {}
-                    )(
+                    {getFieldDecorator('region', {initialValue:UserAccount.region,}
+                       )(
                         <Input />
                     )}
                 </FormItem>
@@ -168,16 +182,16 @@ class EditForm extends Component {
                     label="Phone Number"
                 >
                     {getFieldDecorator('phone', {
-
+                      initialValue:UserAccount.phone,
                     })(
-                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+                        <Input style={{ width: '100%' }} />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
                     label="Current Institution"
                 >
-                    { getFieldDecorator('institution',{})
+                    { getFieldDecorator('institution',{initialValue:UserAccount.institution})
                     (<Input />)
                     }
                 </FormItem>
@@ -185,24 +199,27 @@ class EditForm extends Component {
                     {...formItemLayout}
                     label="Major"
                 >
-                    { getFieldDecorator('major',{})
+                    { getFieldDecorator('major',{initialValue:UserAccount.major})
                     (<Input />)
-                    }
+                   }
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label="Personal description"
+                >
+                    { getFieldDecorator('des',{initialValue:UserAccount.introduction})
+                    (<Input />)
+                   }
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    {getFieldDecorator('agreement', {
-                        valuePropName: 'checked',
-                    })(
-                        <Checkbox>I have read the <a href="">agreement</a></Checkbox>
-                    )}
-                </FormItem>
-                <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">Sign Up!</Button>
+                    <Button type="primary" htmlType="submit">Confirm</Button>
                 </FormItem>
             </Form>
+            </Card>
+            </div>
         );
     }
 }
 
-const EditAccountInfo =connect(mapStateToProps,mapDispatchToProps)( Form.create()(EditForm));
+const EditAccountInfo =connect(mapStateToProps,mapDispatchToProps)( Form.create()(RegistrationForm));
 export default  EditAccountInfo;

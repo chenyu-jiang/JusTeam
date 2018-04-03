@@ -4,25 +4,32 @@ import 'antd/dist/antd.css'
 import '../pages/HomePage.css'
 import CommunicationPage from '../forms/CommunicationPage'
 import OneTeamPage from '../forms/OneTeamPage'
+import {getUserTeams,viewOneTeam} from '../../services/teamService'
 import JoinRequest from '../forms/JoinForm'
+import {Route} from 'react-router-dom'
 const TabPane = Tabs.TabPane;
 
-
+const TeamData = getUserTeams();
 function callback(key) {
     console.log(key);
 }
 const column1= [{
   title: 'Title',
-  dataIndex: 'title',
+  dataIndex: 'teamTitle',
   key: 'title',
 }, {
-  title: 'Team Size',
-  dataIndex: 'teamsize',
-  key: 'teamsize',
-}, {
-  title: 'Team Leader',
-  dataIndex: 'teamleader',
-  key: 'teamleader',
+  title: 'Start Time',
+  dataIndex: 'starTime',
+  key: 'starTime',
+},{
+  title: 'End Time',
+  dataIndex: 'endTime',
+  key: 'endTime',
+},
+{
+  title: 'Category',
+  dataIndex: 'category',
+  key: 'category',
 },
 {
   title:'Actions',
@@ -30,101 +37,85 @@ const column1= [{
   render: (text, record) => (
     <span>
       <a href="#">Detail - {record.title}</a>
-      <Divider type="vertical" />
-      <a href="#">Quit</a>
     </span>
   ),
 },
 ];
-const Teamnotstart=[
+const Team=[
   {
     key:'1',
-    title:'ESTR2102Team',
-    teamsize:'3',
-    teamleader:'polarbear',
+    status:'fighting',
+    teamTitle:'ESTR2102Team',
+    maxMember:'100',
+    starTime:'3-19',
+    endTime:'4-4',
+    category:'lalala',
   },
   {
     key:'2',
-    title:'ENGG2430A Team',
-    teamsize:'3',
-    teamleader:'polarbear',
+    status:'notstart',
+    teamTitle:'ENGG2430A Team',
+    maxMember:'100',
+    starTime:'3-19',
+    endTime:'4-4',
+    category:'lalala',
   },
   {
     key:'3',
-    title:'Van you see',
-    teamsize:'3',
-    teamleader:'polarbear',
+    status:'end',
+    teamTitle:'Van you see',
+    maxMember:'100',
+    starTime:'3-19',
+    endTime:'4-4',
+    category:'lalala',
   },
   {
     key:'4',
-    title:'ESTR2002Team',
-    teamsize:'5',
-    teamleader:'polarbearxixi',
+    status:'fighting',
+    teamTitle:'ESTR2002Team',
+    maxMember:'100',
+    starTime:'3-19',
+    endTime:'4-4',
+    category:'lalala',
   },
 ];
-const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
-];
+const notstart= Team.filter(item => item.status==='notstart');
+const fighting= Team.filter(item => item.status==='fighting');
+const ended=Team.filter(item => item.status==='end');
 
 
-const MyTeamsPage=()=>
+const MyTeamsSection=()=>
     (
         <div>
             All My Teams
-
             <Tabs defaultActiveKey="1" onChange={callback} style={{margin:"20px"}}>
-
-                <TabPane tab="Not Started" key="1"><Table columns={column1} dataSource={Teamnotstart} />
-                    <br/>
-                    <Col className="infospan"><div>
-                        <Button  type="primary" ><Icon type="tags-o" />
-                            Check Info</Button>
-                    </div>
-                    </Col>
+                <TabPane tab="Not Started" key="1"><Table columns={column1} dataSource={notstart} />
                 </TabPane>
-                <TabPane tab="In Progress" key="2"><List
-                    size="large"
-                    header={<div>Header</div>}
-                    footer={<div>Footer</div>}
-                    bordered
-                    dataSource={data}
-                    renderItem={item => (<List.Item>{item}</List.Item>)}
-                />
+                <TabPane tab="In Progress" key="2"><Table columns={column1} dataSource={fighting} />
                     <br/>
-                    <Col className="infospan"><div>
-                        <Button  type="primary" ><Icon type="book" />
-                            Team Management</Button>
-                    </div>
-                    </Col>
                 </TabPane>
                 <TabPane tab="Arrive Terminal" key="3">
-                    <List
-                        size="large"
-                        header={<div>Header</div>}
-                        footer={<div>Footer</div>}
-                        bordered
-                        dataSource={data}
-                        renderItem={item => (<List.Item>{item}</List.Item>)}
-                    />
+                  <Table columns={column1} dataSource={ended} />
                     <br/>
-                    <Col className="infospan"><div>
-                        <Button  type="primary" ><Icon type="star-o" />
-                            rate for your teammate</Button>
-                    </div>
-                    </Col>
                 </TabPane>
-
             </Tabs>
             <br/>
             <CommunicationPage/>
             <br/>
-            <OneTeamPage/>
+
             <JoinRequest/>
         </div>
 
     );
+
+const MyTeamsPage=()=>{
+    return(
+      <div>
+          <Route path="/home/dash/myTeams/viewTeam" component={OneTeamPage} />
+          <Route path="/home/dash/myTeams" exact component={MyTeamsSection} />
+      </div>
+    );
+
+
+}
 export default MyTeamsPage;

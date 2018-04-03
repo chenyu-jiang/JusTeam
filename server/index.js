@@ -1,6 +1,7 @@
 var express = require("express");
 var passport = require('passport');
 var app = express();
+var cors = require('cors')
 var interceptor = require('./Router/Interceptor');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -8,12 +9,7 @@ var validator = require('express-validator');
 var identity = require('./AccountSystem/entity/identity');
 var session = require("express-session");
 
-// app.all('/*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-// });
-
+app.use(cors({credentials: true, origin: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true

@@ -119,32 +119,35 @@ const receiveTeam=(teamID,json)=>{
 
 
  const uploadImage=(file)=>{
-    const data=new FormData();
+    var data=new FormData();
+    data.append('image',file);
     console.log("loading image! ");
 
-    return(
-        {
-            path:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul"
-        }
-    )
+    // return(
+    //     {
+    //         path:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul"
+    //     }
+    // )
 
-     return (
+     return ( new Promise((resolve, reject)=>{
          fetch(_domain+_upload_image,
              {
                  method:'POST',
                  credentials: "include",
                  headers:{
                      Accept:'application/json',
-                     'Content-Type':'application/json'
                  },
-                 body: data.append('image',file),
+                 body: data,
              }
          )
-             .then((response)=>response.json())
+             .then((response)=>{
+                 resolve(response.json());
+             })
              .catch((error)=>{
                  console.log('Error occurred'+JSON.stringify(error));
-                 return({error: error});
+                 reject({error: error});
              })
+     })
      );
  }
 

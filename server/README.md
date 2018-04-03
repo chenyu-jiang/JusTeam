@@ -135,56 +135,479 @@
 
 ###api/team
 
-* api/team/createTeam  
+* api/team/TeamOP
 
-    **Response**: {state : 'success'/'fail', team : teamObject}
-    * api/
+​          **api/team/teamOP/createTeam**
 
-  **Method** : POST
+​          **Requirements**: None.
 
-  **Parameters**:
-    1. userID : integer
-    2. postForm : {introduction : string, teamTitle: string, maxMember : integer , category : string, status : string, reminder : string}
+​          **Method**: POST
 
-  **Response**: {state: 'success'/'fail', insertID: integer}
+​           **Parameters**:              
 
-* api/team/teamInfo
+{
 
-    * api/team/teamInfo/getRecommend    // warning : this part haven't been finished
+introduction : string
 
-      get team information for recommend usage
+teamTitle: string
 
-      **Requirements**: None.
+maxMember : integer 
 
-      **Method** : GET
+category : string
 
-      **Parameters**: None
+status : string
 
-      **Response**:
+reminder : string
 
-    * api/team/teamInfo/getUserTeams
+}
 
-      **Requirements**: None.
+ 
 
-      **Method** : GET
+​           **Response**: {state: 'success'/'fail', insertID: integer}
 
-      **Parameters**:
-        1. userID : integer
+ 
 
-      **Response**: {state: 1 all are loaded / 0 not all are loaded, teams : array of team objects }
+​          *** api/team/teamOP/deleteTeam**
 
-    * api/team/teamInfo/viewOneTeam
+ 
 
-      **Requirements**: None.
+​           **Requirements**: None.
 
-      **Method** : GET
+ 
 
-      **Parameters**:
-          1. teamID : integer;
+​            **Method**: GET
 
-      **Response**: {state : 'success'/'fail', team : teamObject}
+ 
 
-      ​
+​           **Parameters**:
+
+ 
+
+​              teamID :integer // the ID of team which is going to be deleted
+
+ 
+
+​           **Response**:  {state : 'success'/ 'fail'}
+
+ 
+
+​          *** api/team/teamOP/editTeam**
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: POST
+
+ 
+
+​            **Parameters**:
+
+ 
+
+ {
+
+'teamID' :integer
+
+Introduction :string
+
+'teamTitle' :string
+
+'maxMember' = integer
+
+'category' :string
+
+'status' :'string'
+
+'reminder' :string
+
+}
+
+ 
+
+​           **Response**:  {state : 'success'/ 'fail'}
+
+ 
+
+​          *api/team/TeamOP/addMember
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**:
+
+ 
+
+​              teamID :integer
+
+ 
+
+​              newMember: integer // which is the userID to be added
+
+ 
+
+​           **Response**: {state : 'success' / 'fail'}
+
+ 
+
+​          *** api/team/teamOP/applyForTeam**
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: POST
+
+ 
+
+​           **Parameters**:
+
+ 
+
+​              teamID :integer
+
+ 
+
+​            application: string
+
+ 
+
+​           **Response**: {state : 'success' / 'fail'}
+
+ 
+
+​          *** api/team/teamOP/deleteMember**
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**:
+
+ 
+
+​              teamID :integer
+
+ 
+
+​              deletedMember: integer //which is the userID to be deleted
+
+ 
+
+​           **Response**: {state : 'success' / 'fail'}
+
+ 
+
+​          *** api/team/teamOP/editAuthority**
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**:
+
+ 
+
+​              userToChange: integer
+
+ 
+
+​              rightToChange: integer
+
+ 
+
+​              teamID :integer
+
+ 
+
+​           **Response**: {state : 'success' / 'fail'}
+
+ 
+
+​    *** api/team/teamInfo**
+
+ 
+
+​          *** api/team/teamInfo/getRecommend**
+
+ 
+
+​           **Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**: None
+
+ 
+
+**Response**: {state : 'success'/ 'fail', recommendTeams : anarray of team objects}
+
+ 
+
+​           *** api/team/teamInfo/getUserTeams**
+
+​            
+
+​            **Requirements**:None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**:
+
+ 
+
+​              teamList  // an array of all the teamID attached to ateam
+
+ 
+
+​           **Response**: an array of team object
+
+ 
+
+​          *** api/team/teamInfo/viewOneTeam**
+
+ 
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            teamID :integer
+
+ 
+
+​           **Response**: {state : ‘success’/ ‘fail’, team : a team object}
+
+ 
+
+ 
+
+***api/event/eventOP**
+
+​            
+
+​            ***api/event/eventOP/createEvent**
+
+ 
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: POST
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            {
+
+​                        teamID: integer
+
+​                        startTime: string
+
+​                        endTime: string
+
+​                        title: string
+
+​                        location: string
+
+​                        specification: string
+
+}
+
+ 
+
+​           **Response**: {state : ‘success’/ ‘fail’, insertID : integer}
+
+ 
+
+​            ***api/event/eventOP/deleteEvent**
+
+​            
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            teamID :integer
+
+ 
+
+​            eventID :integer
+
+ 
+
+​           **Response**: {state : ‘success’/ ‘fail’ }
+
+ 
+
+​            
+
+***api/event/eventOP/editEvent**
+
+ 
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: POST
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            {
+
+​                        teamID: integer
+
+​                        eventID: integer
+
+​                        startTime: string
+
+​                        endTime: string
+
+​                        title: string
+
+​                        location: string
+
+​                        specification: string
+
+}
+
+ 
+
+​           **Response**: {state : ‘success’/ ‘fail’ }
+
+ 
+
+***api/event/eventInfo**
+
+ 
+
+***api/event/eventInfo/getTeamEvents**
+
+ 
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            eventList :the save eventList in the team object
+
+​            
+
+**Response**: {state : ‘success’/‘fail’ , events : an array of event object, postList : an 
+
+ 
+
+array of postID }
+
+ 
+
+***api/event/eventInfo/viewOneEvent**
+
+ 
+
+**Requirements**: None.
+
+ 
+
+​            **Method**: GET
+
+ 
+
+​           **Parameters**: 
+
+ 
+
+​            eventID :integer
+
+​            
+
+​           **Response**: {state : ‘success’/ ‘fail’ , event : an event object}
+
+ 
+
+ 
+
+​            
+
+ 
+
+​            
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
 
 ### api/accounts
 

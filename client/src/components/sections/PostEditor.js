@@ -24,7 +24,7 @@ class PostEditor extends Component {
 
      uploadImageCallBack =(file)=> {
         return new Promise(
-            (resolve, reject) => {
+            async (resolve, reject) => {
                /* const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'https://api.imgur.com/3/image');
                 xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
@@ -32,10 +32,9 @@ class PostEditor extends Component {
                 data.append('image', file);
                 console.log('image:   '+file);*/
                 let defresponse = {data: {link:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul'}};
-                       const response=uploadImage(file);
+                       const response=await uploadImage(file);
                        if(response.path) {
                            defresponse = {data: {link: response.path}}
-
                        }
                     resolve(defresponse);
                     if(response.error) {

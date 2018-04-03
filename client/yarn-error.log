@@ -1,17 +1,17 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\zhang\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-app-rewired --dev
+  /usr/local/Cellar/node/9.10.1/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js build
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\ProgramData\Oracle\Java\javapath;C:\PROGRAM FILES (X86)\NVIDIA CORPORATION\PHYSX\COMMON;C:\PROGRAM FILES\DELL\DW WLAN CARD;C:\PROGRAM FILES (X86)\INTEL\ICLS CLIENT\;C:\PROGRAM FILES\INTEL\ICLS CLIENT\;C:\WINDOWS\SYSTEM32;C:\WINDOWS;C:\WINDOWS\SYSTEM32\WBEM;C:\WINDOWS\SYSTEM32\WINDOWSPOWERSHELL\V1.0\;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES (X86)\QUICKTIME\QTSYSTEM\;C:\PROGRAM FILES (X86)\WINDOWS KITS\8.1\WINDOWS PERFORMANCE TOOLKIT\;C:\WINDOWS\system32\config\systemprofile\.DNX\BIN;C:\PROGRAM FILES\MICROSOFT DNX\DNVM\;C:\PROGRAM FILES\MICROSOFT SQL SERVER\130\TOOLS\BINN\;C:\PROGRAM FILES (X86)\WINDOWS KITS\10\WINDOWS PERFORMANCE TOOLKIT\;C:\PROGRAM FILES\GIT\CMD;C:\Program Files\WIDCOMM\Bluetooth Software\;C:\Program Files\WIDCOMM\Bluetooth Software\syswow64;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Java\jdk1.8.0_144\bin;C:\Program Files\Java\jdk1.8.0_144\jre\bin;C:\Program Files\MiKTeX 2.9\miktex\bin\x64\;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\zhang\AppData\Local\Microsoft\WindowsApps;C:\Users\zhang\AppData\Local\atom\bin;C:\Users\zhang\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+  /Users/michael/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 Yarn version: 
   1.5.1
 
 Node version: 
-  8.9.4
+  9.10.1
 
 Platform: 
-  win32 x64
+  darwin x64
 
 npm manifest: 
   {
@@ -21,8 +21,12 @@ npm manifest:
     "dependencies": {
       "ajv": "^6.2.1",
       "antd": "^3.2.3",
+      "draft-js": "^0.10.5",
+      "draftjs-to-html": "^0.8.3",
       "enquire-js": "^0.1.3",
+      "html-to-draftjs": "^1.3.0",
       "lodash": "^4.17.5",
+      "password-hash": "^1.2.2",
       "prop-type": "0.0.1",
       "prop-types": "^15.6.1",
       "rc-banner-anim": "^1.0.1",
@@ -32,6 +36,9 @@ npm manifest:
       "react": "^16.2.0",
       "react-chat-widget": "^2.1.2",
       "react-dom": "^16.2.0",
+      "react-draft-wysiwyg": "^1.12.11",
+      "react-html-parser": "^2.0.2",
+      "react-image-file": "^0.3.0",
       "react-redux": "^5.0.7",
       "react-router-dom": "^4.2.2",
       "react-scripts": "1.1.1",
@@ -47,12 +54,12 @@ npm manifest:
       "test": "react-app-rewired test --env=jsdom",
       "eject": "react-scripts eject"
     },
-  
     "devDependencies": {
       "babel-plugin-import": "^1.6.7",
       "react-app-rewire-less": "^2.1.1",
       "react-app-rewired": "^1.5.0"
-    }
+    },
+    "homepage": "http://localhost:3001/"
   }
 
 yarn manifest: 
@@ -2124,6 +2131,18 @@ Lockfile:
     version "0.2.0"
     resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   
+  deep-eql@~2.0.1:
+    version "2.0.2"
+    resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-2.0.2.tgz#b1bac06e56f0a76777686d50c9feb75c2ed7679a"
+    dependencies:
+      type-detect "^3.0.0"
+  
+  deep-eql@~3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-3.0.1.tgz#dfc9404400ad1c8fe023e7da1df1c147c4b444df"
+    dependencies:
+      type-detect "^4.0.0"
+  
   deep-equal@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
@@ -2474,6 +2493,12 @@ Lockfile:
       memory-fs "^0.4.0"
       object-assign "^4.0.1"
       tapable "^0.2.7"
+  
+  enquire-js@^0.1.3:
+    version "0.1.3"
+    resolved "https://registry.yarnpkg.com/enquire-js/-/enquire-js-0.1.3.tgz#1fd799daaf6c6ae96208179218f3deee4e566e42"
+    dependencies:
+      enquire.js "^2.1.6"
   
   enquire.js@^2.1.1, enquire.js@^2.1.6:
     version "2.1.6"
@@ -5859,7 +5884,7 @@ Lockfile:
     version "0.0.1"
     resolved "https://registry.yarnpkg.com/prop-type/-/prop-type-0.0.1.tgz#4a211359cc622f7d2d1eee14d34afb7dfe7ea64e"
   
-  prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1:
+  prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1:
     version "15.6.1"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
     dependencies:
@@ -5939,9 +5964,15 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-1.0.0.tgz#6286242112c5b712fa654e526652bf6a13ff05cb"
   
-  raf@3.4.0:
+  raf@3.4.0, raf@3.x, raf@~3.4.0:
     version "3.4.0"
     resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
+    dependencies:
+      performance-now "^2.1.0"
+  
+  raf@~3.3.0:
+    version "3.3.2"
+    resolved "https://registry.yarnpkg.com/raf/-/raf-3.3.2.tgz#0c13be0b5b49b46f76d6669248d527cf2b02fe27"
     dependencies:
       performance-now "^2.1.0"
   
@@ -5995,6 +6026,16 @@ Lockfile:
       babel-runtime "6.x"
       css-animation "^1.3.2"
       prop-types "15.x"
+  
+  rc-banner-anim@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/rc-banner-anim/-/rc-banner-anim-1.0.1.tgz#14a8be16d0eaf389d7ea7f6f751f17691b36e611"
+    dependencies:
+      babel-runtime "6.x"
+      prop-types "^15.5.0"
+      rc-tween-one "~1.5.0"
+      style-utils "~0.1.13"
+      tween-functions "1.x"
   
   rc-calendar@~9.6.0:
     version "9.6.0"
@@ -6143,6 +6184,14 @@ Lockfile:
       babel-runtime "6.x"
       prop-types "^15.5.8"
   
+  rc-queue-anim@^1.4.1:
+    version "1.4.1"
+    resolved "https://registry.yarnpkg.com/rc-queue-anim/-/rc-queue-anim-1.4.1.tgz#52c4fbe84543f56656c61535d01984fcbdf56747"
+    dependencies:
+      babel-runtime "6.x"
+      prop-types "^15.5.0"
+      rc-tween-one "^1.5.0"
+  
   rc-rate@~2.4.0:
     version "2.4.0"
     resolved "https://registry.yarnpkg.com/rc-rate/-/rc-rate-2.4.0.tgz#97ebcc5876e2e498b9f5f65ced256d8ab54e5f06"
@@ -6151,6 +6200,16 @@ Lockfile:
       classnames "^2.2.5"
       prop-types "^15.5.8"
       rc-util "^4.3.0"
+  
+  rc-scroll-anim@^2.3.3:
+    version "2.3.3"
+    resolved "https://registry.yarnpkg.com/rc-scroll-anim/-/rc-scroll-anim-2.3.3.tgz#e28d8a5c1ae040f1fd44a9eba878a5e54c59623d"
+    dependencies:
+      babel-runtime "6.x"
+      prop-types "^15.6.0"
+      raf "3.x"
+      rc-tween-one "^1.7.0"
+      tween-functions "1.x"
   
   rc-select@~7.7.0:
     version "7.7.5"
@@ -6273,6 +6332,28 @@ Lockfile:
       rc-align "2.x"
       rc-animate "2.x"
       rc-util "^4.4.0"
+  
+  rc-tween-one@^1.5.0, rc-tween-one@^1.7.0, rc-tween-one@^1.7.3:
+    version "1.7.3"
+    resolved "https://registry.yarnpkg.com/rc-tween-one/-/rc-tween-one-1.7.3.tgz#1cdc0b88c0aaab481254c00e604b94af6ddbbc32"
+    dependencies:
+      babel-runtime "6.x"
+      deep-eql "~3.0.1"
+      prop-types "^15.5.0"
+      raf "~3.4.0"
+      style-utils "~0.1.13"
+      tween-functions "~1.2.0"
+  
+  rc-tween-one@~1.5.0:
+    version "1.5.8"
+    resolved "https://registry.yarnpkg.com/rc-tween-one/-/rc-tween-one-1.5.8.tgz#b4dbc4b74502231faf6f7dcca00c4c6e42dd0638"
+    dependencies:
+      babel-runtime "6.x"
+      deep-eql "~2.0.1"
+      prop-types "^15.5.0"
+      raf "~3.3.0"
+      style-utils "~0.1.13"
+      tween-functions "~1.2.0"
   
   rc-upload@~2.4.0:
     version "2.4.4"
@@ -7372,6 +7453,10 @@ Lockfile:
       loader-utils "^1.0.2"
       schema-utils "^0.3.0"
   
+  style-utils@~0.1.13:
+    version "0.1.16"
+    resolved "https://registry.yarnpkg.com/style-utils/-/style-utils-0.1.16.tgz#d06cc892c1dc2b1ac16e73318fd810b26dfbb4a9"
+  
   supports-color@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
@@ -7606,6 +7691,10 @@ Lockfile:
     dependencies:
       safe-buffer "^5.0.1"
   
+  tween-functions@1.x, tween-functions@~1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
+  
   tweetnacl@^0.14.3, tweetnacl@~0.14.0:
     version "0.14.5"
     resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
@@ -7615,6 +7704,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
     dependencies:
       prelude-ls "~1.1.2"
+  
+  type-detect@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-3.0.0.tgz#46d0cc8553abb7b13a352b0d6dea2fd58f2d9b55"
+  
+  type-detect@^4.0.0:
+    version "4.0.8"
+    resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
   
   type-is@~1.6.15:
     version "1.6.16"
@@ -8220,7 +8317,16 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
 Trace: 
-  Error: getaddrinfo ENOENT registry.yarnpkg.com:443
-      at Object._errnoException (util.js:1022:11)
-      at errnoException (dns.js:55:15)
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:92:26)
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c react-app-rewired build
+  Directory: /Users/michael/Documents/Projects/JusTeam/client
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)

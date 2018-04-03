@@ -147,7 +147,11 @@ const getNewNotiList=()=>{
 
             }
         )
-            .then((response)=>response.json())
+            .then(async (response)=>{
+                var a = await response.json();
+                console.log(a);
+                return a;
+            })
             .catch((error)=>{
                 console.log('Error occurred'+JSON.stringify(error));
                 return({error: error});
@@ -156,14 +160,12 @@ const getNewNotiList=()=>{
 }
 const getNotiHistory=(start,end)=>{
     return (
-        fetch(_domain+_noti_history,
+        fetch(_domain+_noti_history+"?start="+start+"&end="+end,
             {
                 method:'GET',
                 credentials: "include",
                 headers:{
                     Accept:'application/json',
-                    start:start,
-                    end:end,
                 },
 
             }

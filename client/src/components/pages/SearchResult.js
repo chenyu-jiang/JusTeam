@@ -3,8 +3,6 @@ import React,{Component} from 'react';
 import {getNewNotiNum,getNewNotiList,getNotiHistory,deleteNoti}from '../../services/notiService';
 import {connect} from 'react-redux';
 import './AccountInfoPage.css';
-const number= getNewNotiNum();
-const getNoti=getNewNotiList();
 const fakeresult=[
   {
     key:'1',
@@ -52,7 +50,6 @@ const fakeresult=[
 const pagination = {
  pageSize: 5,
  defaultcurrent: 1,
- total: number,
  onChange: (() => {}),
 
   showSizeChanger:true,

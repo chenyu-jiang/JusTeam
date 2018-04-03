@@ -1,5 +1,5 @@
 
-var {_domain,_log_in,_sign_up,_upload_image,_log_out}=require( './Urlparams');
+var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info}=require( './Urlparams');
 
 const logIn=(userID)=>{
     console.log('calling action creator:',userID);
@@ -29,22 +29,72 @@ const signUpSubmit=(value)=>{
             })
     );
 }
+const defaultinfo= {
+    userID: 'Van Darkholme',
+    nickname:'world of wonder',
+    birthday: '1919/8/10',
+    phone: '+852-114514',
+    introduction: 'My name is van, I am an artist, a preformance artist.',
+    major:'computer Science',
+    institution:'CUHK',
+    region:'HK',
+    gender:'male',
+    teamList:[27,28],
+};
 
-const fetchActInfo=(userID)=>{
-    const defaultinfo= {
-        userID: 'Van Darkholme',
-        nickname:'world of wonder',
-        birthday: '1919/8/10',
-        phone: '+852-114514',
-        introduction: 'My name is van, I am an artist, a preformance artist.',
-        major:'computer Science',
-        institution:'CUHK',
-        region:'HK',
-        gender:'male',
-    };
-    return( defaultinfo
+const fetchActInfo=(userID=undefined)=>{
+    if(userID) {
+        return(
+        fetch(_domain + _get_user_info,
+            {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userID: userID,
+                }),
+            }
+        )
+            .then((response) => response.json())
+            .catch((error) => {
+                console.log('Error occurred' + JSON.stringify(error));
 
+                // only for development!!!
+                return(defaultinfo);
+
+                return ({error: error});
+            })
     );
+    }
+    else{
+        return(
+        fetch(_domain + _get_user_info,
+            {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                }),
+            }
+        )
+            .then((response) => response.json())
+            .catch((error) => {
+                console.log('Error occurred' + JSON.stringify(error));
+
+                // only for development!!!
+                return(defaultinfo);
+
+                return ({error: error});
+
+            }));
+    }
+
 }
 
 const logInAuth=(userID,password)=>{

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {List, Avatar,Row,Col,Button, Rate,Tabs,Icon,Card} from 'antd';
 import {Link,Redirect} from 'react-router-dom'
 import './AccountInfoPage.css'
@@ -24,12 +24,18 @@ const mapDispatchToProps= ()=>{
     return{
     }
 }
-
-const AccountInfoPage=connect(mapStateToProps,mapDispatchToProps)(({userID})=>{
+let data=undefined;
+class AccountInfoPage extends Component {
+    state={
+        data:undefined,
+    }
+    render(){
+        const userID= this.props.userID;
     if(!userID) return(
         <Redirect to='/home/dash/login'/>
     );
-    const data=fetchActInfo(userID);
+    data=this.state.data;
+    if(data)
     return(
         <div>
           <br/>
@@ -68,6 +74,14 @@ const AccountInfoPage=connect(mapStateToProps,mapDispatchToProps)(({userID})=>{
         </div>
 
 
-    );});
-
-export  default  AccountInfoPage;
+    );
+ else return(<div>
+        loading!!
+    </div>);
+}
+ componentDidMount(){
+        if(this.props.userID)
+     fetchActInfo(this.props.userID).then((response)=>{this.setState({data:response})});
+ }
+}
+export  default  connect(mapStateToProps,mapDispatchToProps)(AccountInfoPage);

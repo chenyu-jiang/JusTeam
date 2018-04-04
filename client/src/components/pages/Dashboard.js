@@ -14,7 +14,7 @@ import AccountInfoPage from "./AccountInfoPage";
 
 class Dashboard extends Component {
     render() {
-        if(this.props.location.pathname==='/home/dash') return<Redirect to='/home/dash/teaming'/>;
+        if(this.props.location.pathname==='/home/dash') return<Redirect to='/home/dash/discover'/>;
         return (
             <div>
                 <div style={{marginBottom:'20px'}}>

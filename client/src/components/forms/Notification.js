@@ -65,7 +65,7 @@ const differType=(type,content,messageID)=>{
           deleteNoti(messageID,type);
       };
     }
-  if(type==="TeamPublicMessage"){
+    if(type==="TeamPublicMessage"){
         title= `Annoncement from ${content.teamToBeUpdated} by ${content.sender}`;
         color="#66ccff";
       description=content.message;

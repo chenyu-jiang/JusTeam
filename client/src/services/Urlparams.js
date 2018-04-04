@@ -13,6 +13,7 @@ module.exports=
     _new_noti_list:"api/notifications/new/content/",
     _noti_history:"api/notifications/history/",
     _noti_delete:"api/notifications/delete/",
+    _get_user_info:"api/account/requestInformation",
 
     _upload_image:"api/posts/upload/pictures/",
 

@@ -13,7 +13,7 @@ const TabPane = Tabs.TabPane;
 const column1= [{
   title: 'Title',
   dataIndex: 'teamTitle',
-  key: 'title',
+  key: 'teamTitle',
 }, {
   title: 'Start Time',
   dataIndex: 'startTime',
@@ -43,6 +43,15 @@ state={
   teamlist:this.props.teamlist,
 }
 
+componentWillReceiveProps(nextProps) {
+    if(JSON.stringify(this.props.teamlist) !== JSON.stringify(nextProps.teamlist)) // Check if it's a new user, you can also use some unique, like the ID
+    {
+        this.setState({
+            teamlist:nextProps.teamlist,
+        });
+    }
+}
+
 Filter=(teamlist)=>{
   const nostart= teamlist.filter(item => item.status==='Recruiting');
   const fighting= teamlist.filter(item => item.status==='Fighting');
@@ -55,7 +64,7 @@ Filter=(teamlist)=>{
 }
 
   render(){
-    console.log(this.state.teamlist);
+    console.log(this.state);
     if(this.state.teamlist){
     return(
       <div>

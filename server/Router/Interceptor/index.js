@@ -18,8 +18,11 @@ var interceptor = function (req, res, next) {
             next();
         }
         else{
-            res.setHeader("status", 403);
-            res.send("Access forbidden.<br>" + req.path);
+            res.setHeader("status", 200);
+            res.send(JSON.stringify({
+              requestState:false,
+              error:"Not logged in!",
+            }));
         }
     }
 }

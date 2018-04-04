@@ -88,7 +88,7 @@ const fetchActInfo=(userID=undefined)=>{
                 console.log('Error occurred' + JSON.stringify(error));
 
                 // only for development!!!
-               // return(defaultinfo);
+                //return(defaultinfo);
 
                 return ({error: error});
 

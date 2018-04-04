@@ -12,7 +12,9 @@ router.get('/getRecommend',(req,res)=>{
 });
 //TODO:
 router.get('/getUserTeams',(req,res)=>{
-  var teamList = JSON.parse(req.query.teamList);
+  var l = req.query.teamList;
+  l = '['+l+']';
+  var teamList = JSON.parse(l);
   var teams = [];
   var aimUser = undefined;
   function askOnce(var_i){
@@ -37,12 +39,13 @@ router.get('/getUserTeams',(req,res)=>{
           await askOnce(i);
           if(a == teamList.length - 1){
             result.teams = teams;
+            console.log(result);
             res.send(result);
           }
         }
         catch(e){
           result.state = 'part';
-          console.log(i);
+          console.log('mei zhao quan a***********************');
           if(i == teamList.length - 1){
             function down(x, y) {
               return (x.age < y.age) ? 1 : -1

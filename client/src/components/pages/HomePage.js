@@ -1,6 +1,7 @@
 import  React,{Component} from 'react'
 import  {Link,Route,Redirect} from 'react-router-dom'
 import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix} from 'antd'
+import {getTeamSearchResult} from "../../services/searchService"
 import './HomePage.css'
 import 'antd/dist/antd.css'
 import NotiPage from "./NotiPage";
@@ -30,9 +31,24 @@ const mapDispatchToProps=dispatch=>{
 
     }
 }
-class HomePage extends Component{
 
+
+class HomePage extends Component{
+  state = {
+    searchResult : undefined
+  }
+  handleSearch=async (value)=>{
+    var result = await getTeamSearchResult(value);
+    console.log("result:");
+    console.log(result.results);
+    this.setState({
+      searchResult: result.results
+    });
+  }
     render(){
+        if(this.state.searchResult) return(
+            <SearchPage searchResult={this.state.searchResult}/>
+        );
         if(this.props.location.pathname==='/home') return<Redirect to='/home/dash'/>;
         if(this.props.location.pathname==='/home/dash/login') return<Redirect to='/login'/>;
         this.props.setUrlDispatch(this.props.location.pathname);
@@ -46,9 +62,12 @@ class HomePage extends Component{
         </Button>
         </Link>
         <Search
-            style={{ width: "70%",height: "120%",marginLeft:'10%'}}
+            style={{ width: "70%",height: "120%", marginLeft:'10%'}}
             placeholder="search for whatever you want!"
+            onSearch={
+              value=>this.handleSearch(value)
 
+            }
             enterButton
         />
         </Col>
@@ -61,22 +80,18 @@ class HomePage extends Component{
     </span>
     </div></Affix>
 
-
         <div style={{ background: '#fff', padding: '20px 0px 0px' }}>
             <Route path='/home/accountInfo'  component={AccountInfoPage} />
             <Route path='/home/dash'  component={Dashboard} />
             <Route path='/home/notification'  component={NotiPage} />
-              <Route path='/home/searchResult'  component={SearchPage} />
         </div>
       <div>
       <Footer/>
 
       </div>
 
-
-
-
     </div>
+
 );
 }
 }

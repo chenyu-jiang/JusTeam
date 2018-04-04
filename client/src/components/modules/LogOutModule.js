@@ -14,16 +14,19 @@ const mapStateToProps=state=>{
 const mapDispatchToProps=dispatch=>{
     return{
         logOutDispatch: ()=>{
-            const response= logOutService();
-            if(response.logOutState) {
-                console.log("Logout successful");
-                logoutStatus=true;
-                dispatch(logOut());
-            }
-            else {
-                if(response.error) message.error("Error occurred when logging out:"+response.error);
-                else message.error("Failed to login!");
-            }
+            logOutService().then(
+                (response)=> {
+                    if (response.logoutState) {
+                        console.log("Logout successful");
+                        logoutStatus = true;
+                        dispatch(logOut());
+                    }
+                    else {
+                        if (response.error) message.error("Error occurred when logging out:" + response.error);
+                        else message.error("Failed to login!");
+                    }
+                }
+        )
         }
     }
 }

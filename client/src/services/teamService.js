@@ -145,9 +145,9 @@ const getRecommendTeam=()=> {
 
 }
 
-const getUserTeams=()=>{
+const getUserTeams=(teamList)=>{
     return (
-        fetch(_domain+_get_user_teams,
+        fetch(_domain+_get_user_teams+"?teamList="+teamList,
             {
                 method:'GET',
                 credentials: "include",

@@ -111,22 +111,12 @@ class  MyTeamsSection extends Component {
     render() {
         return(
             <div>
-                All My Teams
+
 
                 <div>
                     <TeamList teamlist={this.state.TeamData}/>
                 </div>
-                <Tabs defaultActiveKey="1" onChange={callback} style={{margin: "20px"}}>
-                    <TabPane tab="Not Started" key="1"><Table columns={column1} dataSource={notstart}/>
-                    </TabPane>
-                    <TabPane tab="In Progress" key="2"><Table columns={column1} dataSource={fighting}/>
-                        <br/>
-                    </TabPane>
-                    <TabPane tab="Arrive Terminal" key="3">
-                        <Table columns={column1} dataSource={ended}/>
-                        <br/>
-                    </TabPane>
-                </Tabs>
+
                 <br/>
                 <CommunicationPage/>
                 <br/>

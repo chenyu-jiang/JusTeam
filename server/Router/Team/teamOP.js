@@ -89,6 +89,27 @@ router.post('/createTeam',bodyParser.urlencoded({extended: true}),async (req,res
               res.send(a);
             }
             else{
+              //create input interface: {'startTime' = string, 'endTime' = string, 'title' = string, 'location' = string, 'specification' = string}
+              //var jsIn_event = {teamID : jsIn.teamID,startTime : req.body.startTime,endTime : req.body.endTime, title : 'Our story begin', location : 'World of Wonder', specification : 'chase your dream with JusTeam'};
+
+              async function f(){
+                await new Promise((resolve,reject)=>{
+                  var jsIn_event = {teamID : jsIn.teamID,startTime : req.body.startTime,endTime : req.body.endTime, title : 'Our story begin', location : 'World of Wonder', specification : 'chase your dream with JusTeam'};
+                  eventOP.createEvent(jsIn_event,(err,result)=>{
+                    if(err){
+                      console.log(err);
+                      res.send({state : 'fail'});
+                    }
+                    else {
+                      console.log('---------------------*********-______________-');
+                      resolve();
+                    }
+                  });
+
+                });
+              }
+              f();
+
               try{searchOP.updateUser(userID, body.category);}
               catch(e){
               }

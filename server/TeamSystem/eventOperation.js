@@ -1,5 +1,6 @@
 const Event = require('./Event');
 const dbEvent = require('./dbConnectionForEvent')
+const teamOP = require('./teamOperation');
 
 //create input interface: {'startTime' = string, 'endTime' = string, 'title' = string, 'location' = string, 'specification' = string}
 //edit input interface: {'eventID' = integer,'startTime' = string(datetime), 'endTime' = string(datetime), 'title' = string, 'location' = string, 'specification' = string}
@@ -18,6 +19,24 @@ module.exports = {
           callback(err,null);
         }
         else{
+
+          async function f(){
+            console.log('--------------------***********------------------');
+            await new Promise((resolve,reject)=>{
+              teamOP.teamAttachEvent({teamID : jsonIn.teamID, eventID : result.insertId},(err,result)=>{
+                if(err){
+                  callback(err,null);
+                  resolve();
+                }
+                else{
+                  resolve();
+                }
+              });
+            });
+
+          }
+          f();
+
           callback(null,result.insertId);
         }
       });

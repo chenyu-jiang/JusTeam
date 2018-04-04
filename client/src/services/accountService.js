@@ -29,7 +29,6 @@ const signUpSubmit=(value)=>{
             })
     );
 }
-
 const defaultinfo= {
     userID: 'Van Darkholme',
     nickname:'world of wonder',
@@ -64,7 +63,7 @@ const fetchActInfo=(userID=undefined)=>{
                 console.log('Error occurred' + JSON.stringify(error));
 
                 // only for development!!!
-                //return(defaultinfo);
+               // return(defaultinfo);
 
                 return ({error: error});
             })
@@ -170,14 +169,15 @@ const receiveTeam=(teamID,json)=>{
 
 
  const uploadImage=(file)=>{
-    const data=new FormData();
+    var data=new FormData();
+    data.append('image',file);
     console.log("loading image! ");
 
-    return(
-        {
-            path:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul"
-        }
-    )
+    // return(
+    //     {
+    //         path:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul"
+    //     }
+    // )
 
      return (
          fetch(_domain+_upload_image,
@@ -186,17 +186,16 @@ const receiveTeam=(teamID,json)=>{
                  credentials: "include",
                  headers:{
                      Accept:'application/json',
-                     'Content-Type':'application/json'
                  },
-                 body: data.append('image',file),
+                 body: data,
              }
          )
              .then((response)=>response.json())
              .catch((error)=>{
                  console.log('Error occurred'+JSON.stringify(error));
                  return({error: error});
-             })
-     );
+             }
+     ))
  }
 
 module.exports={

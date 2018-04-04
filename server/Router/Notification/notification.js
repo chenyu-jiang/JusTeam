@@ -9,8 +9,6 @@ router.get("/history", async (req, res, next) => {
     var start = req.query.start;
     var end = req.query.end;
     if(start && end && userID) {
-        console.log("start:"+start);
-        console.log("end:"+end);
         var response = await notiInterface.getNotificationHistory(userID, start, end);
         res.send(response);
     }

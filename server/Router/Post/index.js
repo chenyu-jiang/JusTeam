@@ -1,6 +1,6 @@
 var fs = require("fs");
 var path = require("path");
-const localPath = "http://localhost:3000/"
+const localPath = "http://localhost:3001/"
 //fileUpload middleware
 const picMimetypes = {
     "image/bmp": true,
@@ -107,6 +107,7 @@ var uploadText = multer({storage: textStorage});
 
 router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
     //return the path
+    console.log(req.file);
     var resContent = {
         path: localPath+req.file.path.split(path.resolve("./").length,req.file.path.length)
     };
@@ -121,6 +122,7 @@ router.post("/upload/articles", uploadText.single('article'), async (req, res, n
     };
     //save record in database
     try{
+        console.log(req.body);
         var postID = undefined;
         req.body.postID = parseInt(req.body.postID);
         req.body.isNew = req.body.isNew === "true" ? true : false;

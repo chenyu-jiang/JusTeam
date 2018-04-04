@@ -1,12 +1,15 @@
 import React,{Component} from 'react';
-import  {Link,Route,Redirect} from 'react-router-dom'
-import{Button,Col,Row,Divider} from 'antd'
-import './HomePage.css'
 import MyTeamsPage from "../sections/MyTeamsPage";
 import Discover from '../sections/Discover'
 import Teaming from '../sections/Teaming'
+import  {Link,Route,Redirect} from 'react-router-dom'
+import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix} from 'antd'
 import LogDepButton from '../modules/LogDepButton'
-import {logIn} from "../../services/accountService";
+import 'antd/dist/antd.css'
+import './HomePage.css'
+import AccountInfoPage from "./AccountInfoPage";
+
+
 
 
 class Dashboard extends Component {
@@ -44,10 +47,12 @@ class Dashboard extends Component {
                     <Route path='/home/dash/teaming' component={Teaming}/>
                     <Route path='/home/dash/discover' component={Discover}/>
                 </div>
+
+
             </div>
         );
     }
 }
 
 
-export  default Dashboard;
+export  default  Dashboard;

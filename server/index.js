@@ -1,6 +1,7 @@
 var express = require("express");
 var passport = require('passport');
 var app = express();
+var cors = require('cors')
 var interceptor = require('./Router/Interceptor');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');

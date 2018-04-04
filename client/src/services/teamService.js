@@ -254,13 +254,18 @@ const editEvent=(data)=>{
 }
 
 const sendNewPost=(data)=>{
+    const formData=new FormData();
+    formData.append("article",data);
+    formData.append("isNew",true);
+    formData.append("portTitle", "Fake title");
+    //formData.append("")
     return(
         fetch(_domain+_send_post,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
-                    'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
                     article:data,

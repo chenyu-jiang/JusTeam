@@ -122,11 +122,11 @@ class RegistrationForm extends Component {
             },
             file:statefile,
         };
-      const handleUpload = () => {
+      const handleUpload = async () => {
               const  fileList  = statefile;
               uploading=true;
               // You can use any AJAX library you like
-              const response=uploadImage(fileList);
+              const response= await uploadImage(fileList);
               if(response.path) imgurl=response.path;
               console.log("imgurl=  ",imgurl);
           }

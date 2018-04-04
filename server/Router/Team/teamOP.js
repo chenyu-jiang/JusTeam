@@ -230,7 +230,7 @@ router.post('/editTeam', bodyParser.urlencoded({extended: true}), async (req,res
 });
 
 router.get('/addMember',async (req,res)=>{
-
+  console.log(req.query);
   var aimTeamID = parseInt(req.query.teamID);
   var newMember = parseInt(req.query.newMember);
   var jsIn = {teamID : aimTeamID, userID : newMember};

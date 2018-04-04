@@ -1,12 +1,6 @@
 import { Table, Input, Popconfirm, Button, Icon } from 'antd';
 import React,{Component}from 'react';
 
-const TimeLine=[{key:'0',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do something1', Description:'I am so bad guy', Status:'finish',},
-    {key:'1',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do something2', Description:'I am so bad guy', Status:'process',},
-    {key:'2',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do something3', Description:'I am so bad gu', Status:'wait',},
-    {key:'3',startTime:'2018.3.19', Location:'LSKLT',DoItem:'Do something4', Description:'I am so bad guy', Status:'wait',},
-    {key:'4',startTime:'2018.4.14', Location:'LSKLT',DoItem:'ProjectDemo', Description:'I am so bad guy', Status:'wait',},
-  ];
 
     class EditableCell extends React.Component {
       state = {
@@ -64,12 +58,12 @@ const TimeLine=[{key:'0',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do some
         super(props);
         this.columns = [{
           title: 'Name',
-          dataIndex: 'DoItem',
+          dataIndex: 'title',
           width: '30%',
           render: (text, record) => (
             <EditableCell
               value={text}
-              onChange={this.onCellChange(record.key, 'Name')}
+              onChange={this.onCellChange(record.key, 'title')}
             />
           ),
         }, {
@@ -78,36 +72,36 @@ const TimeLine=[{key:'0',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do some
           render: (text, record) => (
             <EditableCell
               value={text}
-              onChange={this.onCellChange(record.key, 'Time')}
+              onChange={this.onCellChange(record.key, 'startTime')}
             />
           ),
         },
         {
           title: 'End Time',
-          dataIndex: 'startTime',
+          dataIndex: 'endTime',
           render: (text, record) => (
             <EditableCell
               value={text}
-              onChange={this.onCellChange(record.key, 'Time')}
+              onChange={this.onCellChange(record.key, 'endTime')}
             />
           ),
         },
         {
           title: 'Location',
-          dataIndex: 'Location',
+          dataIndex: 'location',
           render: (text, record) => (
             <EditableCell
               value={text}
-              onChange={this.onCellChange(record.key, 'Location')}
+              onChange={this.onCellChange(record.key, 'location')}
             />
           ),
         },{
           title: 'Description',
-          dataIndex: 'Description',
+          dataIndex: 'specification',
           render: (text, record) => (
             <EditableCell
               value={text}
-              onChange={this.onCellChange(record.key, 'Description')}
+              onChange={this.onCellChange(record.key, 'specification')}
             />
           ),
         }, {
@@ -124,8 +118,7 @@ const TimeLine=[{key:'0',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do some
             );
           },
         }];
-
-        this.state = {TimeLine:TimeLine,count:5,};
+        this.state = {TimeLine:this.props.TimeLine,count:5,};
       }
       onCellChange = (key, dataIndex) => {
         return (value) => {
@@ -155,14 +148,20 @@ const TimeLine=[{key:'0',startTime:'2018.2.19', Location:'LSKLT',DoItem:'Do some
         });
       }
       render() {
-        const { TimeLine } = this.state;
+        if(this.state.TimeLine){
+        const { TimeLine } = this.state.TimeLine;
         const columns = this.columns;
+
         return (
           <div>
             <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>
             <Table bordered dataSource={TimeLine} columns={columns} />
           </div>
         );
+      }
+      else{
+        return(<div>cannot</div>);
+      }
       }
     }
 export default EditableTable;

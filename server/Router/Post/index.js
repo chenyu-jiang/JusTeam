@@ -114,33 +114,47 @@ router.post("/upload/pictures", uploadPic.single('image'), (req, res, next)=>{
     res.send(resContent);
 });
 
-router.post("/upload/articles", uploadText.single('article'), async (req, res, next)=>{
+router.post("/upload/articles", async (req, res, next)=>{
     var user = req.user.id;
     var resContent = {
         status: true,
         postID: -1
     };
     //save record in database
-    try{
-        var postID = undefined;
-        req.body.postID = parseInt(req.body.postID);
-        req.body.isNew = req.body.isNew === "true" ? true : false;
-        var content = {
-            "user" : user,
-            "path" : path.resolve("./")+'/'+req.file.path,
-            "postTitle" : req.body.postTitle,
-            "tags" : JSON.parse(req.body.tags).tags,
-            "isFinal": req.body.isFinal === "true" ? 1 : 0,
-            "teamID": req.body.teamID,
-            "eventID": req.body.eventID
+    var postID = undefined;
+    var filename = uuidv4()+".txt";
+    var serverPath = "/upload/articles/"+filename;
+    var localDir = path.resolve("./")+"/upload/articles/"+filename;
+    fs.writeFile(localDir,JSON.stringify(req.body.article),"utf8",async (err)=>{
+        if(err) {
+            console.log(err);
+            resContent.status = false;
         }
-        postID = await postRecord.saveRecord(content, req.body.isNew, req.body.postID);
-        resContent.postID = postID;
-    } catch(err) {
-        console.log(err);
-        resContent.status = false;
-    }
-    res.send(resContent);
+        else {
+            req.body.postID = parseInt(req.body.postID);
+            req.body.isNew = parseInt(req.body.isNew);
+            var content = {
+                "user" : user,
+                "path" : serverPath,
+                "postTitle" : req.body.postTitle,
+                "tags" : req.body.tags,
+                "isFinal": parseInt(req.body.isFinal),
+                "teamID": req.body.teamID,
+                "eventID": req.body.eventID
+            }
+            try{
+                console.log(req.body);
+                postID = await postRecord.saveRecord(content, req.body.isNew, req.body.postID);
+                resContent.postID = postID;
+            } catch(err) {
+                if(err) {
+                    console.log(err);
+                    resContent.status = false;
+                }
+            }
+            res.send(resContent);
+        }
+});
 });
 
 router.get("/setFinal", async (req, res, next)=> {

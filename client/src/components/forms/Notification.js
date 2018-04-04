@@ -24,7 +24,12 @@ const mapDispatchToProps=dispatch=>{
     }
 }
 
-const differType=(type,content,messageID)=>{
+class NotificationItem extends Component{
+state={
+    getNoti:undefined,
+}
+
+differType=(type,content,messageID)=>{
   content = JSON.parse(content);
   var title="";
   var color="#f50";
@@ -37,7 +42,8 @@ const differType=(type,content,messageID)=>{
   if(type==="JoinRequest"){
       title=`${content.applicant}  wants to join team: ${content.teamToBeJoined}`;
       color="#f50";
-      description=content.joinInfo;
+      description=content.joinInfo.inputdescription;
+      console.log(content);
       action1="Accept";
       action2="Refuse";
       func1 = ()=>{
@@ -45,7 +51,7 @@ const differType=(type,content,messageID)=>{
           addMember(content.userID,content.teamID);
           //redirect
           this.props.changeTeamDispatch(content.teamID);
-          this.props.history.push('/home/dash/myTeams/viewTeam');
+          //this.props.history.push('/home/dash/myTeams/viewTeam');
       };
       func2 = ()=> {
           deleteNoti(messageID,type);
@@ -90,10 +96,8 @@ const differType=(type,content,messageID)=>{
     func2: func2
   });
 }
-class NotificationItem extends Component{
-state={
-    getNoti:undefined,
-}
+
+
   componentDidMount(){
     getNotiHistory(0,1000).then((response)=>{
         this.setState({"getNoti":response});
@@ -119,17 +123,17 @@ if(this.state.getNoti){
           <Card
             style={{marginTop: "2%", height:"200px"}}
             type="inner"
-            title={<Col span={5}><Tag color={differType(item.messageType,item.content,item.messageID).color}>{item.messageType}</Tag></Col>}
-            extra={<span><Button size="small" onClick={differType(item.messageType,item.content,item.messageID).func1}> {differType(item.messageType,item.content,item.messageID).action1}</Button> <Button size="small" onClick={differType(item.messageType,item.content,item.messageID).func2}>{differType(item.messageType,item.content,item.messageID).action2}</Button></span>}
+            title={<Col span={5}><Tag color={this.differType(item.messageType,item.content,item.messageID).color}>{item.messageType}</Tag></Col>}
+            extra={<span><Button size="small" onClick={this.differType(item.messageType,item.content,item.messageID).func1}> {this.differType(item.messageType,item.content,item.messageID).action1}</Button> <Button size="small" onClick={this.differType(item.messageType,item.content,item.messageID).func2}>{this.differType(item.messageType,item.content,item.messageID).action2}</Button></span>}
           >
           <List.Item
             key={item.messageID}>
             <List.Item.Meta
             title={<span>
-            {differType(item.messageType,item.content).title}</span>}
+            {this.differType(item.messageType,item.content).title}</span>}
 
             />
-            {differType(item.messageType,item.content).description}
+            {this.differType(item.messageType,item.content).description}
           </List.Item>
           </Card>
         )}

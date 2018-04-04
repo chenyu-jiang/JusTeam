@@ -5,7 +5,7 @@ const SetViewingTeam=(state=initState,action={})=>{
     console.log('SetViewingTeam called: ',JSON.stringify(state),JSON.stringify(action));
     switch (action.type){
         case 'SET_TEAMID':
-            console.log('Login with ',action.viewingTeamID)
+            console.log('Setting TeamID ',action.viewingTeamID)
             return action.viewingTeamID ;
         default: return state;
 
@@ -18,6 +18,17 @@ const SetFromUrl=(state=initState,action={})=>{
         case 'SET_FROMURL':
             console.log('set fromUrl ',action.fromUrl)
             return action.fromUrl;
+        default: return state;
+
+    }
+
+}
+const SetLogo=(state=undefined,action={})=>{
+    console.log('SetLogo called: ',JSON.stringify(state),JSON.stringify(action));
+    switch (action.type){
+        case 'SET_LOGO':
+            console.log('set logo ',action.logo)
+            return action.logo;
         default: return state;
 
     }
@@ -59,6 +70,11 @@ const SetToPath=(state=initState,action={})=>{
         case 'SET_FROMURL':
             console.log('setting a from url:',JSON.stringify(action),'state=',JSON.stringify(state));
             nextstate=Object.assign({},state,{fromUrl: SetFromUrl(state.fromUrl,action)});
+            console.log('generating new state:', JSON.stringify(nextstate));
+            return nextstate;
+        case 'SET_LOGO':
+            console.log('setting a logo :',JSON.stringify(action),'state=',JSON.stringify(state));
+            nextstate=Object.assign({},state,{logo: SetLogo(state.logo,action)});
             console.log('generating new state:', JSON.stringify(nextstate));
             return nextstate;
         default:

@@ -18,6 +18,7 @@ class JoinRequest extends Message {
     }
 
     initial(content) {
+        console.log(content);
         return new Promise((resolve,reject)=>{
             teamOP.askTeam(content.teamToBeJoined,(err,result)=>{
                 if(err) reject(err);

@@ -8,14 +8,13 @@ var postIndexName = "post";
 var teamTypeName = "team";
 var postTypeName = "post";
 
-async function createPostItem(postId, postTitle, tags, content, callback) {
+async function createPostItem(postId, postTitle, content, callback) {
     client.create({
         index: postIndexName,
         type: postTypeName,
         id: postId,
         body: {
             "postTitle": postTitle,
-            "tags": tags,
             "content": content
         }
     },(err, response)=>{
@@ -23,7 +22,7 @@ async function createPostItem(postId, postTitle, tags, content, callback) {
     });
 }
 
-async function updatePostItem(postId, postTitle, tags, content, callback) {
+async function updatePostItem(postId, postTitle, content, callback) {
     await client.delete({
         index: postIndexName,
         type: postTypeName,
@@ -31,7 +30,7 @@ async function updatePostItem(postId, postTitle, tags, content, callback) {
     },(err, response)=>{
         if(callback) callback(err);
     });
-    createPostItem(postId, postTitle,tags,content);
+    createPostItem(postId, postTitle,content);
 }
 
 async function deletePostItem(postID,callback) {

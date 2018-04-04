@@ -5,8 +5,10 @@ var passport = require('passport');
 var local = require('passport-local').Strategy;
 
 router.post('/', async function(req, res){
+    res.clearCookie('session_cookie_name');
     if (req.session != undefined) {
         await req.session.destroy(function (err) {
+            console.log("Session: " + JSON.stringify(req.session));
             if (err) res.send(JSON.stringify({logoutState: false, error: err}));
             //res.redirect('/login');
             try {
@@ -15,7 +17,6 @@ router.post('/', async function(req, res){
             } catch (err) {
                 res.send(JSON.stringify({logoutState: false, error: err}));
             }
-
         });
     }
     else try {

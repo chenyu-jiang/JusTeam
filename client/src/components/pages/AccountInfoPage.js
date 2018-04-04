@@ -17,7 +17,8 @@ function callback(key) {
 const mapStateToProps= state=>{
     console.log("state fetched:", JSON.stringify(state)) ;
     return{
-        userID: state.userID
+        userID: state.userID,
+        logo:state.logo,
     }
 }
 const mapDispatchToProps= ()=>{
@@ -34,8 +35,8 @@ class AccountInfoPage extends Component {
     if(!userID) return(
         <Redirect to='/home/dash/login'/>
     );
-    data=this.state.data;
-    if(data)
+
+    if(this.state.data)
     return(
         <div>
           <br/>
@@ -45,18 +46,18 @@ class AccountInfoPage extends Component {
                 <TabPane tab="My Info" key="1">
                 <Col className="infospan" >
                     <div>
-                        <Avatar size="large" icon="user">
+                        <Avatar  src={this.props.logo} size="large" icon="user">
                         </Avatar>
                     </div>
                 </Col>
 
                 <Col className="secondspan">
-                    <div><h2 textalign="center">Hello, {data.nickname}</h2>
+                    <div><h2 textalign="center">Hello, {this.state.data.nickname}</h2>
                     </div></Col>
                     <Col className="secondspan" >
                         <div><h3 >Personal Information</h3>
                         </div></Col>
-                <AccountInfoList data={data} />
+                <AccountInfoList data={this.state.data} />
                 <br/>
                 <Col className="infospan"><div>
                     <Link to='/home/dash/myTeams'>
@@ -81,7 +82,9 @@ class AccountInfoPage extends Component {
 }
  componentDidMount(){
         if(this.props.userID)
-        fetchActInfo(this.props.userID).then((response)=>{this.setState({data:response})});
+        fetchActInfo(this.props.userID).then((response)=>{
+            if(response.requestState)
+            this.setState({data:response.result})});
  }
 }
 export  default  connect(mapStateToProps,mapDispatchToProps)(AccountInfoPage);

@@ -1,4 +1,4 @@
-const matchList = ["^/$","/static","/login","/api/account/register","/api/account/login","/api/post/articles","/upload/pictures","/api/search.*","/api/team/teanInfo.*"]
+const matchList = ["^/$","/static","/login","/api/account/register","/api/account/login","/api/account/logout","/api/post/articles","/upload/pictures","/api/search.*","/api/team/teanInfo.*"]
 
 var interceptor = function (req, res, next) {
     if(req.user) {

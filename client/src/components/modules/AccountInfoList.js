@@ -13,7 +13,7 @@ const AccountInfoList=({data})=>{
         <List bordered="true" className="infoList"
               itemLayout="horizontal">
             <List.Item>
-                <List.Item.Meta title="User Name" description={preventNull(data.userID)} />
+                <List.Item.Meta title="User Name" description={preventNull(data.username)} />
             </List.Item>
             <List.Item>
                 <List.Item.Meta title="Nickname" description={preventNull(data.nickname)} />
@@ -25,7 +25,7 @@ const AccountInfoList=({data})=>{
                 <List.Item.Meta title="Contact" description={preventNull(data.phone)} />
             </List.Item>
             <List.Item>
-                <List.Item.Meta title="Personal Description" description={preventNull(data.description)} />
+                <List.Item.Meta title="Personal Description" description={preventNull(data.introduction)} />
             </List.Item>
         </List>
     );

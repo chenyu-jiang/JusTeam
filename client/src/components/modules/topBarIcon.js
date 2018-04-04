@@ -1,5 +1,5 @@
 import React from 'react'
-import {Dropdown,Button,Menu} from 'antd'
+import {Dropdown,Button,Menu,Avatar} from 'antd'
 import {connect} from 'react-redux'
 import  {Link} from 'react-router-dom'
 import logo from '../../logo.svg'
@@ -27,7 +27,8 @@ const menu = (
 const mapStateToProps= state=>{
     console.log("state fetched:", JSON.stringify(state)) ;
     return{
-        userID: state.userID
+        userID: state.userID,
+        logo:state.logo,
     }
 }
 const mapDispatchToProps= ()=>{
@@ -36,7 +37,7 @@ const mapDispatchToProps= ()=>{
 }
 
 
-  const topBarIcon=function({userID=undefined}) {
+  const topBarIcon=function({userID=undefined,logo}) {
     if(userID)
       return (
           <span align="right">
@@ -47,7 +48,7 @@ const mapDispatchToProps= ()=>{
               <Dropdown overlay={menu}>
                   <Link to='/home/accountInfo'>
                       <Button shape="circle"  >
-                          <img src={logo} alt='UserLogo' height="30" width="30"/>
+                          <Avatar src={logo} />
                       </Button>
                   </Link>
               </Dropdown>

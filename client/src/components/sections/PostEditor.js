@@ -2,16 +2,31 @@ import React, { Component } from 'react';
 import { EditorState, convertToRaw, ContentState,convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import{Button,message} from 'antd'
-import {uploadImage} from'../../services/accountService'
+import {logIn, uploadImage} from '../../services/accountService'
 import {sendNewPost} from '../../services/teamService'
 import 'antd/dist/antd.css'
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {connect} from "react-redux";
 
 
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Write your post here!","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
 
+const mapStateToProps=state=>{
+    return{
+        userID: state.userID,
+        viewingTeamID:state.viewingTeamID,
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+        logInDispatch: userID=>{
+            dispatch(logIn(userID));
+        },
+
+    }
+}
 
 class PostEditor extends Component {
     constructor(props) {
@@ -19,12 +34,14 @@ class PostEditor extends Component {
         const contentState = convertFromRaw(content);
         this.state = {
             contentState,
+            rootevent:props.eventID,
+            teamID : props.teamID,
         }
     }
 
      uploadImageCallBack =(file)=> {
         return new Promise(
-            async (resolve, reject) => {
+            (resolve, reject) => {
                /* const xhr = new XMLHttpRequest();
                 xhr.open('POST', 'https://api.imgur.com/3/image');
                 xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
@@ -32,15 +49,19 @@ class PostEditor extends Component {
                 data.append('image', file);
                 console.log('image:   '+file);*/
                 let defresponse = {data: {link:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVE-4_zEbt3e1kwojwImbB7cJjMxLBjG4M_O6RXisnxaY1jYul'}};
-                       const response=await uploadImage(file);
-                       if(response.path) {
-                           defresponse = {data: {link: response.path}}
-                       }
-                    resolve(defresponse);
-                    if(response.error) {
-                           defresponse={error: response.error}
-                           reject(defresponse);
-                    }
+                       uploadImage(file).then((response)=>{
+                           if(response.path) {
+                               defresponse = {data: {link: response.path}}
+
+
+                               resolve(defresponse);
+                           }
+                           if(response.error) {
+                               defresponse={error: response.error}
+                               reject(defresponse);
+                           }
+                       });
+
 
 
             }
@@ -48,21 +69,25 @@ class PostEditor extends Component {
     }
 
     contentSubmit=()=>{
-        console.log("submitting post:  "+JSON.stringify(this.state.contentState));
-       const response= sendNewPost(this.state.contentState);
-       if(response.status) {
-           if (response.postID) {
-               console.log("Post experience successful, postID= " + response.postID);
-           }
-       }
-       else {
-           let errormessage="Failed to upload new post!";
-           if(response.error) errormessage=errormessage+"  Error: "+ response.error;
-               message.error(errormessage);
+        if(this.state.rootevent) {
+            console.log("submitting post:  " + JSON.stringify(this.state.contentState));
+            sendNewPost(this.props.userID, this.props.viewingTeamID, this.state.rootevent, this.state.contentState)
+                .then((response)=>{
+                    if (response.status) {
+                        if (response.postID) {
+                            console.log("Post experience successful, postID= " + response.postID);
+                        }
+                    }
+                    else {
+                        let errormessage = "Failed to upload new post!";
+                        if (response.error) errormessage = errormessage + "  Error: " + response.error;
+                        message.error(errormessage);
+                    }
+                });
 
-       }
-       // console.log("submitting json:  "+convertToRaw( this.state.contentState));
-    }
+            // console.log("submitting json:  "+convertToRaw( this.state.contentState));
+        }
+        }
 
     onContentStateChange= (contentState) => {
         this.setState({
@@ -96,4 +121,4 @@ class PostEditor extends Component {
         );
     }
 }
-export default PostEditor;
+export default connect(mapStateToProps,mapDispatchToProps)  (PostEditor);

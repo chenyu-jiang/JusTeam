@@ -4,9 +4,9 @@ import SearchResult from '../pages/SearchResult'
 const Teaming=()=>
     (
         <div>
-            Teaming section
+            <br/>
             <CreateForm/>
-            <SearchResult/>
+
         </div>
     );
 export default Teaming;

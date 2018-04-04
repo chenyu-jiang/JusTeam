@@ -6,7 +6,7 @@ import './AccountInfoPage.css'
 const NotiPage=()=>
     (
       <div className="background">
-         Notification Dashboard
+        
          <div className="secondspan"><h1>- Notification Board -</h1></div>
          <NotificationItem />
          <BackTop className="back-up">

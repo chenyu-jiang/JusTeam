@@ -10,6 +10,7 @@ import JoinRequest from '../forms/JoinForm'
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 import TeamList from '../forms/TeamList'
+
 const TabPane = Tabs.TabPane;
 
 let TeamData = undefined;
@@ -88,9 +89,6 @@ const mapStateToProps=state=>{
 }
 const mapDispatchToProps=dispatch=>{
     return{
-        logInDispatch: userID=>{
-            dispatch(logIn(userID));
-        },
 
     }
 }
@@ -111,22 +109,18 @@ class  MyTeamsSection extends Component {
     render() {
         return(
             <div>
-
-
                 <div>
                     <TeamList teamlist={this.state.TeamData}/>
                 </div>
-
                 <br/>
-                <CommunicationPage/>
+                
                 <br/>
 
-                <JoinRequest/>
             </div>
         );
     }
 
-    componentDidMount(){
+    componentWillMount(){
 
         fetchActInfo(this.props.userID).then((response)=> {
                 if (response.requestState===true) {

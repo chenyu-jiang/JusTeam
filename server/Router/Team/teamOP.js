@@ -359,8 +359,8 @@ router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
   var teamID = req.body.teamID;
   var applicant = req.user.id;
   var appliForm = req.body.application;
-  var notification = new noti.JoinRequest(teamID, applicant,appliForm);
-  var users = undefined;
+  var notification = new notiOP.JoinRequest(teamID, applicant,appliForm);
+  var users = [];
 
   async function f(){
     await new Promise((resolve, reject)=>{
@@ -380,10 +380,14 @@ router.post('/applyForTeam',bodyParser.urlencoded({extended: true}),(req,res)=>{
   }
   f();
   notification.send(users,(err)=>{
-    console.log(err);
-    res.send({state : "fail"});
+    if(err){
+        console.log(err);
+        res.send({state : "fail"});
+    }
+    else {
+      res.send({state : 'success'});
+    }
   });
-  res.send({state : 'success'});
 });
 
 module.exports = router;

@@ -11,7 +11,7 @@ import TopBarIcon from '../modules/topBarIcon'
 import Dashboard from './Dashboard'
 import Footer from '../../antdm/Footer';
 import {connect} from "react-redux";
-
+import jtlogo from  '../../img/log.png'
 
 const Search = Input.Search;
 
@@ -57,9 +57,7 @@ class HomePage extends Component{
     <Affix><div style={{background:'rgba(26,165,122,0.7)', padding:'10px'}}>
     <Col span={18}>
         <Link to='/home/dash'>
-            <Button size={30} shape="circle" >
-            Logo
-        </Button>
+        <img src={jtlogo} style={{width: 40, height: 40}} />
         </Link>
         <Search
             style={{ width: "70%",height: "120%", marginLeft:'10%'}}

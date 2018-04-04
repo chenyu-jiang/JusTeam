@@ -163,7 +163,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="nickname"
                         >
-                            {getFieldDecorator('userID', {
+                            {getFieldDecorator('nickname', {
                                 initialValue: UserAccount.nickname,
                                 rules: [ {
                                     required: true, message: 'Please input your nickname!',

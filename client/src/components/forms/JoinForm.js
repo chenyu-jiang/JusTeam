@@ -1,8 +1,37 @@
 import React, {Component}from 'react';
-import {Row,Col,Button,Icon,Form,Input}from'antd';
+import {Row,Col,Button,Icon,Form,Input,message}from'antd';
 import '../pages/AccountInfoPage.css';
+import {connect} from 'react-redux'
+import {applyForTeam} from '../../services/teamService';
 const FormItem=Form.Item;
 const {TextArea}=Input;
+const mapStateToProps=state=>{
+    return{
+        userID: state.userID,
+        viewingTeamID:state.viewingTeamID,
+        toPath:state.toPath,
+    }
+}
+const mapDispatchToProps=dispatch=>{
+    return{
+       createTeamDispatch: teamID=>{
+            dispatch({
+                type:"SET_TEAMID",
+                viewingTeamID:teamID,
+            });
+            dispatch({
+                type:"SET_TOPATH",
+                toPath:"/home/dash/myTeams/viewTeam"
+            });
+        },
+       resetPathDispatch: ()=>{
+           dispatch({
+               type:"SET_TOPATH",
+               toPath:"/null"
+           });
+       }
+    }
+}
 class JoinRequests extends Component{
   handleSubmit = (e)=>{
     e.preventDefault();
@@ -11,6 +40,23 @@ class JoinRequests extends Component{
         return;
       }
       const joinreq = fieldsValue['inputdescription'];
+      const values={
+        application : fieldsValue,
+        teamID:this.props.viewingTeamID,
+      }
+      const response = applyForTeam(values)
+      if(response.status){
+      if(response.state==='success'){
+          console.log('join team successful')
+          message('join team successful')
+      }
+      else{
+        message.error('Failed to create, please retry!')
+
+      }
+    }
+    if(response.error) console.log(response.error);
+     console.log('Received values of form: ', JSON.stringify(values));
       console.log('Received values of form: ', joinreq);
     });
   }
@@ -43,9 +89,9 @@ class JoinRequests extends Component{
     };
     return(
       <div>
-      This is a JoinRequest of a Team.
+        <br/>
         <div>
-        <Form>
+        <Form className="center" onSubmit={this.handleSubmit}>
         <FormItem
           {...layout}
           label="Team Description"
@@ -65,5 +111,5 @@ class JoinRequests extends Component{
 
 
 }
-const JoinRequest = Form.create()(JoinRequests);
+const JoinRequest = connect(mapStateToProps,mapDispatchToProps)(Form.create()(JoinRequests));
 export default JoinRequest;

@@ -10,7 +10,8 @@ import {connect} from 'react-redux'
 
 const mapStateToProps=state=>{
     return{
-        userID: state.userID
+        userID: state.userID,
+        logo:state.logo,
     }
 }
 const mapDispatchToProps=dispatch=>{
@@ -18,7 +19,12 @@ const mapDispatchToProps=dispatch=>{
         logInDispatch: userID=>{
             dispatch(logIn(userID));
         },
-
+      SetLogoDispatch: logo=>{
+          dispatch({
+              type:"SET_LOGO",
+              logo:logo,
+          })
+      }
     }
 }
 
@@ -28,11 +34,16 @@ class App extends Component {
           console.log("response at app.js:  "+JSON.stringify(response) );
             if(response.requestState)
                 if(response.requestState===true)
-                    if(response.result)
-                   if(response.result.username){ console.log("Auto login invoked"); this.props.logInDispatch(response.result.username);}
+                    if(response.result) {
+                        if ((response.result.photo) && (response.result.photo !== this.props.logo)) this.props.SetLogoDispatch(response.result.photo);
+                        if (response.result.username) {
+                            console.log("Auto login invoked");
+                            this.props.logInDispatch(response.result.username);
+                        }
+                    }
         });
     }
-    render() {
+        render() {
 
         if((this.props.location.pathname==='/')) return<Redirect to='/home'/>;
         return (

@@ -10,6 +10,7 @@ module.exports=
     _get_user_info:"api/account/requestInformation/",
     _edit_account_info:"api/account/editInformation/",
 
+
     _new_noti_num:"api/notifications/new/number/",
     _new_noti_list:"api/notifications/new/content/",
     _noti_history:"api/notifications/history/",
@@ -23,6 +24,8 @@ module.exports=
     _add_team_member:"api/team/teamOP/addMember/",
     _delete_team_member:"api/team/teamOP/deleteMember/",
     _edit_team_member_authority:"api/team/teamOP/editAuthority/",
+    _view_one_team:"api/team/teamInfo/viewOneTeam/",
+    _join_team:"api/team/teamOP/applyForTeam/",
 
     _get_recommend_team:"api/team/teamInfo/getRecommend/",
     _get_user_teams:"api/team/teamInfo/getUserTeams/",

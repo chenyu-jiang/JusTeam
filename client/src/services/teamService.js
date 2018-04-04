@@ -1,7 +1,7 @@
 import {_domain,_create_team,_delete_team,_edit_team,_add_team_member,
     _delete_team_member,_edit_team_member_authority,_get_recommend_team,
     _get_user_teams,_get_team_events,_get_one_event,_create_event,
-    _delete_event,_edit_event,_send_post,_view_one_team}from './Urlparams'
+    _delete_event,_edit_event,_send_post,_view_one_team,_join_team}from './Urlparams'
 
 
 
@@ -28,6 +28,29 @@ const createNewTeam=(data)=> {
                     return({error: error});
                 })
         );
+
+}
+
+const applyForTeam=(data)=>{
+
+  return (
+      fetch(_domain+_join_team,
+          {
+              method:'POST',
+              credentials: "include",
+              headers:{
+                  Accept:'application/json',
+                  'Content-Type':'application/json'
+              },
+              body: JSON.stringify(data),
+          }
+      )
+          .then((response)=>response.json())
+          .catch((error)=>{
+              console.log('Error occurred'+JSON.stringify(error));
+              return({error: error});
+          })
+  );
 
 }
 
@@ -274,9 +297,10 @@ const sendNewPost=(userID,teamID,eventID,data)=>{
         fetch(_domain+_send_post,
             {
                 method:'POST',
+                credentials: "include",
                 headers:{
                     Accept:'application/json',
-                    'Content-Type':'application/json'
+                    'Content-Type':'application/json',
                 },
                 body: JSON.stringify({
                     article:data,
@@ -304,4 +328,4 @@ export{createNewTeam,getRecommendTeam,addMember,
     deleteMember,editTeam,editAuthority,
     deleteTeam,getUserTeams,getTeamEvents,
     getOneEvent,createEvent,deleteEvent,
-    editEvent,sendNewPost, viewOneTeam};
+    editEvent,sendNewPost, viewOneTeam, applyForTeam};

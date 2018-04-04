@@ -35,12 +35,12 @@ class LoginFormTemp extends Component {
             if (!err) {
                 const hide=message.loading('Logging in...',0);
                 console.log('ID:   '+values.userID+' password: '+passwordHash.generate(values.password));
-                logInAuth(values.userID,passwordHash.generate(values.password)).then(
+                logInAuth(values.userID,values.password).then(
                     (response)=>{
                         if(response.error) message.error('Failed to login: '+response.error);
-                        //else this.props.logInDispatch(values.userID);
+                        else this.props.logInDispatch(values.userID);
                         hide();
-                        this.props.logInDispatch(values.userID);
+                        //this.props.logInDispatch(values.userID);
                     }
                 )
 

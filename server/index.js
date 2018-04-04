@@ -20,10 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use('/',(req,res,next)=>{
-  console.log('someone comes to '+req.url+' with '+JSON.stringify(req.body));
-  next();
-});
+
 app.use(session({
     //Example
     key: 'session_cookie_name',
@@ -48,15 +45,8 @@ passport.deserializeUser(function (id, done) {
 var options = {
     redirect: false
 }
-app.use('/',(req,res,next)=>{
-  console.log('before');
-  next();
-});
+
 app.use("/", interceptor);
-app.use('/',(req,res,next)=>{
-  console.log('after');
-  next();
-});
 app.use("/api",require("./Router/api"));
 app.use("/",express.static("client",options));
 app.use("/upload/pictures",express.static("upload/pictures",options));

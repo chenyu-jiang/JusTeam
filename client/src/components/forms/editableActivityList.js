@@ -148,10 +148,11 @@ import React,{Component}from 'react';
         });
       }
       render() {
+          console.log("state at list: "+JSON.stringify(this.state));
         if(this.state.TimeLine){
-        const { TimeLine } = this.state.TimeLine;
+        const  TimeLine = this.state.TimeLine;
         const columns = this.columns;
-
+        console.log("time line in list:"+TimeLine)
         return (
           <div>
             <Button className="editable-add-btn" onClick={this.handleAdd}>Add</Button>

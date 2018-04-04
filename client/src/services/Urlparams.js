@@ -7,13 +7,13 @@ module.exports=
     _log_in:"api/account/login/",
     _log_out:"api/account/logout",
     _sign_up:"api/account/register/",
-    _get_user_info:"/api/account/requestInformation",
+    _get_user_info:"api/account/requestInformation/",
+    _edit_account_info:"api/account/editInformation/",
 
     _new_noti_num:"api/notifications/new/number/",
     _new_noti_list:"api/notifications/new/content/",
     _noti_history:"api/notifications/history/",
     _noti_delete:"api/notifications/delete/",
-    _get_user_info:"api/account/requestInformation",
 
     _upload_image:"api/posts/upload/pictures/",
 

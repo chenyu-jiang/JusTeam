@@ -14,6 +14,7 @@ function instantChat(server) {
                 return;
             }
             //first login, check userID
+            console.log()
             if(data.username && data.nickname && data.userID && data.teamID) {
                 socket.userName = data.username;
                 socket.nickName = data.nickname;

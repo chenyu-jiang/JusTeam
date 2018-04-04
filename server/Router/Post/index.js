@@ -122,7 +122,6 @@ router.post("/upload/articles", uploadText.single('article'), async (req, res, n
     };
     //save record in database
     try{
-        console.log(req.body);
         var postID = undefined;
         req.body.postID = parseInt(req.body.postID);
         req.body.isNew = req.body.isNew === "true" ? true : false;

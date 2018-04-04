@@ -1,5 +1,5 @@
 
-var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info}=require( './Urlparams');
+var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info, _edit_account_info}=require( './Urlparams');
 
 const logIn=(userID)=>{
     console.log('calling action creator:',userID);
@@ -95,6 +95,28 @@ const fetchActInfo=(userID=undefined)=>{
             }));
     }
 
+}
+
+const editAccountInfo=(value)=>{
+    console.log(_edit_account_info);
+    return (
+        fetch(_domain+_edit_account_info,
+            {
+                method:'POST',
+                credentials: "include",
+                headers:{
+                    Accept:'application/json',
+                    'Content-Type':"application/json"
+                },
+                body: JSON.stringify(value)
+            }
+        )
+            .then((response)=>response.json())
+            .catch((error)=>{
+                console.log('Error occurred'+JSON.stringify(error));
+                return({error: error});
+            })
+    );
 }
 
 const logInAuth=(userID,password)=>{
@@ -207,5 +229,6 @@ module.exports={
     fetchActInfo:fetchActInfo,
     signUpSubmit:signUpSubmit,
     uploadImage:uploadImage,
+    editAccountInfo: editAccountInfo,
     logOutService:logOutService,
 };

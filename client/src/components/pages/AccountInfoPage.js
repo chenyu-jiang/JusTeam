@@ -81,7 +81,7 @@ class AccountInfoPage extends Component {
 }
  componentDidMount(){
         if(this.props.userID)
-     fetchActInfo(this.props.userID).then((response)=>{this.setState({data:response})});
+        fetchActInfo(this.props.userID).then((response)=>{this.setState({data:response})});
  }
 }
 export  default  connect(mapStateToProps,mapDispatchToProps)(AccountInfoPage);

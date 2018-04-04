@@ -1,7 +1,7 @@
 import {_domain,_create_team,_delete_team,_edit_team,_add_team_member,
     _delete_team_member,_edit_team_member_authority,_get_recommend_team,
     _get_user_teams,_get_team_events,_get_one_event,_create_event,
-    _delete_event,_edit_event,_send_post}from './Urlparams'
+    _delete_event,_edit_event,_send_post,_view_one_team}from './Urlparams'
 
 
 
@@ -76,6 +76,22 @@ const addMember=(userID,teamID)=> {
 
     return (
         fetch(_domain+_add_team_member+"?teamID="+teamID+"&newMember="+userID,
+            {
+                method: 'GET',
+                credentials: "include",
+            }
+        )
+            .then((response)=>response.json())
+            .catch((error)=>{
+                console.log('Error occurred'+JSON.stringify(error));
+                return({error: error});
+            })
+    );
+}
+const viewOneTeam=(teamID)=> {
+
+    return (
+        fetch(_domain+_view_one_team+"?teamID="+teamID,
             {
                 method: 'GET',
                 credentials: "include",
@@ -253,23 +269,24 @@ const editEvent=(data)=>{
 
 }
 
-const sendNewPost=(data)=>{
-    const formData=new FormData();
-    formData.append("article",data);
-    formData.append("isNew",true);
-    formData.append("portTitle", "Fake title");
-    //formData.append("")
+const sendNewPost=(userID,teamID,eventID,data)=>{
     return(
         fetch(_domain+_send_post,
             {
                 method:'POST',
-                credentials: "include",
                 headers:{
                     Accept:'application/json',
+                    'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
                     article:data,
-                    isNew:true,
+                    isNew:1,
+                    isFinal:1,
+                    userID:userID,
+                    teamID:teamID,
+                    eventID:eventID,
+                    postTitle:"A new post of "+userID,
+                    tags:[userID,teamID,eventID],
                 }),
             }
         )
@@ -287,4 +304,4 @@ export{createNewTeam,getRecommendTeam,addMember,
     deleteMember,editTeam,editAuthority,
     deleteTeam,getUserTeams,getTeamEvents,
     getOneEvent,createEvent,deleteEvent,
-    editEvent,sendNewPost};
+    editEvent,sendNewPost, viewOneTeam};

@@ -1,6 +1,6 @@
 import React,{Component} from'react'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card,Radio, Upload} from 'antd';
-import {logIn, signUpSubmit,fetchActInfo,uploadImage} from '../../services/accountService'
+import {logIn, signUpSubmit,fetchActInfo,uploadImage,editAccountInfo} from '../../services/accountService'
 import {connect} from 'react-redux'
 import {Redirect}  from'react-router-dom'
 const UserAccount= fetchActInfo() ;
@@ -13,11 +13,13 @@ let imgurl=undefined;
 function onChange(e) {
     console.log(`radio checked:${e.target.value}`);
 }
+
 const mapStateToProps=state=>{
     return{
         userID: state.userID,
     }
 }
+
 const mapDispatchToProps=dispatch=>{
     return{
         logInDispatch: userID=>{
@@ -38,20 +40,20 @@ class RegistrationForm extends Component {
             if (!err) {
                 const formval={
                     photo:imgurl,
-                    userID:values.userID,
-                    birthday:values.password,
+                    userID:this.props.userID,
+                    birthday:values.birthday,
                     nickname:values.nickname,
                     gender:values.gender,
-                    photo:values.photo,
                     region:values.region,
-                    introduction:values.introduction,
-                    phone:values.phone ?(values.prefix+values.phone):undefined,
+                    introduction:values.des,
+                    phone:values.phone ?(values.phone):undefined,
                     institution:values.institution,
                     email:values.email,
                     major:values.major,
                 }
+                console.log(formval);
                 const hide=message.loading('Processing...',0);
-                signUpSubmit(formval)
+                editAccountInfo(formval)
                     .then(response=>{
                         console.log('response received: '+JSON.stringify(response));
                         this.props.logInDispatch(values.userID);
@@ -128,7 +130,6 @@ class RegistrationForm extends Component {
               // You can use any AJAX library you like
               const response= await uploadImage(fileList);
               if(response.path) imgurl=response.path;
-              console.log("imgurl=  ",imgurl);
           }
 
         return (
@@ -139,10 +140,7 @@ class RegistrationForm extends Component {
                             {...formItemLayout}
                             label="Upload Avatar"
                         >
-                            {getFieldDecorator('upload', {
-                                valuePropName: 'fileList',
-                                getValueFromEvent: uploadImage(),
-                            })(
+
                                 <div>
                                     <Upload {...props}>
                                         <Button>
@@ -159,7 +157,7 @@ class RegistrationForm extends Component {
                                         {uploading ? 'Uploading' : 'Start Upload' }
                                     </Button>
                                 </div>
-                            )}
+
                         </FormItem>
                         <FormItem
                             {...formItemLayout}

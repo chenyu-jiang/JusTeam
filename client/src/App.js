@@ -5,29 +5,8 @@ import LoginPage from './components/pages/LoginPage'
 import LogOutModule from './components/modules/LogOutModule'
 import SignUpPage from './components/pages/SignUpPage'
 import './App.css';
-import {logIn,fetchActInfo} from "./services/accountService";
-import {connect} from 'react-redux'
-
-const mapStateToProps=state=>{
-    return{
-        userID: state.userID
-    }
-}
-const mapDispatchToProps=dispatch=>{
-    return{
-        logInDispatch: userID=>{
-            dispatch(logIn(userID));
-        },
-
-    }
-}
 
 class App extends Component {
-    componentWillMount(){
-        fetchActInfo().then((response)=>{
-            if(response.userID) this.props.logInDispatch(response.userID);
-        });
-    }
     render() {
         if((this.props.location.pathname==='/')) return<Redirect to='/home'/>;
         return (
@@ -40,4 +19,4 @@ class App extends Component {
         );
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default App;

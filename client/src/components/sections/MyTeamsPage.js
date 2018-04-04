@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Tabs, Col, Button, Icon,List,Table,Divider} from 'antd'
+import {Tabs, Col, Button, Icon,List,Table,Divider,message} from 'antd'
 import 'antd/dist/antd.css'
 import '../pages/HomePage.css'
 import CommunicationPage from '../forms/CommunicationPage'
@@ -9,6 +9,7 @@ import {fetchActInfo, logIn} from '../../services/accountService'
 import JoinRequest from '../forms/JoinForm'
 import {Route} from 'react-router-dom'
 import {connect} from 'react-redux'
+import TeamList from '../forms/TeamList'
 const TabPane = Tabs.TabPane;
 
 let TeamData = undefined;
@@ -106,12 +107,14 @@ class  MyTeamsSection extends Component {
     state={
         TeamData:undefined,
     }
+
     render() {
         return(
             <div>
                 All My Teams
+
                 <div>
-                    My teams:  {decideItem(this.state)}
+                    <TeamList teamlist={this.state.TeamData}/>
                 </div>
                 <Tabs defaultActiveKey="1" onChange={callback} style={{margin: "20px"}}>
                     <TabPane tab="Not Started" key="1"><Table columns={column1} dataSource={notstart}/>
@@ -135,30 +138,42 @@ class  MyTeamsSection extends Component {
 
     componentDidMount(){
 
-        fetchActInfo(this.props.userID).then((response)=>{
-           if(response.teamList){
+        fetchActInfo(this.props.userID).then((response)=> {
+                if (response.requestState===true) {
+                    if (response.result.team) {
 
-               getUserTeams(response.teamList).then((response)=>{
-                   if(response.teams)
-                   this.setState({
-                       TeamData:response.teams,
-                   });
-                   else {
-                       if(response.error){
-                           this.setState({
-                              TeamData:{error:response.error,},
-                           });
-                       }
-                       else this.setState({
-                               TeamData: undefined,
-                           }
-                       );
-                   }
-                   console.log("received user Teams: "+JSON.stringify(this.state.TeamData));
-               });
-           }
-         else TeamData=undefined;
-        }
+                        getUserTeams(response.result.team).then((response) => {
+                            if (response.teams)
+                                this.setState({
+                                    TeamData: response.teams,
+                                });
+                            else {
+                                if (response.error) {
+                                    this.setState({
+                                        TeamData: {error: response.error,},
+                                    });
+                                }
+                                else this.setState({
+                                        TeamData: undefined,
+                                    }
+                                );
+                            }
+                            console.log("received user Teams: " + JSON.stringify(this.state.TeamData));
+                        });
+                    }
+                    else this.setState({
+                            TeamData: undefined,
+                        }
+                    );
+                }
+                else {
+                    message.error("Failed to fetch annount information!");
+                    this.setState({
+                            TeamData: undefined,
+                        }
+                    );
+                }
+            }
         );
 
     }

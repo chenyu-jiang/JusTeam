@@ -8,11 +8,10 @@ router.post('/', function(req, res){
     //Test
     var id;
     if(req.user !== undefined) id = req.user.id;
-    else if(req.body !== undefined){
-        if(req.body.id !== undefined)
-            id = req.body.id;
+    else  {
+         res.send(JSON.stringify({requestState: false, error: "No user in cookie"}));
     }
-    else return res.send(JSON.stringify({error: "Cannot get user id"}));
+    //else return res.send(JSON.stringify({error: "Cannot get user id"}));
     const identityItem = ['*'];
     const informationItem = ['*'];
 
@@ -34,7 +33,9 @@ router.post('/', function(req, res){
             var result = Object.assign(identityResult[0], informationResult[0]);
             result.team = JSON.parse(result.team);
             result.post = JSON.parse(result.post);
-            res.send({requestState: true, result: result});
+            var a = {requestState: true, result: result};
+            console.log(a);
+            res.send({"requestState": true, "result": result});
         });
     });
 });

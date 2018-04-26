@@ -119,7 +119,7 @@ class RegistrationForm extends React.Component {
            if(response.error) console.log(response.error);
             console.log('Received values of form: ', JSON.stringify(values));
            // this.props.createTeamDispatch(response.insertID);
-            topath='home/dash/myTeams/viewTeam'
+            //topath='home/dash/myTeams/viewTeam'
         });
     }
 

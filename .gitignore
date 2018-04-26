@@ -9,6 +9,10 @@ Desktop.ini
 #node modules
 node_modules/
 
+#build files
+client/build/
+server/client/
+
 #customer files and debug
 upload/
 main.js

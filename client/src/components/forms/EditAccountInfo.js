@@ -56,7 +56,7 @@ class RegistrationForm extends Component {
                 editAccountInfo(formval)
                     .then(response=>{
                         console.log('response received: '+JSON.stringify(response));
-                        this.props.logInDispatch(values.userID);
+                        
                         hide();
 
                     });

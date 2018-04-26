@@ -1,8 +1,27 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : dbConnection-NotifictaionSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180301
+*
+* Purpose           : Database connection module for notifictaion system.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180315    Michael      1     Fixed bug in getNewUserNotification function.
+* 20180316    Michael      2     Fixed bug in history function.
+**/
+
 var dbCommon = new (require("../dbCommon"))("messageSystem");
 dbCommon.establishPool();
 var checkConnection = dbCommon.checkConnection;
 var sqlQuery = dbCommon.sqlQuery;
 
+//Update the last time of checking user request
 async function updateUserLastRequest(user) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -28,6 +47,7 @@ async function updateUserLastRequest(user) {
     });
 }
 
+//get new notifications' id for user
 async function checkLastUserRequest(user) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -80,6 +100,7 @@ exports.getUserNotification = async function getUserNotification(user, start, en
     });
 }
 
+//returns the new notification content for the user.
 exports.getNewUserNotification = async function getNewUserNotification(user) {
     return new Promise(async (resolve, reject) => {
         try {

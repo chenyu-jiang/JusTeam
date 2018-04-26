@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : Router/searchSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180323
+*
+* Purpose           : Router for search system. Also handles file upload.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 var router = require("express").Router();
 var searchSystem = require("../../SearchSystem");
 

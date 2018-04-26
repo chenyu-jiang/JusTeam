@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : Router/newNotifictaion
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180322
+*
+* Purpose           : Router for notification system, handles new notifictaion
+                      requests.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 var router = require("express").Router();
 var notiInterface = require("../../NotificationSystem/RouterInterface")
 

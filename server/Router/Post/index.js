@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : Router/postSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180322
+*
+* Purpose           : Router for post system. Also handles file upload.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 var fs = require("fs");
 var path = require("path");
 const localPath = "http://localhost:3001/"
@@ -125,6 +142,7 @@ router.post("/upload/articles", async (req, res, next)=>{
     var filename = uuidv4()+".txt";
     var serverPath = "/upload/articles/"+filename;
     var localDir = path.resolve("./")+"/upload/articles/"+filename;
+    //save file in local storage
     fs.writeFile(localDir,JSON.stringify(req.body.article),"utf8",async (err)=>{
         if(err) {
             console.log(err);

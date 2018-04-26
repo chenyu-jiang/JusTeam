@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : JoinRequest-NotifictaionSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180301
+*
+* Purpose           : A JoinRequest class used for sending messages
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 const Message = require('./Message');
 const dbConnection = require('./dbConnection');
 const teamOP = require("../TeamSystem/teamOperation");
@@ -20,6 +37,7 @@ class JoinRequest extends Message {
     initial(content) {
         console.log(content);
         return new Promise((resolve,reject)=>{
+            //get the team name
             teamOP.askTeam(content.teamToBeJoined,(err,result)=>{
                 if(err) reject(err);
                 else {

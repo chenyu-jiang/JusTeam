@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : NotificationSystem Interface
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180301
+*
+* Purpose           : A wrapper class for importing notification system.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180322    Michael      1     Disabled NewSystemMessage function.
+**/
+
 //exposed to router
 
 //exposed to other internal modules

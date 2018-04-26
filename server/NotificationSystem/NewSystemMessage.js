@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : SystemMessage-NotifictaionSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180301
+*
+* Purpose           : A Message class used for sending system message to other
+                      users.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 const Message = require('./Message');
 const dbConnection = require('./dbConnection');
 

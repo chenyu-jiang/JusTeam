@@ -1,7 +1,26 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : RouterInterface-NotificationSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180302
+*
+* Purpose           : A interface exposed to router.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 const NotificationSystem = require("./NotificationSystem");
 const db = require("./dbConnection");
 
 //all errors must be handled at this level.
+
+//construct a notifObject
 async function processNotification(notifObject,msgArray) {
     return new Promise(async (resolve,reject)=>{
         try{
@@ -32,6 +51,7 @@ async function parallelProcessing(notis,msgArray) {
     await Promise.all(tmp);
 }
 
+//compares the date info of 2 notifications
 function compareNotif(not1,not2) {
     var t1 = Date.parse(not1.timeStamp);
     var t2 = Date.parse(not2.timeStamp);
@@ -40,6 +60,7 @@ function compareNotif(not1,not2) {
     else return 1;
 }
 
+//Get new notifications for user
 exports.getNewNotification = async function getNewNotification(user) {
     //construct response object
     var response = {
@@ -68,6 +89,7 @@ exports.getNewNotification = async function getNewNotification(user) {
     }
 }
 
+//Get only the number of new notifications
 exports.getNumberOfNewNotification = async function getNumberOfNewNotification(user) {
     //construct response object
     var response = {
@@ -93,6 +115,7 @@ exports.getNumberOfNewNotification = async function getNumberOfNewNotification(u
     }
 }
 
+//Get notification history of a user, can be biased using start and end parameters.
 exports.getNotificationHistory = async function getNotificationHistory(user, start, end) {
     //construct response object
     var response = {
@@ -121,6 +144,7 @@ exports.getNotificationHistory = async function getNotificationHistory(user, sta
     }
 }
 
+//Deletes a notification
 exports.deleteNotification = async function deleteNotification(messageID) {
     //construct response object
     var response = {

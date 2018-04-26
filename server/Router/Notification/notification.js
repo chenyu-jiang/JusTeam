@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : Router/Notifictaion
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180322
+*
+* Purpose           : Router for notification system, handles noti history and
+                      deletion.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 var router = require("express").Router();
 var newNotis = require("./new");
 var notiInterface = require("../../NotificationSystem/RouterInterface")

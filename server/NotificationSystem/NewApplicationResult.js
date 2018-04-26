@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : ApplicationResult-NotifictaionSystem
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180301
+*
+* Purpose           : A Message class used for sending application result to other
+                      users.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 const Message = module.require('./Message');
 const teamOP = require("../TeamSystem/teamOperation");
 const identity = require("../AccountSystem/entity/identity");
@@ -16,6 +34,7 @@ class NewApplicationResult extends Message {
 
     async initial(content) {
         return new Promise((resolve,reject)=>{
+            //get team name
             teamOP.askTeam(content.teamApplied,(err,result)=>{
                 if(err) reject(err);
                 else {

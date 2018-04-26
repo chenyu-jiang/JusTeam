@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : NotificationSystem Interface
+*
+* Author            : JIANG Chenyu, WANG Yuxuan
+*
+* Date created      : 20180324
+*
+* Purpose           : Recommendation system based on ElasticSearch.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+*
+**/
+
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
     host: 'localhost:9200',
@@ -6,6 +23,7 @@ var client = new elasticsearch.Client({
 var recomIndexName = "recommend";
 var recomTypeName = "recommend";
 
+//Creates an empty user in the system
 function addEmptyUser(userID, callback) {
     return new Promise((resolve, reject)=>{
         client.create({
@@ -24,8 +42,10 @@ function addEmptyUser(userID, callback) {
     });
 }
 
+//Update a user's tag info
 function updateUser(userID, category) {
     return new Promise((resolve,reject)=>{
+        //get old info
         client.get({
           index: recomIndexName,
           type: recomTypeName,
@@ -37,6 +57,7 @@ function updateUser(userID, category) {
               category = category.toLowerCase();
               if(!response._source.tags.includes(category))
               {
+                  //add new tags by first deleting, and then add a new one
                   oldtags.push(category);
                   client.delete({
                       index: recomIndexName,
@@ -64,6 +85,7 @@ function updateUser(userID, category) {
     });
 }
 
+//Calculates the recommendation for a user.
 function aggregation(userID,callback) {
     //get all the tags of user
     client.get({
@@ -77,6 +99,7 @@ function aggregation(userID,callback) {
           var result = {};
           var counter = 0;
           await tags.forEach(async (listItem,index)=>{
+              //for each tag, we use aggregation function to recommend content
               await client.search({
                   index:recomIndexName,
                   type:recomTypeName,
@@ -98,6 +121,7 @@ function aggregation(userID,callback) {
               },(err, aggRes)=>{
                   if(err) callback(err, null);
                   else {
+                      //Calculates score for each tag
                       aggRes.aggregations.recommended.buckets.forEach((item)=>{
                           if(result[item.key] == undefined) {
                               result[item.key] = {};

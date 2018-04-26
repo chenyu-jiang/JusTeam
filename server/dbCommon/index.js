@@ -1,3 +1,22 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name      : Database common
+*
+* Author            : JIANG Chenyu
+*
+* Date created      : 20180307
+*
+* Purpose           : A wrapper module for mysql database, with automatic
+                      connection checking.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180322    Michael      1     Added connection checking feature.
+*
+**/
+
 class dbCommon {
     //private methods
     constructor(dbName) {
@@ -59,6 +78,7 @@ class dbCommon {
         return (Y + M + D + h + m + s);
     }
 
+    //creates a connection pool if there is not
     async establishPool() {
         if (this.pool !== undefined) return;
         this.pool = await this.mysql.createPool({

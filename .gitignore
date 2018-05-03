@@ -6,5 +6,18 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-#debug
+#node modules
+node_modules/
+
+#build files
+client/build/
+server/client/
+
+#customer files and debug
+upload/
 main.js
+newTest.js
+
+#ide
+.idea/
+

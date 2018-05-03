@@ -1,0 +1,203 @@
+@import '~antd/dist/antd.css';
+.back{
+  margin-left: 45%;
+  margin-right: 10%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.center{
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 5%;
+}
+.editable-cell {
+  position: relative;
+}
+
+.editable-cell-input-wrapper,
+.editable-cell-text-wrapper {
+  padding-right: 24px;
+}
+
+.editable-cell-text-wrapper {
+  padding: 5px 24px 5px 5px;
+}
+
+.editable-cell-icon,
+.editable-cell-icon-check {
+  position: absolute;
+  right: 0;
+  width: 20px;
+  cursor: pointer;
+}
+
+.editable-cell-icon {
+  line-height: 18px;
+  display: none;
+}
+
+.editable-cell-icon-check {
+  line-height: 28px;
+}
+
+.editable-cell:hover .editable-cell-icon {
+  display: inline-block;
+}
+
+.editable-cell-icon:hover,
+.editable-cell-icon-check:hover {
+  color: #108ee9;
+}
+
+.editable-add-btn {
+  margin-bottom: 8px;
+}
+/*Header*/
+
+.signup-form{
+  margin-left: 10%;
+  margin-right: 10%;
+
+  background-color: #eee;
+}
+.H1{
+  margin-left: auto;
+
+
+  font-size: 40px;
+  background-color: #1DA57A;
+  border-radius: 2px;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+  color: #fff;
+}
+.background{
+  background-color: #333;
+}
+.container{
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top:  30px;
+  background-color: #eee;
+}
+.bkg{
+  background: url("https://www.aptean.com/assets/images/headers/Management_Web_Header_Ex1.jpg"),center;
+}
+.login-form{
+
+  padding-left: 20%;
+  padding-right: 20%;
+  margin-top:  30px;
+  margin-bottom:  30px;
+  background-color: #eee;
+}
+.infospan {
+  padding: 5px 30%;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
+}
+.tableview{
+  padding: 10%;
+}
+.secondspan {
+  padding: 5px 30% ;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+}
+ .back-up {
+  bottom: 100px;
+  text-align: center;
+
+}
+ .ant-back-top-inner {
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  border-radius: 20px;
+  background-color: rgba(26,165,122,0.6);
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+}
+.secondspan h1{
+  color:#fff;
+  font-size: 40px;
+  margin-top: 20px;
+}
+.infoList1 {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top:  30px;
+  color: #fff;
+  font-size: 30px;
+}
+.infoList {
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top:  30px;
+  color: #fff;
+  font-size: 30px;
+}
+.centerbutton {
+text-align: center;
+  font-size: 18px;
+}
+.spacebetween{
+  font-size: 72px;
+}
+/*for CommunicationPage*/
+.editInfo{
+  text-align:right;
+}
+.conversation-container > .header {
+
+  background-color:#95de64;
+
+}
+.conversation-container > .header>.title {
+
+  color: #fff;
+
+}
+.close-button{
+  background-color:#333;
+}
+.message>.client{
+  background-color:#1DA57A;
+  color: white;
+}
+.message > .response {
+
+  background-color: black;
+
+  color: white;
+
+}
+.widget-container>.launcher{
+  background-color: #1DA57A;
+}
+/*for TimeLineCard*/
+.StepLine{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+/*forms*/
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all .3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

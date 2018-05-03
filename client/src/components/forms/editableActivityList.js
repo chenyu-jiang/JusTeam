@@ -1,3 +1,24 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Editable Event List
+*
+* Author: ZHANG Yuechen, XU lu
+*
+* Date created: 20180320
+*
+* Purpose: Provide an event list for each single team with some editable inforamtions
+* Users joined the team can add/delete/edit event info by manually input them.
+* **  Note: The connection with back end in this part is incomplete, but the basic
+*     operation of this table is doable... **
+*
+* Revision History:
+*
+* Date      Author       Ref   Revision
+* 20180320  Julian       1     Add an antd editable table format.
+* 20180403  Julian, Bob  2     Revise the table with the connection requirement of backend.
+*
+**/
 import { Table, Input, Popconfirm, Button, Icon } from 'antd';
 import React,{Component}from 'react';
 

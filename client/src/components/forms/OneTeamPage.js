@@ -1,3 +1,25 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: One Team Page
+*
+* Author: ZHANG Yuechen, XU Lu
+*
+* Date created: 20180301
+*
+* Purpose: A Page for users to view a single team with a teamID. Lists of member
+* and To Join a team。
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180301  Julian           1     Construct a team Card Module with SingleTeam.
+* 20180303  Julian           2     Add a List of events and TimeLine.
+* 20180330  Bob              3     Reset the module to a new page
+* 20180402  Julian, Bob      4     Revise the data structure of team to make synchronization with API.
+* 20180403  Julian, Bob      5     Connect the data to backend database, handle button redirections
+*
+**/
 import React,{Component} from 'react';
 import  {Link,Route,Redirect} from 'react-router-dom'
 import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix,Timeline,Steps,Tag,Divider,Tabs} from 'antd'
@@ -125,7 +147,7 @@ class OneTeamPage extends Component{
 
                 <Layout style={{ padding: '24px 24px 24px' }}>
                   <Content style={{ background: '#fff', padding: 24, margin: 0, height: 400, width:"80%" }}>
-                    
+
                     <PostEditor className="center" teamID={this.props.viewingTeamID} eventID={this.state.teaminfo.eventList ? JSON.stringify(this.state.teaminfo.eventList.IDList[0]):-1} />
                   </Content>
                   <JoinRequest/>

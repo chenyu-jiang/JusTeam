@@ -1,3 +1,21 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Discover Page
+*
+* Author: ANTD Motion, ZAHNG Yuechen
+*
+* Date created: 20180329
+*
+* Purpose: The Discover Page shows the components in 'antdm' folder (Generated
+* by Antd Motion)
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180329  Julian          1      Component rearrangement.
+*
+**/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { enquireScreen } from 'enquire-js';
@@ -29,7 +47,7 @@ export default class Home extends React.Component {
       <hr className="inline"/>,
       <Content4 id="content_2_1" key="content_2_1"/>,
       <div style={{margin:'100px'}}/>,
-      
+
     ];
     return (
       <div className="templates-wrapper">

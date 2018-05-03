@@ -1,3 +1,21 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: HomePage component.
+*
+* Author: XU Lu, ZHANG Yuechen
+*
+* Date created: 20180228
+*
+* Purpose: Define The routers on the top bar and component of search bar
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180228  Bob              1     Router Construction.
+* 20180328  Julian           2     Add search bar component and CSS style.
+*
+**/
 import  React,{Component} from 'react'
 import  {Link,Route,Redirect} from 'react-router-dom'
 import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix} from 'antd'

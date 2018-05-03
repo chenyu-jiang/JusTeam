@@ -1,3 +1,22 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Edit Account Information Form
+*
+* Author: XU lu, ZHANG Yuechen
+*
+* Date created: 20180323
+*
+* Purpose: A form for users to edit their information.
+*
+* Revision History:
+*
+* Date      Author       Ref   Revision
+* 20180320  Bob          1     Add an antd editable form format.
+* 20180401  Bob          2     Add functions of uploading image (Avatar).
+* 20180403  Julian, Bob  3     Revise the form with the connection requirement of backend.
+*
+**/
 import React,{Component} from'react'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card,Radio, Upload} from 'antd';
 import {logIn, signUpSubmit,fetchActInfo,uploadImage,editAccountInfo} from '../../services/accountService'
@@ -56,7 +75,7 @@ class RegistrationForm extends Component {
                 editAccountInfo(formval)
                     .then(response=>{
                         console.log('response received: '+JSON.stringify(response));
-                        
+
                         hide();
 
                     });

@@ -1,3 +1,22 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Join Application Form
+*
+* Author: ZHANG Yuechen, JIANG Chenyu
+*
+* Date created: 20180330
+*
+* Purpose: An notification Board for users to check team announcements, result of
+* joinrequests, handle join requests.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180330  Julian           1     Construct a List with Single NotificationItem.
+* 20180403  Julian, Michael  2     Connect the List data to backend database, handle button redirections
+*
+**/
 import {Icon, Button,Card, Avatar,List,Tag,Col,Divider} from 'antd';
 import React,{Component} from 'react';
 import {getNewNotiNum,getNewNotiList,getNotiHistory,deleteNoti}from '../../services/notiService';

@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : PostTag
+*
+* Author            : XU Lu
+*
+* Date created      : 20180401
+*
+* Purpose           : A tag containing title of the post,
+*                     triggering a popup box to display the post
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+**/
+
 import React, { Component } from 'react';
 //import {democontent} from'../../services/notiService'
 import PostContentViewer from './PostContentViewer'

@@ -1,3 +1,24 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : MyTeamsPage
+*
+* Author            : ZHANG Yuechen, XU Lu
+*
+* Date created      : 20180308
+*
+* Purpose           : A page displaying basic information of all the user's teams,
+*                      links to specific team pages,
+*                      uses the CommunicationPage for team chatting
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180330 ZHANG Yuechen   1      UI redesign
+* 20180331  XU Lu          2      Added posting
+* 20180403  XU Lu          3      Bug fix, update control logic
+**/
+
 import React,{Component} from 'react'
 import {Tabs, Col, Button, Icon,List,Table,Divider,message} from 'antd'
 import 'antd/dist/antd.css'
@@ -113,7 +134,7 @@ class  MyTeamsSection extends Component {
                     <TeamList teamlist={this.state.TeamData}/>
                 </div>
                 <br/>
-                
+
                 <br/>
 
             </div>

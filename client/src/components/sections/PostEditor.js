@@ -1,3 +1,25 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : PostEditor
+*
+* Author            : XU Lu
+*
+* Date created      : 20180331
+*
+* Purpose           : A rich-text editor using react-draft-wysiwyg and draft.js,
+*                       for writing and submitting experiec posts.
+*                        Supports markdown, hyperlinks, fonts, undo/redo,
+*                      picture uploading (shares the api with user logo uploading)
+*                      Uses Redux to fetch login status and current team.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180402    XU Lu        1      connect to backend post api
+* 20180403    XU Lu        2      enable picture uploading
+**/
+
 import React, { Component } from 'react';
 import { EditorState, convertToRaw, ContentState,convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';

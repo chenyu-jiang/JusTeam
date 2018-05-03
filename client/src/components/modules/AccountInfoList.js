@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : AccountInfoList
+*
+* Author            : Zhang Yuechen
+*
+* Date created      : 20180321
+*
+* Purpose           : List for viewing account information
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+**/
+
 import React from 'react';
 import {List} from 'antd';
 import '../pages/AccountInfoPage.css'

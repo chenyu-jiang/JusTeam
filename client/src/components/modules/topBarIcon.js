@@ -1,3 +1,24 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : topBarIcon
+*
+* Author            : XU Lu, ZHANG Yuechen
+*
+* Date created      : 20180308
+*
+* Purpose           : A floating bar containing the website logo, a search bar
+*                     and a login button. After login, the login button is replaced
+*                     by the account droplist with user logo.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180318    XU Lu         1     Added Redux connection
+* 20180330    ZHANG Yuechen 2     Added search bar
+* 20180403    XU Lu         3     Updated UI design, added user logo
+**/
+
 import React from 'react'
 import {Dropdown,Button,Menu,Avatar} from 'antd'
 import {connect} from 'react-redux'

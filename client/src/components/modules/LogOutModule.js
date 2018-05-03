@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : LogOutModule
+*
+* Author            : XU Lu
+*
+* Date created      : 20180318
+*
+* Purpose           : Handle logout request and frontend path redirect.
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+**/
+
+
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'

@@ -1,3 +1,19 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : Team
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180303
+*
+* Purpose           : Basic class define for Team object
+*
+* Revision History  :
+* NA
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+**/
+
 class Team {
   constructor (teamID, introduction, teamTitle, maxMember,category,status,reminder,startTime,endTime){
     if(!(new.target)) throw new TypeError("You need to create a new Team with new");

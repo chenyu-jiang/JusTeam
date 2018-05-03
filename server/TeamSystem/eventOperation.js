@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : eventOperation
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180305
+*
+* Purpose           : provide functions related to event operation
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180315    DENG ShiYuan      1     Fixed bug in askEvent function.
+**/
+
 const Event = require('./Event');
 const dbEvent = require('./dbConnectionForEvent')
 const teamOP = require('./teamOperation');
@@ -9,6 +26,8 @@ const teamOP = require('./teamOperation');
 
 
 module.exports = {
+
+  //add the event into a team's eventList and insert the event information into the database and return rejection error whenever a error occurs
   createEvent : function createEvent(jsonIn,callback){
     var newEventID = undefined;
     var newEvent = new Event(jsonIn.teamID,null,jsonIn.startTime, jsonIn.endTime, jsonIn.title, jsonIn.location, jsonIn.specification);
@@ -21,7 +40,6 @@ module.exports = {
         else{
 
           async function f(){
-            console.log('--------------------***********------------------');
             await new Promise((resolve,reject)=>{
               teamOP.teamAttachEvent({teamID : jsonIn.teamID, eventID : result.insertId},(err,result)=>{
                 if(err){
@@ -44,6 +62,7 @@ module.exports = {
     insertNow();
   },
 
+  //delete all the event which belongs to a team due to the ID and delete the eventID from the team's eventList and return rejection through callback fuction when any error happens
   deleteEventByTeam(teamID,callback){
     dbEvent.establishPool();
     dbEvent.deleteEventByTeam(teamID,(err,result)=>{
@@ -71,6 +90,7 @@ module.exports = {
     deleteNow();
   },
 
+  //edit the event information and return rejection error if any error happens
   editEvent : function editEvent(jsonIn,callback){
     dbEvent.establishPool();
     dbEvent.askEventInfo(jsonIn.eventID,(err,rows,fields)=>{
@@ -93,6 +113,7 @@ module.exports = {
     });
   },
 
+  //return event information due to the ID input and return rejection error if any error happens
   askEvent : function askEvent(eventID,callback){
     dbEvent.establishPool();
     dbEvent.askEventInfo(eventID,(err,rows,fields)=>{
@@ -105,6 +126,7 @@ module.exports = {
     });
   },    //return a event object.
 
+  //add a postID into an event's postList and return rejection error if any error happens
   postAttachEvent : function postAttachEvent(jsonIn,callback){
     var eventAttaching = undefined;
     async function attachNow(){
@@ -143,6 +165,7 @@ module.exports = {
     }
   },
 
+  //delete a postID from a event's postList and return rejection error if any error occurs
   postDeleteEvent : function postDeleteEvent(jsonIn,callback){
     var eventDeleting = undefined;
     async function deleteNow(){

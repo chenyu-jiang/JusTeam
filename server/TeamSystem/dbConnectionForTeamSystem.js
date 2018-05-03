@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : dbConnectionForTeamSystem
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180304
+*
+* Purpose           : Database connection module for team system.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180313    DENG ShiYuan      1     Fixed bug in askTeamInfo function.
+**/
+
 const mysql = module.require("mysql");
 const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
@@ -13,6 +30,8 @@ const teamDeleteSQL = 'DELETE FROM formal_team WHERE teamID = ?';
 var teamSystemPool = undefined;
 
 module.exports = {
+
+//establish database pool for event system
   getDBTime : function getDBTime(){
     var date = new Date(Date.now());
     var Y = date.getFullYear() + '-';
@@ -24,6 +43,7 @@ module.exports = {
     return (Y+M+D+h+m+s);
   },
 
+//establish database pool for team system
   establishPool : function createPool(){
     if(teamSystemPool !== undefined) return;
     try{
@@ -47,6 +67,7 @@ module.exports = {
       return teamSystemPool;
   },
 
+//get team information due to the ID input and return rejection error throgh the callback function if failed
 askTeamInfo : function sqlQuery(teamID,callback){
   this.establishPool();
   if(teamID == null){
@@ -80,7 +101,9 @@ askTeamInfo : function sqlQuery(teamID,callback){
       }
     });
   }
-},                    //成品       //成品
+},
+
+//insert a new team in the database and return rejection error through the callback funtion if failed
 insertNewTeam : function insertNewTeam(newTeam,callback){
   newTeam.launchTime = this.getDBTime();
   newTeam.recentEditTime = newTeam.launchTime;
@@ -96,6 +119,7 @@ insertNewTeam : function insertNewTeam(newTeam,callback){
   });
 },           //成品
 
+//edit a exsting team and return rejection error through the callback funtion if failed
 updateTeamInfo: function updateTeamInfo(teamToBeUpdated, callback){
   teamToBeUpdated.recentEditTime = this.getDBTime();
   var teamUpdate_Params = [teamToBeUpdated.introduction,teamToBeUpdated.teamTitle,teamToBeUpdated.maxMember,JSON.stringify(teamToBeUpdated.memberList),JSON.stringify(teamToBeUpdated.eventList),teamToBeUpdated.recentEditTime,teamToBeUpdated.category,teamToBeUpdated.reminder,teamToBeUpdated.status,teamToBeUpdated.teamID];
@@ -108,8 +132,9 @@ updateTeamInfo: function updateTeamInfo(teamToBeUpdated, callback){
       callback(null,result);
     }
   });
-},         //成品
+},
 
+//delete a team information due to ID and return rejection error through the callback funtion if failed
 deleteTeam: function deleteTeam(teamID,callback){
   var deleteTeam_Params = [teamID];
   teamSystemPool.query(teamDeleteSQL,deleteTeam_Params,(err,result) =>{

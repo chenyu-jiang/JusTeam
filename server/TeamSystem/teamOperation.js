@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : teamOperation
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180304
+*
+* Purpose           : provide functions related to team operation
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180315    DENG ShiYuan      1     Fixed bug in askTeam function.
+**/
+
 const dbTeam = require('./dbConnectionForTeamSystem');
 const Team = require('./Team');
 
@@ -11,6 +28,7 @@ const Team = require('./Team');
 
 
 module.exports = {
+//create a team into the database and add the teamID to one's account and return rejection error if failed
   createTeam : function createTeam(jsonIn,callback){
     var newTeamID = undefined;
     var newTeam = new Team(null,jsonIn.introduction, jsonIn.teamTitle, jsonIn.maxMember,jsonIn.category,jsonIn.status,jsonIn.reminder,jsonIn.startTime,jsonIn.endTime);
@@ -28,6 +46,7 @@ module.exports = {
     insertNow();
   },
 
+//delete the team information from the database and the teamID from one's account and return rejection error if failed
   deleteTeam : function deleteTeam(teamID,callback){
     async function deleteNow(){
       await dbTeam.establishPool();
@@ -43,6 +62,7 @@ module.exports = {
     deleteNow();
   },
 
+//edit team information in the database and return rejection error if failed
   editTeam : function editTeam(jsonIn,callback){
     dbTeam.establishPool();
     dbTeam.askTeamInfo(jsonIn.teamID,(err,rows,fields)=>{
@@ -66,6 +86,7 @@ module.exports = {
     });
   },
 
+//return team information due to teamID and return rejection error if failed
   askTeam : function askTeam(teamID,callback){
     dbTeam.establishPool();
     dbTeam.askTeamInfo(teamID,(err,rows,fields)=>{
@@ -78,6 +99,7 @@ module.exports = {
     });
   },    //return a team object.
 
+//add a user's account ID into one team's account IDList and return rejection error if failed
   addMember : function addMember(jsonIn,callback){
     var switchTeam = undefined;
     dbTeam.establishPool();
@@ -110,6 +132,7 @@ module.exports = {
     foo();
   },
 
+//delete a userID from one team's userID list and return rejection error if failed
   deleteMember : function deleteMember(jsonIn, callback){
     var switchTeam = undefined;
     async function foo(){
@@ -160,6 +183,7 @@ module.exports = {
     foo();
   },
 
+//edit a user's authority and return rejection error if failed
   editAuthority : function editAuthority(jsonIn, callback){
     var switchTeam = undefined;
     dbTeam.establishPool();
@@ -201,6 +225,7 @@ module.exports = {
     foo();
   },
 
+//add a eventID into one team's eventList and return rejection error if failed
   teamAttachEvent : function teamAttachEvent(jsonIn,callback){
     var switchTeam = undefined;
     dbTeam.establishPool();
@@ -233,6 +258,7 @@ module.exports = {
     foo();
   },
 
+//delete a eventID from one team's eventList and return rejection error if failed
   teamDeleteEvent : function teamDeleteEvent(jsonIn,callback){
     var switchTeam = undefined;
     async function foo(){

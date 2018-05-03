@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : teamInfo
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180322
+*
+* Purpose           : Router for teamInformation operation
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180323    DENG ShiYuan      1     Fixed bug in router getUserTeams.
+**/
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const teamOP = require('../../TeamSystem/teamOperation');
@@ -10,7 +27,8 @@ router.get('/getRecommend',(req,res)=>{
   var recommendTeams = getRecommendTeam();
   res.send(recommendTeams);
 });
-//TODO:
+
+//return one user's all teams
 router.get('/getUserTeams',(req,res)=>{
   /*function down(x, y) {
     return (x.age < y.age) ? 1 : -1
@@ -40,10 +58,7 @@ router.get('/getUserTeams',(req,res)=>{
   });
   });
 
-
-
-  //TODO: need to reorder the teams
-//TODO: reorder
+//return one team information due to the input from client side
 router.get('/viewOneTeam',(req,res)=>{
   var aimTeam = parseInt(req.query.teamID);   //NOTE: here we require a teamID in the head
   teamOP.askTeam(aimTeam,(err,result, fields)=>{

@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : dbConnectionForEvent
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180303
+*
+* Purpose           : Database connection module for event system.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180313    DENG ShiYuan      1     Fixed bug in askEventInfo function.
+**/
+
 const mysql = module.require("mysql");
 const dbHost = '127.0.0.1';                 // localhost for dev
 const dbUser = 'root';                      // root for dev
@@ -15,6 +32,7 @@ var eventSystemPool = undefined;
 
 module.exports = {
 
+//Update the last time of checking user request
 getDBTime : function getDBTime(){
     var date = new Date(Date.now());
     var Y = date.getFullYear() + '-';
@@ -26,7 +44,7 @@ getDBTime : function getDBTime(){
     return (Y+M+D+h+m+s);
   },
 
-
+//establish database pool for event system
 establishPool : function createPool(){
     if(eventSystemPool !== undefined) return;
     try{
@@ -51,7 +69,7 @@ establishPool : function createPool(){
   },
 
 
-
+//delete all the event belongs to the given team and return rejection error if failed
 deleteEventByTeam : function deleteEventByTeam(teamID,callback){
   var deleteEvent_Params = [teamID];
   eventSystemPool.query(eventDeleteByTeamID,deleteEvent_Params,(err,result) =>{
@@ -65,7 +83,7 @@ deleteEventByTeam : function deleteEventByTeam(teamID,callback){
   });
 },
 
-
+//return the event information and return rejection error if failed througth the callback funtion
 askEventInfo : function askEventInfo(eventID,callback){
     var eventQueryByID_Params = [eventID];
     eventSystemPool.query(eventQueryByID,eventQueryByID_Params,(err,rows,fields)=>{
@@ -82,7 +100,7 @@ askEventInfo : function askEventInfo(eventID,callback){
     });
 },                    //成品
 
-
+//create new event into database and return rejection error if failed througth the callback funtion
 insertNewEvent : function insertNewEvent(newevent,callback){
   newevent.launchTime = this.getDBTime();
   newevent.recentEditTime = newevent.launchTime;
@@ -98,7 +116,7 @@ insertNewEvent : function insertNewEvent(newevent,callback){
   });
 },           //成品
 
-
+// edit a exsiting event's information and return rejection error if failed
 updateEventInfo: function updateEventInfo(eventToBeUpdated, callback){
   eventToBeUpdated.recentEditTime = this.getDBTime();
   console.log(eventToBeUpdated);
@@ -115,7 +133,7 @@ updateEventInfo: function updateEventInfo(eventToBeUpdated, callback){
   });
 },         //成品
 
-
+//delete a event information due to the ID input and return error through the callback funtion 
 deleteEvent: function deleteEvent(eventID,callback){
   var deleteEvent_Params = [eventID];
   eventSystemPool.query(eventDeleteSQL,deleteEvent_Params,(err,result) =>{

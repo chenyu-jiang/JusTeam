@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server
+*
+* Module name       : teamOP
+*
+* Author            : DENG ShiYuan
+*
+* Date created      : 20180322
+*
+* Purpose           : Router for teamInformation operation
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180323    DENG ShiYuan      1     Fixed bug in router getUserTeams.
+**/
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const notiOP = require('../../NotificationSystem/NotificationSystem')

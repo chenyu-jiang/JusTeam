@@ -1,4 +1,23 @@
-
+/**
+* Project           : JusTeam/client
+*
+* Module name       : Urlparams
+*
+* Author            : XU Lu
+*
+* Date created      : 20180330
+*
+* Purpose           : Exporting backend urls for other modules and services,
+*                      related to account, team, notification and post system.
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180401    XU Lu        1      added urls for post system
+* 20180402    XU Lu        2      modified urls for form submition
+* 20180403    XU Lu        3      modified account related urls due to backend redesign
+**/
 
 module.exports=
 {

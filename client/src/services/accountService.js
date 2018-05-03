@@ -1,4 +1,23 @@
-
+/**
+* Project           : JusTeam/client
+*
+* Module name       : accountService
+*
+* Author            : XU Lu
+*
+* Date created      : 20180318
+*
+* Purpose           : Login/Logout dispatch functions for redux update;
+*                     account related services (functions communicating with backend) :
+*                      including signup, get/edit information, login/out, uploading image to backend
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180330    XU Lu      1     Added get/edit information service.
+* 20180401    XU Lu      2     Added upload image; bug fix
+* 20180403    XU Lu      3     Updated encryption method
+**/
 var {_domain,_log_in,_sign_up,_upload_image,_log_out,_get_user_info, _edit_account_info}=require( './Urlparams');
 
 const logIn=(userID)=>{

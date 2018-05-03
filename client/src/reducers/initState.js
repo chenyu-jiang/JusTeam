@@ -1,3 +1,23 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : initState
+*
+* Author            : XU Lu
+*
+* Date created      : 20180310
+*
+* Purpose           : exporting a default initial state for redux
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180331     XU Lu       1      Added viewingTeamID
+* 20180403     XU Lu       2      Added default logo
+**/
+
+
 const initState={
     userID:undefined,
     notiNum:0,

@@ -1,3 +1,26 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : teamService
+*
+* Author            : XU Lu
+*
+* Date created      : 20180330
+*
+* Purpose           : backend communication related to team system:
+*                      1. join, create, delete and edit team
+*                      2. create, get and edit events
+*                      3. send posts and get team postlist
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180331    XU Lu      1       Adding post related functions
+* 20180401    XU Lu      2       Updated request body; bugfix
+**/
+
+
 import {_domain,_create_team,_delete_team,_edit_team,_add_team_member,
     _delete_team_member,_edit_team_member_authority,_get_recommend_team,
     _get_user_teams,_get_team_events,_get_one_event,_create_event,

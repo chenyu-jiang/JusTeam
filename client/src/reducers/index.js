@@ -1,3 +1,24 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : reducers/index
+*
+* Author            : XU Lu
+*
+* Date created      : 20180310
+*
+* Purpose           : Redux reduces to handle dispatch activities:
+*                   including storing login status, recording current viewing team, setting paths
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180401    XU Lu        1      Added SetViewingTeam
+* 20180403    XU Lu        2      Added SetLogo
+**/
+
+
 import LogInOut from './LogInOut'
 import initState from './initState'
 

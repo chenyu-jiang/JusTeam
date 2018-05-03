@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/client
+*
+* Module name       : searchService
+*
+* Author            : XU Lu
+*
+* Date created      : 20180403
+*
+* Purpose           : getting search result from backend.
+*
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+**/
+
 import {_domain,_search_team} from "./Urlparams"
 
 const getTeamSearchResult = (queryString)=> {

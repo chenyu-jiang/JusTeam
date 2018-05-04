@@ -1,3 +1,22 @@
+/**
+* Project           : JusTeam/server/AccountSystem
+*
+* Module name      : identity
+*
+* Author            : WANG Yuxuan
+*
+* Date created      : 20180317
+*
+* Purpose           : This module provides an entry for log in.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180318    WANG Yuxuan      1     Add cookie to the login session.
+* 20180322    WANG Yuxuan      2     Adjust the rule for authentication
+.* 20180323    WANG Yuxuan     3     Add keep login state.
+**/
+
 var express = require('express');
 var router = express.Router();
 var identity = require('../entity/identity');

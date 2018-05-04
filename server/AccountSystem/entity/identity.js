@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server/AccountSystem
+*
+* Module name      : identity
+*
+* Author            : WANG Yuxuan
+*
+* Date created      : 20180317
+*
+* Purpose           : This module is designed to provide basic entities and procedures for authentication system
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180318    WANG Yuxuan      1     Revision on regValidate function.
+* 20180319    WANG Yuxuan      2     Add getUserFromId and getEmailFromUsername function.
+**/
+
 var dbCommon = require('../../dbCommon');
 var connection = new dbCommon('accountSystem');
 var moment = require('moment');

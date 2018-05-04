@@ -1,3 +1,22 @@
+/**
+* Project           : JusTeam/server/AccountSystem
+*
+* Module name      : information
+*
+* Author            : WANG Yuxuan
+*
+* Date created      : 20180317
+*
+* Purpose           : This module includes entities and procedures for fetching and manipulating additional information for personal accounts.
+*                            Information related to this module is not compulsory.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180319    WANG Yuxuan      1     Removed some bugs of delete functions.
+* 20180319    WANG Yuxuan      2     Fix sone bugs of add functions.
+**/
+
 var dbCommon = require('../../dbCommon');
 var connection = new dbCommon('accountSystem');
 

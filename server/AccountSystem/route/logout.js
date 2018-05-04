@@ -1,3 +1,20 @@
+/**
+* Project           : JusTeam/server/AccountSystem
+*
+* Module name      : identity
+*
+* Author            : WANG Yuxuan
+*
+* Date created      : 20180317
+*
+* Purpose           : This module provides an entry for log out.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180322    WANG Yuxuan      1     Fix the bug on .destroy session.
+**/
+
 var express = require('express');
 var router = express.Router();
 var identity = require('../entity/identity');

@@ -1,3 +1,21 @@
+/**
+* Project           : JusTeam/server/AccountSystem
+*
+* Module name      : identity
+*
+* Author            : WANG Yuxuan
+*
+* Date created      : 20180317
+*
+* Purpose           : This module enable uses to modify their personal information.
+*
+* Revision History  :
+*
+* Date        Author      Ref    Revision (Date in YYYYMMDD format)
+* 20180322    WANG Yuxuan      1     Remove restriction on type of information to be edited..
+*
+**/
+
 var express = require('express');
 var router = express.Router();
 var information = require('../entity/information');

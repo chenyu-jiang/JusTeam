@@ -1,3 +1,21 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: AccountInfo Page
+*
+* Author: ZHANG Yuechen, XU lu
+*
+* Date created: 20180305
+*
+* Purpose: An Account Information Page to show the Account info and edit form.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180305  Julian           1     Construct a account info list for default value.
+* 20180315  Bob              2     Reconstruct the information data structure.
+*
+**/
 import React,{Component} from 'react';
 import {List, Avatar,Row,Col,Button, Rate,Tabs,Icon,Card} from 'antd';
 import {Link,Redirect} from 'react-router-dom'

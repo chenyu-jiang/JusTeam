@@ -1,3 +1,23 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Login Form
+*
+* Author: XU Lu, ZHANG Yuechen
+*
+* Date created: 20180226
+*
+* Purpose: A Login form for user to login (If user do not have an account, there
+*  is a link to Sign up form.)
+*
+* Revision History:
+*
+* Date      Author       Ref   Revision
+* 20180226  Bob          1     Construct a form and input criterions.
+* 20180302  Bob          2     Combine the form information with redux.
+* 20180330  Julian       3     Reform the framework of login form, add CSS style.
+*
+**/
 import { Form, Icon, Input, Button, Checkbox ,message,notification,Card} from 'antd';
 import React,{Component} from 'react'
 import {Link,Redirect} from'react-router-dom';

@@ -1,3 +1,24 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: AccountInfo CSS
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180228
+*
+* Purpose: A CSS component to define some basic CSS styles in pages and forms.
+* (It not only shows the CSS style for Account info system, but also in Team and
+* Account Management System)
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180228  Julian           1     Add CSS style for Account Info System
+* 20180315  Julian           2     Add CSS style for Forms (Login, Sign up, Create...)
+* 20180323  Julian           3     Add CSS style for Communication Item
+*
+**/
 @import '~antd/dist/antd.css';
 .back{
   margin-left: 45%;

@@ -1,3 +1,22 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Join Application Form
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180322
+*
+* Purpose: Using TextArea in antd to provide a method for user to send a join request
+*
+*
+* Revision History:
+*
+* Date      Author       Ref   Revision
+* 20180322  Julian       1     Construct a form with textArea.
+* 20180402  Julian       2     Revise the form with the connection requirement of backend.
+*
+**/
 import React, {Component}from 'react';
 import {Row,Col,Button,Icon,Form,Input,message}from'antd';
 import '../pages/AccountInfoPage.css';

@@ -1,3 +1,20 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: FrontEnd DashBoard
+*
+* Author: XU Lu
+*
+* Date created: 20180301
+*
+* Purpose: The Central Page of JusTeam, Defines routers and frameworks of frontend.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180301  Bob              1     Construct basic routers
+*
+**/
 import React,{Component} from 'react';
 import MyTeamsPage from "../sections/MyTeamsPage";
 import Discover from '../sections/Discover'

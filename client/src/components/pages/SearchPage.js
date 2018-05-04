@@ -1,3 +1,20 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Search Page
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180324
+*
+* Purpose: Page to import Search Result List.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180324  Julian           1     Page construction.
+*
+**/
 import React from 'react'
 import{BackTop}from'antd'
 import SearchResult from './SearchResult'

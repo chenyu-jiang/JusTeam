@@ -1,3 +1,20 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: HomePage CSS Style
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180228
+*
+* Purpose: The CSS Style for the original discover Page
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180228  Julian           1     Add CSS style for discover page.
+*
+**/
 @import '~antd/dist/antd.css';
 .hoverbot{
   hover{

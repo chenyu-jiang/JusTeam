@@ -1,3 +1,23 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Communication Page
+*
+* Author: XU Lu
+*
+* Date created: 20180316
+*
+* Purpose: Construct a Communication Item in the single team page, imports
+* the 'react-chat-widget' module and applies socket.io to handle the message
+* sending system. For users, it provides a platform for team discussion.
+*
+* Revision History:
+*
+* Date      Author    Ref   Revision
+* 20180326  Bob       1     import react-chat-widget module.
+* 20180402  Bob       2     construction of socket.
+*
+**/
 import React,{Component} from 'react';
 import { Widget , addResponseMessage} from 'react-chat-widget';
 import MyTeamsPage from "../sections/MyTeamsPage";

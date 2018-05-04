@@ -1,3 +1,22 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: My Team List
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180313
+*
+* Purpose: A List To show "MyTeams" with the order of time, show some essential info.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180313  Julian           1     Build a tab to filter teams with time
+* 20180315  Julian           2     Construct a default list to display.
+* 20180401  Julian           3     Data structure revision and rearrange with backend connection.
+*
+**/
 import React,{Component} from 'react'
 import {Tabs, Col, Button, Icon,List,Table,Divider} from 'antd'
 import 'antd/dist/antd.css'

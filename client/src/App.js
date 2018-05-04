@@ -1,3 +1,20 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Application Router & Auto Login judgement
+*
+* Author: Create-react-app, XU Lu
+*
+* Date created: 20180220
+*
+* Purpose: Define the logic of login and auto-login.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180321  Bob             1      Add Redux connection module and auto-login judgement.
+*
+**/
 import React, { Component } from 'react';
 import {Route,Redirect} from 'react-router-dom';
 import HomePage from './components/pages/HomePage'

@@ -1,3 +1,22 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: One team Module
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180301
+*
+* Purpose: A Team Card Module displays on the One Team Page
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180301  Julian           1     Construct a Card and default indo  Team Module.
+* 20180303  Julian           2     Add CSS styles for the form.
+* 20180330  Julian           3     data structure revision and rearrange with backend connection.
+*
+**/
 import React,{Component} from 'react';
 import  {Link,Route,Redirect} from 'react-router-dom'
 import {Button,Dropdown,Menu,Icon,Col,Row,Carousel,Card,Avatar,Input,Layout,Affix,Timeline,Steps,Tag,Divider,Tabs} from 'antd'

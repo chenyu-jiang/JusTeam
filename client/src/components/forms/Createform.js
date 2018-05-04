@@ -1,3 +1,24 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Team Creation Form
+*
+* Author: XU Lu, ZHANG Yuechen
+*
+* Date created: 20180312
+*
+* Purpose: Provide a form for team creation. Users can fill in some necessary
+* informations such as TITLE, DESCRIPTION, TEAM_SIZE, DURATION, and TAGS. These info
+* will be collected together as a JSON and send to backend to create a team.
+*
+* Revision History:
+*
+* Date      Author    Ref   Revision
+* 20180312  Julian    1     Add a form format in antd, set input criterions.
+* 20180330  Bob       2     Service construction and bug fixed.
+* 20180402  Julian    3     Reset the input criterions for tags.
+*
+**/
 import React from 'react';
 import { Form, Input, Tooltip, Icon, Cascader, Select,
     Row, Col, Checkbox, Button, AutoComplete,

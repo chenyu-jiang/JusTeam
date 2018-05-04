@@ -1,3 +1,21 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Edit Team Form
+*
+* Author: ZHANG Yuechen
+*
+* Date created: 20180320
+*
+* Purpose: Using TextArea in antd to provide a method for user to revise team information
+*
+* Revision History:
+*
+* Date      Author       Ref   Revision
+* 20180320  Julian       1     Construct a form with textArea.
+* 20180403  Julian       2     Revise the form with the connection requirement of backend.
+*
+**/
 import React,{Component} from'react'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message} from 'antd';
 import {logIn, signUpSubmit,fetchActInfo} from '../../services/accountService'

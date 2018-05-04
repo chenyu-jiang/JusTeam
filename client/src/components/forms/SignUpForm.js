@@ -1,3 +1,23 @@
+/**
+* Project:  JusTeam/client
+*
+* Module name: Sign Up Form
+*
+* Author: XU Lu, ZHANG Yuechen
+*
+* Date created: 20180303
+*
+* Purpose: A sign up page for users inputing some basic informations adn sending
+* to the backend database.
+*
+* Revision History:
+*
+* Date      Author          Ref    Revision
+* 20180303  Bob              1     Construct a Sign up form Module with criterions.
+* 20180312  Julian           2     Add CSS styles for the form.
+* 20180330  Bob              3     Connection with backend.
+*
+**/
 import React,{Component} from'react'
 
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete ,message,Card} from 'antd';
